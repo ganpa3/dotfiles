@@ -1,0 +1,135 @@
+#     _    _                 _ _____ _______   __
+#    / \  | | __ _  ___ _ __(_)_   _|_   _\ \ / /
+#   / _ \ | |/ _` |/ __| '__| | | |   | |  \ V /
+#  / ___ \| | (_| | (__| |  | | | |   | |   | |
+# /_/   \_\_|\__,_|\___|_|  |_| |_|   |_|   |_|
+#
+# See this wiki page for more info:
+# https://github.com/jwilm/alacritty/wiki
+# xterm pencil darcula
+env:
+  TERM: xterm-256color
+
+# Window configurations
+window:
+  dimensions:
+    columns: 130
+    lines: 34
+
+  padding:
+    x: 0
+    y: 0
+
+  decorations: full
+
+scrolling:
+  multiplier: 5
+
+# Font configurations
+font:
+  size: 17.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+  scale_with_dpi: true
+
+  use_thin_strokes: false
+
+draw_bold_text_with_bright_colors: true
+
+# Colors (Monokai Dark)
+colors:
+  # COLORSCHEME: dracula.yaml
+  # Default colors
+  primary:
+    background: '0x282a36'
+    foreground: '0xf8f8f2'
+
+  # Normal colors
+  normal:
+  # Bright colors
+    black: '0x000000'
+    red: '0xff5555'
+    green: '0x50fa7b'
+    yellow: '0xf1fa8c'
+    blue: '0xbd93f9'
+    magenta: '0xff79c6'
+    cyan: '0x8be9fd'
+    white: '0xbbbbbb'
+
+  # Bright colors
+  bright:
+    black: '0x555555'
+    red: '0xff5555'
+    green: '0x50fa7b'
+    yellow: '0xf1fa8c'
+    blue: '0xcaa9fa'
+    magenta: '0xff79c6'
+    cyan: '0x8be9fd'
+    white: '0xffffff'
+  cursor:
+    text: '0x000b1e'
+    cursor: '0x0abdc6'
+
+  # Normal colors
+  indexed_colors: []
+  dim:
+    black: '0x31363b'
+    red: '0x783228'
+    green: '0x17a262'
+    yellow: '0xb65619'
+    blue: '0x1b668f'
+    magenta: '0x614a73'
+    cyan: '0x186c60'
+    white: '0x63686d'
+bell:
+  animation: EaseOutExpo
+  duration: 0
+
+background_opacity: 1.0
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+mouse_bindings:
+  - {mouse: Middle, action: PasteSelection}
+
+mouse:
+  double_click: {threshold: 300}
+  triple_click: {threshold: 300}
+  faux_scrolling_lines: 1
+  hide_when_typing: false
+
+cursor:
+  style: Underline
+  unfocused_hollow: true
+
+window.dynamic_title: true
+
+live_config_reload: true
+
+key_bindings:
+  - {key: V, mods: Control, action: Paste}
+  - {key: W, mods: Alt, action: Copy}
+  - {key: Insert, mods: Shift, action: PasteSelection}
+  - {key: Key0, mods: Control, action: ResetFontSize}
+  - {key: Equals, mods: Control, action: IncreaseFontSize}
+  - {key: NumpadAdd, mods: Control, action: IncreaseFontSize}
+  - {key: NumpadSubtract, mods: Control, action: DecreaseFontSize}
+  - {key: Minus, mods: Control, action: DecreaseFontSize}
+  - {key: Return, mods: Alt, action: ToggleFullscreen}
+  - {key: Paste, action: Paste}
+  - {key: Copy, action: Copy}
+  - {key: L, mods: Control, action: ClearLogNotice}
+  - {key: L, mods: Control, chars: "\f"}
+  - {key: PageUp, mods: Shift, action: ScrollPageUp, mode: ~Alt}
+  - {key: PageDown, mods: Shift, action: ScrollPageDown, mode: ~Alt}
+  - {key: Home, mods: Shift, action: ScrollToTop, mode: ~Alt}
+  - {key: End, mods: Shift, action: ScrollToBottom, mode: ~Alt}
