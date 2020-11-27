@@ -120,7 +120,7 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
 alias wifi='nmcli r wifi off && sleep 5 && nmcli r wifi on && sleep 5 && nmcli con up GaneshP'
