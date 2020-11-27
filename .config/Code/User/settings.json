@@ -1,0 +1,16 @@
+{
+    "window.zoomLevel": 1,
+    "editor.fontSize": 17,
+    "files.autoSave": "afterDelay",
+    "python.linting.flake8Args": [
+        "--ignore=E501"
+    ],
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "javascript.format.semicolons": "insert",
+    "code-runner.runInTerminal": true,
+    "python.languageServer": "Microsoft"
+}
