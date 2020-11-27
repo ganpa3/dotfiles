@@ -41,3 +41,8 @@ for i in deps:
 print("")
 browser.quit()
 ```
+
+To manage dotfiles, use these links:
+https://github.com/jesuswasrasta/dotfiles
+https://www.atlassian.com/git/tutorials/dotfiles
+https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
