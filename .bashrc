@@ -185,6 +185,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 ulimit -s 512000
 
 ############################################ ALIASES #########################################
+alias sudo='sudo '
 alias ils='logo-ls'
 alias ila='logo-ls -A'
 alias ill='logo-ls -al'

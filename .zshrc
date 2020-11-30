@@ -120,7 +120,9 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
+alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
+alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
 alias wifi='nmcli r wifi off && sleep 5 && nmcli r wifi on && sleep 5 && nmcli con up GaneshP'
@@ -156,7 +158,7 @@ alias path='readlink -f'
 alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dfgs='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add .bashrc .zshrc'
-alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m'
+alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 
 ## Quickly changing directories
@@ -187,7 +189,7 @@ alias sarc='subl ~/.config/alacritty/alacritty.yml'
 
 ## Formatting files
 alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
-alias fp='black *.py'
+alias fp='black --line-length 100 *.py'
 alias fj='npx prettier --write .'
 
 ##############################################################################################

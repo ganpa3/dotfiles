@@ -12,5 +12,6 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "javascript.format.semicolons": "insert",
     "code-runner.runInTerminal": true,
-    "python.languageServer": "Microsoft"
+    "python.languageServer": "Microsoft",
+    "explorer.confirmDragAndDrop": false
 }
