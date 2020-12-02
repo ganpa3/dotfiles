@@ -120,6 +120,15 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
+pol() {
+    dir="/home/ganpa/source/polybar-themes/polybar-$1"
+    # echo $dir
+    cp -r $dir/fonts/* ~/.local/share/fonts
+    fc-cache -v
+    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+    cp -r $dir/* ~/.config/polybar
+}
+alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -133,6 +142,11 @@ LIGHT_COLOR="papercolor_light.yaml"
 alias a="alacritty-colorscheme -C $COLOR_DIR"
 alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
 alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
+alert() { 
+    sleep $1
+    ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
+    notify-send --urgency=critical "Hello!"
+}
 ##############################################################################################
 
 ############################################ ALIASES #########################################
@@ -220,6 +234,8 @@ tt() {
         fi
     done
 }
+
+mkcd () { mkdir -p $1 && cd $1; }
 
 m() { mv $1 ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
