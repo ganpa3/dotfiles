@@ -26,8 +26,9 @@ scrolling:
   multiplier: 5
 
 # Font configurations
+# Use 12.0 for i3 on Manjaro
 font:
-  size: 17.0
+  size: 12.0
 
   offset:
     x: 0
