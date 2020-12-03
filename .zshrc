@@ -171,7 +171,7 @@ alias path='readlink -f'
 ## Managing dotfiles
 alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dfgs='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
-alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add .bashrc .zshrc'
+alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add ~/.bashrc ~/.zshrc'
 alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 
@@ -299,5 +299,13 @@ g() {
 	git add .
 	git commit -m "$@"
 	git push
+}
+
+server() {
+    if [[ $# -eq 0 ]]; then
+        http-server --port 8000
+    else
+        http-server --port $1
+    fi
 }
 ##############################################################################################
