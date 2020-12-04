@@ -76,7 +76,7 @@ sudo pacman -S github-cli
 ####################################################################################################################
 
 # Essentials
-sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch
+sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch scrot
 
 # Install Oh-My-ZSH
 touch ~/.zshrc

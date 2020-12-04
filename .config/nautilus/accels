@@ -1,0 +1,2 @@
+(gtk_accel_path "<Actions>/ShellActions/Up" "BackSpace")
+(gtk_accel_path "/ShellActions/Up" "BackSpace")

@@ -1,15 +1,20 @@
+set $mod Mod4
 # # Custom
 # Night light
 bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 0 -5%
 bindsym XF86AudioMute exec pactl -- set-sink-volume 0 0%
 
+# For screenshot
+bindsym --release Print exec "scrot -u '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
+bindsym --release Shift+Print exec "scrot '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
+bindsym --release $mod+Print exec "scrot -s '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
+
 # If amixer is used, use the following commands:
 # amixer set 'Master' 10%+
 # amixer set 'Master' 10%-
 # amixer set 'Master' 0%
-set $mod Mod4
-bindsym $mod+Alt+n exec --no-startup-id redshift
+bindsym --release $mod+Alt+n exec --no-startup-id redshift
 exec xinput set-prop 13 331 1
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym $mod+s exec systemctl suspend

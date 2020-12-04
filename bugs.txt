@@ -46,3 +46,6 @@ To manage dotfiles, use these links:
 https://github.com/jesuswasrasta/dotfiles
 https://www.atlassian.com/git/tutorials/dotfiles
 https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+
+For arch, install packages:
+sudo pacman -S xorg xorg-xinit xf86-video-intel
