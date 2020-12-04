@@ -32,7 +32,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# export UPDATE_ZSH_DAYS=130
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -206,6 +206,9 @@ alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
 alias fp='black --line-length 100 *.py'
 alias fj='npx prettier --write .'
 
+## Toggle webcam
+alias disable_wc='sudo modprobe -r uvcvideo'
+alias enable_wc='sudo modprobe uvcvideo'
 ##############################################################################################
 
 #######################################Custom Functions ######################################
