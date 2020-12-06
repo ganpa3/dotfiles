@@ -1,9 +1,10 @@
 set $mod Mod4
 # # Custom
+exec --no-startup-id gnome-settings-daemon
 # Night light
 bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 0 -5%
-bindsym XF86AudioMute exec pactl -- set-sink-volume 0 0%
+bindsym XF86AudioMute exec pactl -- set-sink-mute 0 toggle
 
 # For screenshot
 bindsym --release Print exec "scrot -u '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
@@ -96,7 +97,7 @@ bindsym $mod+x move workspace to output right
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu '
 # bindsym $mod+d exec --no-startup-id rofi -show drun
 #bindsym $mod+d exec gnome-control-center
-bindsym $mod+d exec /home/ganpa/.config/rofi/launchers/misc/launcher.sh
+bindsym $mod+d exec /home/ganpa/.config/rofi/launchers/colorful/launcher.sh
 # Screenshot (now provided by Plasma)
 # bindsym Print exec --no-startup-id spectacle
 
@@ -129,7 +130,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 #bindsym $mod+space exec rofi -show drun -theme /home/ganpa/.config/rofi/rofi.rasi
-bindsym $mod+space exec --no-startup-id /home/ganpa/.config/rofi/launchers/text/launcher.sh
+bindsym $mod+space exec --no-startup-id /home/ganpa/.config/rofi/launchers/misc/launcher.sh
 # split in horizontal orientation
 bindsym $mod+h split v
 
@@ -274,7 +275,7 @@ for_window [class="^.*"] border pixel 0
 smart_borders on
 
 # Set inner/outer gaps
-gaps inner 0
+gaps inner 10
 gaps outer 0
 
 # Gaps mode
