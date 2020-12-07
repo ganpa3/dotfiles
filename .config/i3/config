@@ -1,4 +1,8 @@
 set $mod Mod4
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
+
 # # Custom
 exec --no-startup-id gnome-settings-daemon
 # Night light
@@ -129,8 +133,8 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-#bindsym $mod+space exec rofi -show drun -theme /home/ganpa/.config/rofi/rofi.rasi
-bindsym $mod+space exec --no-startup-id /home/ganpa/.config/rofi/launchers/misc/launcher.sh
+bindsym $mod+space exec rofi -no-lazy-grab -show drun -modi drun -theme /home/ganpa/.config/rofi/launchers/misc/blurry.rasi
+#bindsym $mod+space exec --no-startup-id /home/ganpa/.config/rofi/launchers/misc/launcher.sh
 # split in horizontal orientation
 bindsym $mod+h split v
 
@@ -141,15 +145,15 @@ bindsym $mod+v split h
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-# bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+#bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -244,7 +248,7 @@ for_window [class="systemsettings"] floating enable
 for_window [class="keepassxc"] floating enable
 
 # Set wallpaper with feh
-exec --no-startup-id feh --bg-fill /home/ganpa/Pictures/Wallpapers/papers.co-ad29-deer-animal-illust-dark-36-3840x2400-4k-wallpaper.jpg
+exec --no-startup-id feh --bg-fill /home/ganpa/Pictures/Wallpapers/BG2.jpg
 
 ## Plasma Integration
 # Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
