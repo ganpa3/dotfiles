@@ -167,6 +167,7 @@ alias ys='youtube-dl --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
 alias emcc='~/source/emsdk/upstream/emscripten/emcc'
 alias em++='~/source/emsdk/upstream/emscripten/em++'
 alias path='readlink -f'
+alias redshift='redshift -O 2600'
 
 ## Managing dotfiles
 alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'

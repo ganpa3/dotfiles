@@ -19,7 +19,7 @@ bindsym --release $mod+Print exec "scrot -s '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/
 # amixer set 'Master' 10%+
 # amixer set 'Master' 10%-
 # amixer set 'Master' 0%
-bindsym --release $mod+Shift+n exec --no-startup-id redshift
+bindsym --release $mod+Shift+n exec --no-startup-id redshift -r -l 18.53:73.86 -t 2500:2500
 exec xinput set-prop 13 331 1
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym $mod+s exec systemctl suspend
