@@ -2,6 +2,7 @@ set $mod Mod4
 
 # Autostart programs when you login
 exec google-chrome-stable
+exec picom --experimental-backends
 
 # If the XF86* keysyms do not work, use "xmodmap -pke" command to list them.
 
@@ -24,7 +25,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # For screenshot
-bindsym --release Print exec "scrot -u '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
+bindsym --release Print exec scrot -u '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'
 bindsym --release Shift+Print exec "scrot '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
 bindsym --release $mod+Print exec "scrot -s '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures'"
 
@@ -45,7 +46,7 @@ bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
 # Add this to your i3 config (~/.config/i3/config) and restart i3 (Super+Shift+R)
 #exec --no-startup-id "alacritty"
 #for_window [class="Alacritty"] move scratchpad, move position 150 150, resize set 1700 800;
-bindsym Mod1+space [class="Alacritty"] scratchpad show;
+bindsym Mod1+space [class="alacritty"] scratchpad show;
 
 # (No) Title Bars
 for_window [class="^.*"] border pixel 0

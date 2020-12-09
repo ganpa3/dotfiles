@@ -3,7 +3,7 @@
 
 include "/home/ganpa/.gtkrc-2.0.mine"
 gtk-theme-name="Adwaita-dark"
-gtk-icon-theme-name="Adwaita"
+gtk-icon-theme-name="Papirus-Dark"
 gtk-font-name="Cantarell 11"
 gtk-cursor-theme-name="xcursor-breeze"
 gtk-cursor-theme-size=0
