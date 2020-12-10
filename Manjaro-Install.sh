@@ -76,7 +76,12 @@ sudo pacman -S github-cli
 ####################################################################################################################
 
 # Essentials
-sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch scrot
+sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch scrot rsync
+
+## Setting up config files
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/ganpa3/dotfiles.git ~/tmp
+rsync --recursive --verbose --exclude '.git' ~/tmp/ $HOME/
+rm --recursive ~/tmp
 
 # Install Oh-My-ZSH
 touch ~/.zshrc
