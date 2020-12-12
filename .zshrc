@@ -113,6 +113,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/tmp/rust_install_w3id_45r/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH":$HOME/bin"
+
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
@@ -120,14 +121,6 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
-pol() {
-    dir="/home/ganpa/source/polybar-themes/polybar-$1"
-    # echo $dir
-    cp -r $dir/fonts/* ~/.local/share/fonts
-    fc-cache -v
-    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
-    cp -r $dir/* ~/.config/polybar
-}
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'

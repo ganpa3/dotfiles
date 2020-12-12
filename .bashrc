@@ -171,90 +171,203 @@ _alacritty()
     COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
     return 0
 }
-##############################################################################################
 
+##############################################################################################
 # Custom Commands below
+reset-cursor() {
+  printf '\033]50;CursorShape=1\x7'
+}
+export PS1="$(reset-cursor)$PS1"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/tmp/rust_install_w3id_45r/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH":$HOME/bin"
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=' -p /usr/bin/python3 '
-export PROJECT_HOME=$HOME/Devel
-#source /usr/local/bin/virtualenvwrapper.sh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
+export BROWSER='/usr/bin/google-chrome-stable'
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+source /home/ganpa/.local/bin/virtualenvwrapper.sh
+
+######################################## TEMPORARY ALIASES ###################################
+alias play='ffplay -nodisp -autoexit -loglevel quiet'
+alias sudo='sudo '
+alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
+alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
+alias flake8='flake8 --ignore=E501'
+alias own='sudo chown -R ganpa:ganpa'
+alias wifi='nmcli r wifi off && sleep 5 && nmcli r wifi on && sleep 5 && nmcli con up GaneshP'
+alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
+alias q='sudo apt-get install --mark-auto -y'
+COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
+LIGHT_COLOR="papercolor_light.yaml"
+alias a="alacritty-colorscheme -C $COLOR_DIR"
+alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
+alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
+alert() { 
+    sleep $1
+    ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
+    notify-send --urgency=critical "Hello!"
+}
+##############################################################################################
 
 ############################################ ALIASES #########################################
-alias sudo='sudo '
-alias ils='logo-ls'
-alias ila='logo-ls -A'
-alias ill='logo-ls -al'
-alias CC='cd ~/Desktop/C++_Programs/'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 alias x='exit'
 alias c='clear'
 alias f='nautilus .'
-alias ff='clang-format -i *.cpp'
-alias fp='black *.py'
-alias brc='nvim ~/.bashrc'
-alias s='source ~/.bashrc'
+alias s='source ~/.zshrc'
 alias r='rm *.out'
-alias ivim='sudo dpkg -i /home/ganpa/GitHub/vim/vim_20201013-1_amd64.deb'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
-alias vimrc='nvim ~/.vimrc'
-alias nvimrc='nvim ~/.config/nvim/init.vim'
+alias chrome='/opt/google/chrome/chrome'
+alias v='nvim'
+alias spd='systemctl suspend'
+alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
+alias ys='youtube-dl --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
+alias emcc='~/source/emsdk/upstream/emscripten/emcc'
+alias em++='~/source/emsdk/upstream/emscripten/em++'
+alias path='readlink -f'
+alias redshift='redshift -O 2600'
+
+## Managing dotfiles
+alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dfgs='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
+alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add'
+alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
+alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
+
+## Quickly changing directories
+alias CC='cd ~/C++_Programs/'
+alias CK='cd ~/Kotlin_Programs/'
+alias CS='cd ~/source'
+
+## Updating system
+alias um='yay -Syu'
+alias uu='sudo apt update && sudo apt upgrade -y' # && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
+
+## Opening config files
+alias brc='nvim ~/.bashrc'
+alias zrc='nvim ~/.zshrc'
+alias uirc='nvim ~/.config/regolith/i3/config'
+alias irc='nvim ~/.config/i3/config'
+alias vrc='nvim ~/.vimrc'
+alias nrc='nvim ~/.config/nvim/init.vim'
+alias arc='nvim ~/.config/alacritty/alacritty.yml'
+# With Sublime text
+alias sirc='subl ~/.config/i3/config'
+alias szrc='subl ~/.zshrc'
+alias sbrc='subl ~/.bashrc'
+alias suirc='subl ~/.config/regolith/i3/config'
+alias svrc='subl ~/.vimrc'
+alias snrc='subl ~/.config/nvim/init.vim'
+alias sarc='subl ~/.config/alacritty/alacritty.yml'
+
+## Formatting files
+alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
+alias fp='black --line-length 100 *.py'
+alias fj='npx prettier --write .'
+
+## Toggle webcam
+alias disable_wc='sudo modprobe -r uvcvideo'
+alias enable_wc='sudo modprobe uvcvideo'
 ##############################################################################################
 
 #######################################Custom Functions ######################################
-function t() {
+t() {
     filename=$1
     filenameWithoutExt=${filename%.*}
-    g++ test.cpp -o test.out && ./test.out < input.txt > o2.txt
-    g++ $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input.txt > o1.txt
-    diff -w o1.txt o2.txt
+    g++ -std=c++17 test.cpp -o test.out && ./test.out < input.txt > o2.txt
+    g++ -std=c++17 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input.txt > o1.txt
+    diff -q -w o1.txt o2.txt
 }
-function y() {
-    for url
-    do youtube-dl -o '~/Videos/%(title)s.%(ext)s' "$url"
+
+tt() {
+    for i in 0 1 2 3 4
+    do
+    	run tc.cpp > input.txt
+    	t $1
+        ret=$(diff -q -w o1.txt o2.txt)
+        if [[ $(echo $?) == 1 ]]; then
+        	echo "The input is:"
+        	cat input.txt
+        	echo "Your output: "
+        	cat o1.txt
+        	echo "Actual output: "
+        	cat o2.txt
+            echo ""
+        fi
     done
 }
-function ys() {
-    for url
-    do youtube-dl --all-subs -o '~/Videos/%(title)s/%(title)s.%(ext)s' "$url"
-    done
-}
 
-u() { sudo apt update; sudo apt upgrade -y; sudo apt autoremove; sudo apt clean; rm -rf ~/.cache/thumbnails/*; }
-m() { mv $1 ~/Desktop/C++_Programs/Competitive-Programming/Codeforces/; }
+mkcd () { mkdir -p $1 && cd $1; }
 
-function mf() { 
+m() { mv $1 ~/C++_Programs/Competitive-Programming/Codeforces/; }
+
+mf() { 
     filename="$@"
     filename="${filename// /_}"
-    cp ~/Desktop/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
+    cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
 }
 
-function mft() { 
+mft() { 
     filename="$@"
     filename="${filename// /_}"
-    cp ~/Desktop/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
-}
-
-cpa() {
-    filename=$1
-    filenameWithoutExt=${filename%.*}
-    g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && time ./$filenameWithoutExt.out |& tee output.txt
+    cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
 }
 
 run() {
     filename=$1
-    filenameWithoutExt=${filename%.*}
-    g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && time ./$filenameWithoutExt.out |& tee output.txt
+    filenameWithoutExt="${filename%.*}"
+    filetype="$(echo $filename | cut -d'.' -f2)"
+
+    case $filetype in
+	    cpp | cc)
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        ;;
+	    py)
+	        python3 $filename
+	        ;;
+
+	    kt)
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar
+	        ;;
+    esac
 }
 
-v() {
-    nvim $@
+cpa() {
+    filename=$1
+    filenameWithoutExt="${filename%.*}"
+    filetype="$(echo $filename | cut -d'.' -f2)"
+
+    case $filetype in
+	    cpp | cc)
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        ;;
+	    py)
+	        python3 $filename
+	        ;;
+	    kt)
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar
+	        ;;
+    esac
+}
+
+cc() {
+    filename=$1
+    filenameWithoutExt="${filename%.*}"
+	
+	g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+}
+
+server() {
+    if [[ $# -eq 0 ]]; then
+        http-server --port 8000
+    else
+        http-server --port $1
+    fi
 }
 ##############################################################################################
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
