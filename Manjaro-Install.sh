@@ -84,7 +84,7 @@ sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch scrot rsync
 
 # HTTPS
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/ganpa3/dotfiles.git ~/tmp
-rsync --recursive --verbose --exclude '.git' ~/tmp/ $HOME/
+rsync --recursive --verbose --exclude '.dotfiles' ~/tmp/ $HOME/
 rm --recursive ~/tmp
 
 # Install Oh-My-ZSH
