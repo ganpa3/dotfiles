@@ -79,6 +79,10 @@ sudo pacman -S github-cli
 sudo pacman -S --noconfirm vlc alacritty tree feh ranger neofetch scrot rsync
 
 ## Setting up config files
+# SSH
+#git clone --separate-git-dir=$HOME/.dotfiles git@github.com:ganpa3/dotfiles.git ~/tmp
+
+# HTTPS
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/ganpa3/dotfiles.git ~/tmp
 rsync --recursive --verbose --exclude '.git' ~/tmp/ $HOME/
 rm --recursive ~/tmp
