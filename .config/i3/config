@@ -265,7 +265,7 @@ for_window [class="systemsettings"] floating enable
 for_window [class="keepassxc"] floating enable
 
 # Set wallpaper with feh
-exec_always --no-startup-id feh --bg-fill /home/ganpa/Pictures/Wallpapers/BG2.jpg
+exec_always --no-startup-id feh --bg-fill /home/ganpa/Pictures/unix.png
 
 ## Plasma Integration
 # Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)

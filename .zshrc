@@ -165,7 +165,7 @@ alias redshift='redshift -O 2600'
 ## Managing dotfiles
 alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dfgs='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
-alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add'
+alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
 alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 
