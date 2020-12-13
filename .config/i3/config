@@ -3,6 +3,7 @@ set $mod Mod4
 # Autostart programs when you login
 exec google-chrome-stable
 #exec picom --experimental-backends
+exec_always /home/ganpa/bin/battery_status
 
 # If the XF86* keysyms do not work, use "xmodmap -pke" command to list them.
 
