@@ -17,10 +17,23 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
     Plug 'udalov/kotlin-vim'
 
+    Plug 'sheerun/vim-polyglot'
+
+    Plug 'pineapplegiant/spaceduck'
+
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""" General Settings """"""""""""""""""""""""""""""""
+" Theme
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
+
+colorscheme spaceduck
+
 " set leader key
 let mapleader = ","
 let g:loaded_matchparen=1
@@ -45,7 +58,6 @@ set smartindent                         " Makes indenting smart
 set autoindent                          " Good auto indent
 set laststatus=0                        " Always display the status line
 set number                              " Line numbers
-"set background=dark                     " tell vim what the background color looks like
 set showtabline=2                       " Always show tabs
 set noshowmode                          " We don't need to see things like -- INSERT -- anymore
 set nobackup                            " This is recommended by coc

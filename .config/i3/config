@@ -2,7 +2,7 @@ set $mod Mod4
 
 # Autostart programs when you login
 exec google-chrome-stable
-exec picom --experimental-backends
+#exec picom --experimental-backends
 
 # If the XF86* keysyms do not work, use "xmodmap -pke" command to list them.
 
@@ -116,7 +116,8 @@ bindsym $mod+x move workspace to output right
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu '
 # bindsym $mod+d exec --no-startup-id rofi -show drun
 #bindsym $mod+d exec gnome-control-center
-bindsym $mod+d exec /home/ganpa/.config/rofi/launchers/colorful/launcher.sh
+#bindsym $mod+d exec /home/ganpa/.config/rofi/launchers/colorful/launcher.sh
+bindsym $mod+d exec nautilus
 # Screenshot (now provided by Plasma)
 # bindsym Print exec --no-startup-id spectacle
 
@@ -294,7 +295,7 @@ for_window [class="^.*"] border pixel 0
 smart_borders on
 
 # Set inner/outer gaps
-gaps inner 10
+gaps inner 5
 gaps outer 0
 
 # Gaps mode
