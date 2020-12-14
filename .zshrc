@@ -118,7 +118,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-source /home/ganpa/.local/bin/virtualenvwrapper.sh
+#source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
