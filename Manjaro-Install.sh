@@ -1,5 +1,8 @@
 # NOTE : This is a poorly written script. Run at your own risk
 
+# If having a separatee home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
+# It can be done by groupmod command.
+
 # Things to do before running this script:
 # Install and make zsh the default shell with chsh -s $(which zsh)
 # If your pip is messed up, remove the current pip and install again.

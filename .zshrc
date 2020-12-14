@@ -118,7 +118,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-#source /home/ganpa/.local/bin/virtualenvwrapper.sh
+# source $HOME/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
@@ -176,7 +176,7 @@ alias CS='cd ~/source'
 
 ## Updating system
 alias um='yay -Syu'
-alias uu='sudo apt update && sudo apt upgrade -y' # && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
+alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
