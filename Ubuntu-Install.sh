@@ -84,7 +84,7 @@ sudo apt install gh
 ####################################################################################################################
 
 # Essentials
-sudo apt install vlc ubuntu-restricted-extras neovim tree neofetch ranger -y
+sudo apt-get install vlc ubuntu-restricted-extras neovim tree neofetch ranger redshift mtools feh -y
 
 # Install Oh-My-ZSH
 touch ~/.zshrc

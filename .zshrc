@@ -173,6 +173,7 @@ alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origi
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
 alias CS='cd ~/source'
+alias CP='cd ~/Python_Programs'
 
 ## Updating system
 alias um='yay -Syu'

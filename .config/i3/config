@@ -296,7 +296,7 @@ for_window [class="^.*"] border pixel 0
 smart_borders on
 
 # Set inner/outer gaps
-gaps inner 5
+gaps inner 0
 gaps outer 0
 
 # Gaps mode
