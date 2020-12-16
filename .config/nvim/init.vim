@@ -14,12 +14,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
     " Prettier
-    Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
     Plug 'udalov/kotlin-vim'
 
     Plug 'sheerun/vim-polyglot'
-
-    Plug 'pineapplegiant/spaceduck'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -31,8 +28,6 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-
-colorscheme spaceduck
 
 " set leader key
 let mapleader = ","
