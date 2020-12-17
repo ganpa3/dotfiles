@@ -127,7 +127,7 @@ alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
-alias wifi='nmcli r wifi off && sleep 5 && nmcli r wifi on && sleep 5 && nmcli con up GaneshP'
+alias wifi='nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP'
 alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias q='sudo apt-get install --mark-auto -y'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
@@ -172,8 +172,9 @@ alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origi
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
-alias CS='cd ~/source'
+alias CS='cd ~/source/sympy'
 alias CP='cd ~/Python_Programs'
+alias CZ='cd /home/ganpa/source/zulip'
 
 ## Updating system
 alias um='yay -Syu'

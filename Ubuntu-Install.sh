@@ -117,7 +117,7 @@ cp extra/completions/_alacritty ${ZDOTDIR:-~}/.zsh_functions/_alacritty
 # Sublime
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 sudo apt-get install apt-transport-https
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.listsudo
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo apt-get update
 sudo apt-get install sublime-text
 
@@ -129,4 +129,8 @@ sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.micr
 sudo apt-get install apt-transport-https
 sudo apt-get update
 sudo apt-get install code # or code-insiders
+
+# Google Chrome
+wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O $HOME/Downloads/google-chrome-stable_current_amd64.deb
+sudo dpkg -i $HOME/Downloads/google-chrome-stable_current_amd64.deb
 ####################################################################################################################

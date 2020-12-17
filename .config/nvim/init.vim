@@ -17,7 +17,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'udalov/kotlin-vim'
 
     Plug 'sheerun/vim-polyglot'
-
+    Plug 'glepnir/oceanic-material'
+    Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -28,6 +29,37 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" For colorscheme
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+let g:onedark_hide_endofbuffer=1
+let g:onedark_termcolors=256
+let g:onedark_terminal_italics=1
+syntax on
+set background=dark
+"colorscheme oceanic_material
+"colorscheme nord
+hi Comment cterm=italic
+hi Normal     ctermbg=NONE guibg=NONE
+hi LineNr     ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
+hi Comment guifg=#5C6370 ctermfg=59
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set leader key
 let mapleader = ","
@@ -59,7 +91,7 @@ set nobackup                            " This is recommended by coc
 set nowritebackup                       " This is recommended by coc
 set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 set formatoptions-=cro                  " Stop newline continution of comments
 "set autochdir                          " Your working directory will always be the same as your working directory
 

@@ -189,7 +189,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-source /home/ganpa/.local/bin/virtualenvwrapper.sh
+#source /home/ganpa/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
@@ -206,10 +206,10 @@ LIGHT_COLOR="papercolor_light.yaml"
 alias a="alacritty-colorscheme -C $COLOR_DIR"
 alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
 alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
-alert() { 
+alert() {
     sleep $1
     ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
-    notify-send --urgency=critical "Hello!"
+    notify-send --urgency=critical "Hello"
 }
 ##############################################################################################
 
@@ -371,3 +371,4 @@ server() {
     fi
 }
 ##############################################################################################
+source "$HOME/.cargo/env"
