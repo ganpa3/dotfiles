@@ -18,7 +18,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     Plug 'sheerun/vim-polyglot'
     Plug 'glepnir/oceanic-material'
-    Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -93,9 +92,9 @@ set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
 "set clipboard=unnamedplus
 set formatoptions-=cro                  " Stop newline continution of comments
-"set autochdir                          " Your working directory will always be the same as your working directory
+set autochdir                          " Your working directory will always be the same as your working directory
 
-au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
+au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vim alternatively you can run :source $MYVIMRC
 
 " You can't stop me
 cmap w!! w !sudo tee %
@@ -137,11 +136,11 @@ nnoremap <TAB> :bnext<CR>
 nnoremap <S-TAB> :bprevious<CR>
 
 " Alternate way to save
-noremap <C-s> :w<CR>
+"noremap <C-s> :w<CR>
 " Alternate way to quit
-nnoremap <C-Q> :wq!<CR>
+nnoremap <C-c> :wq!<CR>
 " Use control-c instead of escape
-nnoremap <C-c> <Esc>
+nnoremap <C-s> :w<CR>
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
@@ -158,5 +157,4 @@ nnoremap <C-l> <C-w>l
 nnoremap <Leader>o o<Esc>^Da
 nnoremap <Leader>O O<Esc>^Da
 
-map <C-K> :py3f ~/Desktop/C++_Programs/clang-format.py<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
