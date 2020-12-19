@@ -71,5 +71,11 @@
     "terminal.integrated.shell.linux": "/usr/bin/zsh",
     "[html]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "terminal.integrated.rightClickBehavior": "copyPaste",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.external.linuxExec": "alacritty"
 }
