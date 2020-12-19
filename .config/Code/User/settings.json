@@ -77,5 +77,6 @@
     },
     "terminal.integrated.rightClickBehavior": "copyPaste",
     "terminal.integrated.cursorStyle": "line",
-    "terminal.external.linuxExec": "alacritty"
+    "terminal.external.linuxExec": "alacritty",
+    "terminal.integrated.fontSize": 16
 }
