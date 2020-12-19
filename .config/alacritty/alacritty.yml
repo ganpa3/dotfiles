@@ -5,7 +5,7 @@ env:
 # Window configurations
 window:
   dimensions:
-    columns: 130
+    columns: 140
     lines: 34
 
   padding:
