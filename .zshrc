@@ -113,12 +113,12 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/tmp/rust_install_w3id_45r/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH":$HOME/bin"
-
+setopt rm_star_silent
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-# source $HOME/.local/bin/virtualenvwrapper.sh
+source $HOME/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
