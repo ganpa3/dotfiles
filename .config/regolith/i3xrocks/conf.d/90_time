@@ -1,0 +1,4 @@
+# Date Time
+[time]
+#command=date +"%a  %d/%m/%Y  %H:%M    "
+interval=10
