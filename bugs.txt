@@ -54,3 +54,6 @@ TO change shell in vagrant, put this in Vagrantfile:
 config.vm.provision :shell do |shell|
     shell.inline = "sudo chsh -s /usr/bin/zsh vagrant"
 end
+
+To change battery colour in regolith, change file:
+/usr/share/i3xrocks/battery
