@@ -54,12 +54,7 @@ To manage dotfiles, use these links:
 * https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
 For arch, install packages:
-sudo pacman -S xorg xorg-xinit xf86-video-intel
-
-TO change shell in vagrant, put this in Vagrantfile:
-config.vm.provision :shell do |shell|
-    shell.inline = "sudo chsh -s /usr/bin/zsh vagrant"
-end
+`sudo pacman -S xorg xorg-xinit xf86-video-intel`
 
 To change battery colour in regolith, change file:
 /usr/share/i3xrocks/battery
