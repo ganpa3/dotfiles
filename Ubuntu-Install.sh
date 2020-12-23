@@ -33,7 +33,8 @@ gsettings set org.gnome.desktop.interface show-battery-percentage true
 
 # Super + D to show desktop
 gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-
+gsettings set org.gtk.Settings.FileChooser show-hidden true
+gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 #####################################################################################################################
 #                                       Installing language tools, compilers, etc.
 #####################################################################################################################

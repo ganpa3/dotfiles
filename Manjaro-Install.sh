@@ -42,7 +42,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab', '<Alt>Tab']"
 gsettings set org.gnome.nautilus.preferences always-use-location-entry true
-
+gsettings set org.gtk.Settings.FileChooser show-hidden true
 #####################################################################################################################
 #                                       Installing language tools, compilers, etc.
 #####################################################################################################################
