@@ -57,3 +57,24 @@ end
 
 To change battery colour in regolith, change file:
 /usr/share/i3xrocks/battery
+
+To have pop-os theme in nautilus in Regolith, change regolith look to pop-os and change file /etc/regolith/styles/pop-os/root to
+```
+regolith.look: pop-os
+
+! -- Styles - Colors
+#include "/etc/regolith/styles/lascaille/color"
+! -- Styles - Fonts
+#include "/etc/regolith/styles/lascaille/typeface"
+
+! -- Styles - Theme
+#include "/etc/regolith/styles/pop-os/theme"
+
+! -- Applications
+! These files map values defined above into specific app settings.
+#include "/etc/regolith/styles/st-term"
+#include "/etc/regolith/styles/lascaille/i3-wm"
+#include "/etc/regolith/styles/i3xrocks"
+#include "/etc/regolith/styles/rofi"
+#include "/etc/regolith/styles/gnome"
+```
