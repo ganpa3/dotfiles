@@ -19,7 +19,7 @@ Help : https://techpiezo.com/linux/install-vlc-media-player-in-ubuntu/
 configure with:
 ```./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse```
 
-Extra packages to install:
+Extra packages to install for building vlc on Ubuntu:
 ```sudo apt install qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev```
 
 To list all the dependencies of an arch package, including optionals, using the hard way using python, run the following script:
@@ -61,7 +61,7 @@ To change battery colour in regolith, change file:
 
 To change themes, icon themes, wallpapers, etc. in Regolith, change file ```/etc/regolith/styles/lascaille/theme```
 E.g.
-```
+```C
 #define gtk_theme           Adwaita-dark
 #define icon_theme          Papirus-Dark
 #define desktop_wallpaper   /home/ganpa/Pictures/Wallpapers/BG_1.jpg
