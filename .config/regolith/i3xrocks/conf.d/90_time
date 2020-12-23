@@ -1,4 +1,5 @@
 # Date Time
 [time]
-#command=date +"%a  %d/%m/%Y  %H:%M    "
+color=#FFFFFF
+command=date +"%a  %d/%m/%Y    %I:%M    "
 interval=10

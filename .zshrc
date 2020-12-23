@@ -173,12 +173,12 @@ alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origi
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
 alias CS='cd ~/source/sympy'
-alias CP='cd ~/Python_Programs'
+alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
 ## Updating system
 alias um='yay -Syu'
-alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
+alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
