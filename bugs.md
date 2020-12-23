@@ -59,23 +59,18 @@ For arch, install packages:
 To change battery colour in regolith, change file:
 /usr/share/i3xrocks/battery
 
-To have pop-os theme in nautilus in Regolith, change regolith look to pop-os and change file `/etc/regolith/styles/pop-os/root` to
+To change themes, icon themes, wallpapers, etc., change file ```/etc/regolith/styles/lascaille/theme```
+E.g.
 ```
-regolith.look: pop-os
+#define gtk_theme           Adwaita-dark
+#define icon_theme          Papirus-Dark
+#define desktop_wallpaper   /home/ganpa/Pictures/Wallpapers/BG_1.jpg
+#define rofi_theme          /etc/regolith/styles/lascaille/rofi.rasi
+#define theme_terminal_scrollbar never
 
-! -- Styles - Colors
-#include "/etc/regolith/styles/lascaille/color"
-! -- Styles - Fonts
-#include "/etc/regolith/styles/lascaille/typeface"
-
-! -- Styles - Theme
-#include "/etc/regolith/styles/pop-os/theme"
-
-! -- Applications
-! These files map values defined above into specific app settings.
-#include "/etc/regolith/styles/st-term"
-#include "/etc/regolith/styles/lascaille/i3-wm"
-#include "/etc/regolith/styles/i3xrocks"
-#include "/etc/regolith/styles/rofi"
-#include "/etc/regolith/styles/gnome"
+#define i3wm_window_border_size         2
+#define i3wm_floatingwindow_border_size 1
+#define i3wm_gaps_inner_size            5
+#define i3wm_gaps_outer_size            0
+#define i3wm_bar_position               bottom
 ```
