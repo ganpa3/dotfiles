@@ -1,12 +1,15 @@
 To find group of a file/directory:
-stat -c "%U %G" /path/to/file
+
+`stat -c "%U %G" /path/to/file`
+
 first value is owner and second is group
 
 To know whether you are using X11 or Wayland, use:
-loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'
+
+`loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'`
 
 Tips regarding building vlc:
-If facing trouble with opencv and vlc, ignore. It's vlc's fault
+If facing trouble with opencv and vlc, ignore. It's vlc's fault.
 
 Ubuntu:
 To build-deps, uncomment the deb-src line in the /etc/apt/sources.list file. Look for universe
@@ -14,13 +17,13 @@ To build-deps, uncomment the deb-src line in the /etc/apt/sources.list file. Loo
 Help : https://techpiezo.com/linux/install-vlc-media-player-in-ubuntu/
 
 configure with:
-./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse
+`./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse`
 
 Extra packages to install:
 sudo apt install qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev
 
 To list all the dependencies of an arch package, including optionals, using the hard way using python, run the following script:
-```
+```python
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -29,23 +32,26 @@ link = "https://aur.archlinux.org/packages/google-chrome/" # Link of the package
 browser.get(link)
 
 try:
-	show = WebDriverWait(browser, timeout=5).until(lambda b: b.find_element_by_css_selector("#pkgdepslistlink"))
-	show.click()
+    show = WebDriverWait(browser, timeout=5).until(lambda b: b.find_element_by_css_selector("#pkgdepslistlink"))
+    show.click()
 except:
-	pass
+    pass
 
 deps = browser.find_elements_by_css_selector("#pkgdepslist li a")
 
 for i in deps:
-	print(i.text, end = " ")
+    print(i.text, end = " ")
 print("")
 browser.quit()
 ```
 
 To manage dotfiles, use these links:
-https://github.com/jesuswasrasta/dotfiles
-https://www.atlassian.com/git/tutorials/dotfiles
-https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+
+* https://github.com/jesuswasrasta/dotfiles
+
+* https://www.atlassian.com/git/tutorials/dotfiles
+
+* https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
 For arch, install packages:
 sudo pacman -S xorg xorg-xinit xf86-video-intel
@@ -58,7 +64,7 @@ end
 To change battery colour in regolith, change file:
 /usr/share/i3xrocks/battery
 
-To have pop-os theme in nautilus in Regolith, change regolith look to pop-os and change file /etc/regolith/styles/pop-os/root to
+To have pop-os theme in nautilus in Regolith, change regolith look to pop-os and change file `/etc/regolith/styles/pop-os/root` to
 ```
 regolith.look: pop-os
 
