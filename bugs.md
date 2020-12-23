@@ -1,12 +1,12 @@
-To find group of a file/directory:
-
-`stat -c "%U %G" /path/to/file`
+To find group of a file/directory: `stat -c "%U %G" /path/to/file`
 
 first value is owner and second is group
 
 To know whether you are using X11 or Wayland, use:
 
-`loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'`
+```bash
+loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'
+```
 
 Tips regarding building vlc:
 If facing trouble with opencv and vlc, ignore. It's vlc's fault.
@@ -17,10 +17,14 @@ To build-deps, uncomment the deb-src line in the /etc/apt/sources.list file. Loo
 Help : https://techpiezo.com/linux/install-vlc-media-player-in-ubuntu/
 
 configure with:
-`./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse`
+```bash
+./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse
+```
 
 Extra packages to install:
+```bash
 sudo apt install qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev
+```
 
 To list all the dependencies of an arch package, including optionals, using the hard way using python, run the following script:
 ```python
@@ -57,9 +61,9 @@ For arch, install packages:
 `sudo pacman -S xorg xorg-xinit xf86-video-intel`
 
 To change battery colour in regolith, change file:
-/usr/share/i3xrocks/battery
+`/usr/share/i3xrocks/battery`
 
-To change themes, icon themes, wallpapers, etc., change file ```/etc/regolith/styles/lascaille/theme```
+To change themes, icon themes, wallpapers, etc. in Regolith, change file ```/etc/regolith/styles/lascaille/theme```
 E.g.
 ```
 #define gtk_theme           Adwaita-dark

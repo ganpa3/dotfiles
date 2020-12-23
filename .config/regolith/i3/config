@@ -1,6 +1,5 @@
 # To enable touchpad, see : https://www.reddit.com/r/i3wm/comments/516e8c/tap_to_click_touchpad/
 exec xinput set-prop 13 333 1
-exec_always --no-startup-id feh --bg-fill /home/ganpa/Pictures/Wallpapers/BG_1.jpg
 bindsym --release $mod+Shift+n exec --no-startup-id redshift -O 2600
 bindsym --release $mod+Mod1+n exec --no-startup-id redshift -x
 for_window [class="yakuake"] floating enable
