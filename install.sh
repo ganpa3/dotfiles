@@ -1,5 +1,7 @@
 #!/bin/sh
 
-git clone --separate-git-dir=$HOME/.dotfiles https://github.com/ganpa3/dotfiles.git $HOME/tmp-dotfiles
-rsync --recursive --verbose --exclude '.git' $HOME/tmp-dotfiles/ $HOME/
-rm --recursive --force $HOME/tmp-dotfiles
+INSTALL_DIR=$HOME/tmp-dotfiles
+
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/ganpa3/dotfiles.git $INSTALL_DIR
+rsync --recursive --verbose --exclude '.git' $INSTALL_DIR/ $HOME/
+rm --recursive --force $INSTALL_DIR
