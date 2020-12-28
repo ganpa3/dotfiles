@@ -3,7 +3,7 @@
 To use, run the following command:
 
 ```
-sh -c "$(curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh)"
+curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s ssh
 ```
 This will replace your current configs.
 
