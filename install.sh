@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 INSTALL_DIR=$HOME/tmp-dotfiles
 
