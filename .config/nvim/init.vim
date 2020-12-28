@@ -29,6 +29,12 @@ if exists('+termguicolors')
     set termguicolors
 endif
 
+" Change cursor back to normal
+augroup RestoreCursorShapeOnExit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:ver25 " a:hor20 for underscore cursor
+augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " For colorscheme
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -135,12 +141,13 @@ nnoremap <TAB> :bnext<CR>
 " SHIFT-TAB will go back
 nnoremap <S-TAB> :bprevious<CR>
 
-" Alternate way to save
-"noremap <C-s> :w<CR>
 " Alternate way to quit
-nnoremap <C-c> :wq!<CR>
-" Use control-c instead of escape
-nnoremap <C-s> :w<CR>
+noremap <C-c> :q!<CR>
+" Alternate way to save
+noremap <C-s> :w<CR>
+" Alternate way to save and quit
+nnoremap <C-q> :wq!<CR>
+
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 

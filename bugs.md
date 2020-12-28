@@ -4,7 +4,7 @@ first value is owner and second is group
 
 To know whether you are using X11 or Wayland, use:
 
-```bash
+```sh
 loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'
 ```
 

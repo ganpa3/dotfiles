@@ -3,15 +3,7 @@ exec xinput set-prop 13 333 1
 bindsym --release $mod+Shift+n exec --no-startup-id redshift -O 2600
 bindsym --release $mod+Mod1+n exec --no-startup-id redshift -x
 for_window [class="yakuake"] floating enable
-exec_always --no-startup-id /home/ganpa/bin/battery_status
-exec_always /home/ganpa/bin/battery_status
-# for_window [class="yakuake"] floating enable
-#for_window [class="guake"] floating enable
-###############################################################################
-# i3-gaps config file for the Regolith Desktop Environment
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-# 
+exec --no-startup-id /home/ganpa/bin/battery_status
 ###############################################################################
 #
 # In this config file, may values are taken from Xresources with the directive 
@@ -80,15 +72,14 @@ set_from_resource $ws19 i3-wm.workspace.19.name "19"
 # Launcher dialogs
 ###############################################################################
 
-# bindsym $mod+Return exec yakuake
 # bindsym $mod+Return exec /usr/bin/x-terminal-emulator
 bindsym $mod+KP_Enter exec yakuake
 
 ## Launch // Terminal // <> Enter ##
+#for_window [class="Alacritty"] title_format "Alacritty"
 bindsym $mod+Return exec alacritty
-#bindsym $mod+Return exec gtk-launch Alacritty
 #bindsym $mod+Return exec /usr/bin/x-terminal-emulator
-#bindsym $mod+KP_Enter exec guake
+
 ## Launch // Browser // <><Shift> Enter ##
 bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
 #bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser)
@@ -136,7 +127,7 @@ bindsym $mod+l focus right
 
 ## Navigate // Workspaces 1-10 // <> 0..9 ##
 bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
+bindsym $mod+2 workspace number $ws2; layout tabbed
 bindsym $mod+3 workspace number $ws3
 bindsym $mod+4 workspace number $ws4
 bindsym $mod+5 workspace number $ws5
@@ -209,7 +200,8 @@ bindsym $mod+Ctrl+m move to scratchpad
 bindsym $mod+Shift+t focus mode_toggle
 
 ## Modify // Window Layout Mode // <> t ##
-bindsym $mod+t layout toggle tabbed splith splitv
+#bindsym $mod+t layout toggle tabbed splith splitv
+bindsym $mod+t layout toggle tabbed split
 
 ## Modify // Move Window to Workspace 1 - 10 // <><Shift> 0..9 ##
 bindsym $mod+Shift+1 move container to workspace number $ws1

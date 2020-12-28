@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # NOTE : This is a poorly written script. Run at your own risk
 
 # Things to do before running this script:
@@ -42,11 +42,11 @@ gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 sudo apt install git build-essential openjdk-15-jdk openjdk-15-jre pkg-config cmake clang make curl wget binutils fakeroot -y
 
 # Install go
-cd ~/Downloads
+cd ~/Downloads || exit
 wget -c https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
 export PATH=$PATH:/usr/local/go/bin
 source ~/.zshrc
-cd ~
+cd ~ || exit
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -68,7 +68,7 @@ nvm install node
 npm install -g yarn
 
 # Installing prettier
-cd ~/webdev
+cd ~/webdev || exit
 npm install -g --save-dev --save-exact prettier
 echo {}> .prettierrc.json
 
@@ -103,7 +103,7 @@ sudo add-apt-repository ppa:regolith-linux/release
 sudo apt install regolith-desktop-mobile
 
 # Install alacritty
-cd source
+cd ~/source || exit
 sudo apt install libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev # Dependencies
 cargo build --release
 sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
@@ -111,9 +111,9 @@ sudo cp target/release/alacritty ~/bin
 sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
 sudo desktop-file-install extra/linux/Alacritty.desktop
 sudo update-desktop-database
-mkdir -p ${ZDOTDIR:-~}/.zsh_functions
-echo 'fpath+=${ZDOTDIR:-~}/.zsh_functions' >> ${ZDOTDIR:-~}/.zshrc
-cp extra/completions/_alacritty ${ZDOTDIR:-~}/.zsh_functions/_alacritty
+mkdir -p "${ZDOTDIR:-~}"/.zsh_functions
+echo 'fpath+=${ZDOTDIR:-~}/.zsh_functions' >> "${ZDOTDIR:-~}"/.zshrc
+cp extra/completions/_alacritty "${ZDOTDIR:-~}"/.zsh_functions/_alacritty
 
 # Sublime
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
@@ -132,6 +132,7 @@ sudo apt-get update
 sudo apt-get install code # or code-insiders
 
 # Google Chrome
-wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O $HOME/Downloads/google-chrome-stable_current_amd64.deb
-sudo dpkg -i $HOME/Downloads/google-chrome-stable_current_amd64.deb
+wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
+sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
 ####################################################################################################################
+

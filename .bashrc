@@ -206,7 +206,8 @@ LIGHT_COLOR="papercolor_light.yaml"
 alias a="alacritty-colorscheme -C $COLOR_DIR"
 alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
 alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
-alert() {
+
+function alert () {
     sleep $1
     ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
     notify-send --urgency=critical "Hello"
@@ -247,7 +248,7 @@ alias CS='cd ~/source'
 
 ## Updating system
 alias um='yay -Syu'
-alias uu='sudo apt update && sudo apt upgrade -y' # && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
+alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'

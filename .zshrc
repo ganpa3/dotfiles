@@ -145,11 +145,13 @@ alert() {
 ############################################ ALIASES #########################################
 alias ll='ls -alF'
 alias la='ls -A'
+alias s='ls -A'
+alias sl='ls -A'
 alias l='ls -CF'
 alias x='exit'
 alias c='clear'
 alias f='nautilus .'
-alias s='source ~/.zshrc'
+alias so='source ~/.zshrc'
 alias r='rm *.out'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
 alias chrome='/opt/google/chrome/chrome'
@@ -208,7 +210,7 @@ alias carc='code ~/.config/alacritty/alacritty.yml'
 ## Formatting files
 alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
 alias fp='black --line-length 100 *.py'
-alias fj='npx prettier --write .'
+alias fj='prettier --config /home/ganpa/webdev/.prettierrc.json --write .'
 
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'
