@@ -11,3 +11,5 @@ curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | ba
 This will replace your current configs.
 
 Run this to hide untracked files: ```dfg config status.showUntrackedFiles no```
+
+Run this to change gitignore file ```dfg config core.excludesfile ~/.dotfilesignore```
