@@ -2,6 +2,11 @@
 
 INSTALL_DIR=$HOME/tmp-dotfiles
 
+## Remove existing .dotfiles repo.
+if [ -d "$HOME/.dotfiles" ]; then
+    rm --recursive --force "$HOME/.dotfiles"
+fi
+
 if [ "$1" == "ssh" ]; then
     git clone --separate-git-dir=$HOME/.dotfiles git@github.com:ganpa3/dotfiles.git $INSTALL_DIR
 else
