@@ -223,7 +223,7 @@ t() {
     filenameWithoutExt=${filename%.*}
     g++ -std=c++17 test.cpp -o test.out && ./test.out < input.txt > o2.txt
     g++ -std=c++17 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input.txt > o1.txt
-    diff -q -w o1.txt o2.txt
+    diff -w o1.txt o2.txt
 }
 
 tt() {
