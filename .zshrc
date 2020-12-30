@@ -106,21 +106,19 @@ source $ZSH/oh-my-zsh.sh
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
+export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/tmp/rust_install_w3id_45r/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH=$PATH":$HOME/bin"
 setopt rm_star_silent
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 source $HOME/.local/bin/virtualenvwrapper.sh
 
 ######################################## TEMPORARY ALIASES ###################################
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -174,10 +172,12 @@ alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origi
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
-alias CS='cd ~/source/sympy'
+alias CS='cd ~/source/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
+alias CD='cd ~/Downloads'
+
 ## Updating system
 alias um='yay -Syu'
 alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
