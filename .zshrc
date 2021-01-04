@@ -127,12 +127,11 @@ alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
 alias wifi='nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP'
 alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
-alias q='sudo apt-get install --mark-auto -y'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
 LIGHT_COLOR="papercolor_light.yaml"
-alias a="alacritty-colorscheme -C $COLOR_DIR"
-alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
-alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
+# alias a="alacritty-colorscheme -C $COLOR_DIR"
+# alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
+# alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
 alert() { 
     sleep $1
     ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
@@ -147,10 +146,10 @@ alias s='ls -A'
 alias sl='ls -A'
 alias l='ls -CF'
 alias x='exit'
-alias c='clear'
+#alias c='clear'
 alias f='nautilus .'
 alias so='source ~/.zshrc'
-alias r='rm *.out'
+# alias r='rm *.out'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
 alias chrome='/opt/google/chrome/chrome'
 alias v='nvim'
@@ -178,10 +177,6 @@ alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 
-## Updating system
-alias um='yay -Syu'
-alias uu='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/*'
-
 ## Opening config files
 alias brc='nvim ~/.bashrc'
 alias zrc='nvim ~/.zshrc'
@@ -208,7 +203,7 @@ alias cnrc='code ~/.config/nvim/init.vim'
 alias carc='code ~/.config/alacritty/alacritty.yml'
 
 ## Formatting files
-alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
+#alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
 alias fp='black --line-length 100 *.py'
 alias fj='prettier --config /home/ganpa/webdev/.prettierrc.json --write .'
 
@@ -218,6 +213,50 @@ alias enable_wc='sudo modprobe uvcvideo'
 ##############################################################################################
 
 #######################################Custom Functions ######################################
+i() {
+    if [[ -f /etc/pacman.conf ]]; then # Arch-based
+        sudo pacman -S --noconfirm "$@"
+    elif [[ -e /etc/apt ]]; then
+    	sudo apt-get install -y "$@"
+    fi
+}
+
+r() {
+	if [[ $# -eq 0 ]]; then
+		rm *.out
+    elif [[ -f /etc/pacman.conf ]]; then # Arch-based
+    	sudo pacman -Rs --noconfirm "$@"
+    elif [[ -e /etc/apt ]]; then
+    	sudo apt-get purge "$@"
+    fi
+}
+
+u() {
+    if [[ -f /etc/pacman.conf ]]; then # Arch-based
+        yay -Syu --noconfirm
+    elif [[ -e /etc/apt ]]; then
+        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/* # Debian-based
+    fi
+}
+
+ff() {
+    if [ $# -eq 0 ]; then
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp
+    else
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" $@
+    fi
+}
+
+c() {
+    if [ $# -ne 0 ]; then
+        filename=$1
+        filenameWithoutExt="${filename%.*}"
+        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename
+    else
+        clear
+    fi
+}
+
 t() {
     filename=$1
     filenameWithoutExt=${filename%.*}
