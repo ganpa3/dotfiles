@@ -14,4 +14,8 @@ else
 fi
 
 rsync --recursive --verbose --exclude '.git' $INSTALL_DIR/ $HOME/
+
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config status.showUntrackedFiles no
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config core.excludesfile ~/.dotfilesignore
+
 rm --recursive --force $INSTALL_DIR

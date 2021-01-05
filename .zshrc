@@ -158,16 +158,16 @@ alias spd='systemctl suspend'
 alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
 alias ys='youtube-dl --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
 alias emcc='~/source/emsdk/upstream/emscripten/emcc'
-alias em++='~/source/emsdk/upstream/emscripten/em++'
+alias empp='~/source/emsdk/upstream/emscripten/em++'
 alias path='readlink -f'
 alias redshift='redshift -O 2600'
 
 ## Managing dotfiles
-alias dfg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dfgs='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
-alias dfga='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
-alias dfgc='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
-alias dfgp='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
+alias dfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
+alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
+alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
+alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
