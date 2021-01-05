@@ -115,7 +115,9 @@ setopt rm_star_silent
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-source $HOME/.local/bin/virtualenvwrapper.sh
+if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
+    source $HOME/.local/bin/virtualenvwrapper.sh
+fi
 
 ######################################## TEMPORARY ALIASES ###################################
 alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**'"
@@ -125,7 +127,6 @@ alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
-alias wifi='nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP'
 alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
 LIGHT_COLOR="papercolor_light.yaml"
@@ -244,6 +245,14 @@ ff() {
         clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp
     else
         clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" $@
+    fi
+}
+
+wifi() {
+    if [ $# -eq 0 ]; then
+        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+    else
+        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up $1
     fi
 }
 
