@@ -1,5 +1,0 @@
-# Date Time
-[time]
-color=#FFFFFF
-command=date +"%a  %d/%m/%Y    %I:%M    "
-interval=10
