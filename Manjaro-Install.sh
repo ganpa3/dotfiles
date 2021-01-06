@@ -58,7 +58,7 @@ gsettings set org.gtk.Settings.FileChooser show-hidden true
 #####################################################################################################################
 
 # Basic development packages
-sudo pacman -S --needed --noconfirm git base-devel neovim python-pynvim cmake clang binutils make curl gcc fakeroot jre-openjdk jdk-openjdk openjdk-doc openjdk-src kotlin go rust pkg-config
+sudo pacman -S --needed --noconfirm git base-devel neovim python-pynvim cmake clang binutils make curl gcc fakeroot jre-openjdk jdk-openjdk openjdk-doc openjdk-src kotlin go rust pkg-config shellcheck
 
 # Updates all the pip packages and install some
 pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
