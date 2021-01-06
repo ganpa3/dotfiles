@@ -1,11 +1,12 @@
+#!/usr/bin/env bash
+
 # NOTE : This is a poorly written script. Run at your own risk
 
 # If having a separatee home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
 # It can be done by groupmod command.
 
 # Things to do before running this script:
-# Install and make zsh the default shell with chsh -s $(which zsh)
-# If your pip is messed up, remove the current pip and install again.
+# If your pip is messed up, remove and install it again.
 
 # Optimized mirror list
 sudo pacman-mirrors --fasttrack
@@ -13,14 +14,11 @@ sudo pacman-mirrors --fasttrack
 # Check for errors
 sudo systemctl --failed
 
-# Update and optimize Pacman database
+# Update and optimize pacman database
 sudo pacman-db-upgrade && sync
 
 # Update system
 sudo pacman -Syu
-
-# Login without password
-sudo sed -i '1i auth sufficient pam_succeed_if.so user ingroup wheel' /etc/pam.d/gdm-password
 
 # Some useful directories
 mkdir -p ~/webdev
@@ -29,10 +27,16 @@ mkdir -p ~/C++_Programs
 mkdir -p ~/Python_Programs
 mkdir -p ~/Kotlin_Programs
 
-# Works only in GNOME
+# Login without password
+sudo sed -i '1i auth sufficient pam_succeed_if.so user ingroup wheel' /etc/pam.d/gdm-password
+# Reverse it
+#sudo sed -i '1d' /etc/pam.d/gdm-password
+
+#####################################################################################################################
+#                                       GNOME specific settings
+#####################################################################################################################
 # Super + D to show desktop
 gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-
 # This is used to set custom shortcuts in GNOME
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'Chrome'
@@ -40,9 +44,15 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Super>b'
 
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab', '<Alt>Tab']"
 gsettings set org.gnome.nautilus.preferences always-use-location-entry true
+gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 gsettings set org.gtk.Settings.FileChooser show-hidden true
+#####################################################################################################################
+
 #####################################################################################################################
 #                                       Installing language tools, compilers, etc.
 #####################################################################################################################

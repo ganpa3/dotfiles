@@ -206,7 +206,7 @@ alias carc='code ~/.config/alacritty/alacritty.yml'
 ## Formatting files
 #alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
 alias fp='black --line-length 100 *.py'
-alias fj='prettier --config /home/ganpa/webdev/.prettierrc.json --write .'
+alias fj='prettier --config $HOME/.config/.prettierrc.json --write .'
 
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'

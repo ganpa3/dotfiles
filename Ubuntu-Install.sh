@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
+
 # NOTE : This is a poorly written script. Run at your own risk
 
+# If having a separatee home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
+# It can be done by groupmod command.
+
 # Things to do before running this script:
-# Install and make zsh the default shell with chsh -s $(which zsh)
-# If your pip is messes up, remove the current pip and install again with "sudo apt install python3-pip"
+# If your pip is messed up, remove and install it again.
 
 # Update the system
 sudo apt update
 sudo apt upgrade -y
-sudo apt autoremove -y
-sudo apt clean -y
-rm -rf ~/.cache/thumbnails/*
+sudo apt-get install -y curl wget git
 
 # Some useful directories
 mkdir -p ~/bin
@@ -25,21 +26,90 @@ sudo sed -i '1i auth sufficient pam_succeed_if.so user ingroup adm' /etc/pam.d/g
 # Reverse it
 #sudo sed -i '1d' /etc/pam.d/gdm-password
 
-# Enable click to minimise
-gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
-
-# Show Battery Percentage
-gsettings set org.gnome.desktop.interface show-battery-percentage true
-
+#####################################################################################################################
+#                                       GNOME specific settings
+#####################################################################################################################
 # Super + D to show desktop
 gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-gsettings set org.gtk.Settings.FileChooser show-hidden true
+# This is used to set custom shortcuts in GNOME
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'Chrome'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'google-chrome'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Super>b'
+
+gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab', '<Alt>Tab']"
+gsettings set org.gnome.nautilus.preferences always-use-location-entry true
 gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+gsettings set org.gtk.Settings.FileChooser show-hidden true
 #####################################################################################################################
-#                                       Installing language tools, compilers, etc.
-#####################################################################################################################
-# Basic development tools
-sudo apt install git build-essential openjdk-15-jdk openjdk-15-jre pkg-config cmake clang make curl wget binutils fakeroot -y
+
+# Adding packages to apt sources
+# Regolith
+ sudo add-apt-repository -y ppa:regolith-linux/release
+
+# Subllime Text
+ wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+ echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+# VS Code
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+
+# Github CLI
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+sudo apt-add-repository -y https://cli.github.com/packages
+
+sudo apt-get update
+
+packages=(
+"git"
+"build-essential"
+"python3-dev"
+"openjdk-15-jdk"
+"openjdk-15-jre"
+"pkg-config"
+"cmake"
+"clang"
+"make"
+"curl"
+"wget"
+"binutils"
+"fakeroot"
+"vlc"
+"neovim"
+"tree"
+"neofetch"
+"ranger"
+"redshift"
+"mtools"
+"feh"
+"tmux"
+"gparted"
+"papirus-icon-theme"
+"apt-transport-https"
+"qbittorrent"
+"dconf-editor"
+"dunst"
+"libnotify-bin"
+"ffmpeg"
+"regolith-desktop-mobile" # OR regolith-desktop-standard for desktop
+"alacritty"
+"sublime-text"
+"code"
+"gh"
+"ubuntu-restricted-extras" # Keep this at last, since it involves agreeing to a license.
+)
+
+sudo apt-get install -y "${packages[@]}"
+
+# Google Chrome
+wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
+sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
 
 # Install go
 cd ~/Downloads || exit
@@ -61,78 +131,6 @@ pip3 install black selenium scrapy virtualenvwrapper
 # Installing nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
 
-# Installing latest node version
+# Installing latest node version and npm packages
 nvm install node
-
-# Installing yarn
-npm install -g yarn
-
-# Installing prettier
-cd ~/webdev || exit
-npm install -g --save-dev --save-exact prettier
-echo {}> .prettierrc.json
-
-# Install Github cli
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-sudo apt-add-repository https://cli.github.com/packages
-sudo apt update
-sudo apt install gh
-
-#####################################################################################################################
-
-####################################################################################################################
-#                                          Editors, Tools, Terminals, WMs, Apps, etc.
-####################################################################################################################
-
-# Essentials
-sudo apt-get install vlc ubuntu-restricted-extras neovim tree neofetch ranger redshift mtools feh -y
-
-# Install Oh-My-ZSH
-touch ~/.zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-curl -s https://raw.githubusercontent.com/ganpa3/dotfiles/main/.zshrc > ~/.zshrc
-source ~/.zshrc
-
-# Nwovim config
-mkdir -p ~/.config/nvim
-touch ~/.config/nvim/init.vim
-curl -s https://raw.githubusercontent.com/ganpa3/dotfiles/main/init.vim > ~/.config/nvim/init.vim
-
-# Install regolith
-sudo add-apt-repository ppa:regolith-linux/release
-sudo apt install regolith-desktop-mobile
-
-# Install alacritty
-cd ~/source || exit
-sudo apt install libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev # Dependencies
-cargo build --release
-sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-sudo cp target/release/alacritty ~/bin
-sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-sudo desktop-file-install extra/linux/Alacritty.desktop
-sudo update-desktop-database
-mkdir -p "${ZDOTDIR:-~}"/.zsh_functions
-echo 'fpath+=${ZDOTDIR:-~}/.zsh_functions' >> "${ZDOTDIR:-~}"/.zshrc
-cp extra/completions/_alacritty "${ZDOTDIR:-~}"/.zsh_functions/_alacritty
-
-# Sublime
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-sudo apt-get install apt-transport-https
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt-get update
-sudo apt-get install sublime-text
-
-# VS Code
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-
-sudo apt-get install apt-transport-https
-sudo apt-get update
-sudo apt-get install code # or code-insiders
-
-# Google Chrome
-wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
-sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
-####################################################################################################################
-
+npm install -g serve http-server yarn prettier
