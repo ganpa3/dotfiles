@@ -7,6 +7,35 @@
 
 # Things to do before running this script:
 # If your pip is messed up, remove and install it again.
+########################################################################################################################
+##                                                      Minimal
+## To use the minimal version, run this command:
+## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Ubuntu-Install | bash -s minimal
+########################################################################################################################
+if [[ "$1" == "minimal" ]]; then
+    sudo apt update
+    sudo apt upgrade -y
+    mkdir -p ~/source ~/C++_Programs
+    packages=(
+    "git"
+    "build-essential"
+    "python3-dev"
+    "cmake"
+    "make"
+    "curl"
+    "wget"
+    "binutils"
+    "neovim"
+    "tree"
+    "neofetch"
+    "ranger"
+    "shellcheck"
+    "dconf-editor"
+    )
+    sudo apt-get install -y "${packages[@]}"
+    exit
+fi
+########################################################################################################################
 
 # Update the system
 sudo apt update
@@ -26,9 +55,9 @@ sudo sed -i '1i auth sufficient pam_succeed_if.so user ingroup adm' /etc/pam.d/g
 # Reverse it
 #sudo sed -i '1d' /etc/pam.d/gdm-password
 
-#####################################################################################################################
-#                                       GNOME specific settings
-#####################################################################################################################
+########################################################################################################################
+##                                             GNOME specific settings
+########################################################################################################################
 # Super + D to show desktop
 gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
 # This is used to set custom shortcuts in GNOME
@@ -45,7 +74,7 @@ gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab', '<
 gsettings set org.gnome.nautilus.preferences always-use-location-entry true
 gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 gsettings set org.gtk.Settings.FileChooser show-hidden true
-#####################################################################################################################
+########################################################################################################################
 
 # Adding packages to apt sources
 # Regolith

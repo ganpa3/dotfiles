@@ -120,7 +120,7 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -176,6 +176,7 @@ alias CS='cd ~/source/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
+alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 
 ## Opening config files
