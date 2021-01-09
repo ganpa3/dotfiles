@@ -17,6 +17,7 @@ if [[ "$1" == "minimal" ]]; then
     sudo apt upgrade -y
     mkdir -p ~/source ~/C++_Programs
     packages=(
+    "zsh"
     "git"
     "build-essential"
     "python3-dev"
@@ -25,12 +26,12 @@ if [[ "$1" == "minimal" ]]; then
     "curl"
     "wget"
     "binutils"
+    "rsync"
     "neovim"
     "tree"
     "neofetch"
     "ranger"
     "shellcheck"
-    "dconf-editor"
     )
     sudo apt-get install -y "${packages[@]}"
     exit

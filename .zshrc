@@ -120,7 +120,7 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -204,11 +204,6 @@ alias cvrc='code ~/.vimrc'
 alias cnrc='code ~/.config/nvim/init.vim'
 alias carc='code ~/.config/alacritty/alacritty.yml'
 
-## Formatting files
-#alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
-alias fp='black --line-length 100 *.py'
-alias fj='prettier --config $HOME/.config/.prettierrc.json --write .'
-
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
@@ -246,6 +241,22 @@ ff() {
         clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp
     else
         clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" $@
+    fi
+}
+
+fj() {
+    if [ $# -eq 0 ]; then
+        prettier --config $HOME/.config/.prettierrc.json --write .
+    else
+        prettier --config $HOME/.config/.prettierrc.json --write $@
+    fi
+}
+
+fp() {
+    if [ $# -eq 0 ]; then
+        black --line-length 100 *.py
+    else
+        black --line-length 100 $@
     fi
 }
 
