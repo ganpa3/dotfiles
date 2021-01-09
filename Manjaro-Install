@@ -40,6 +40,9 @@ if [[ "$1" == "minimal" ]]; then
     "rsync"
     )
     sudo pacman --noconfirm --needed -S "${packages[@]}"
+
+    # Installing config files
+    curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
     exit
 fi
 ########################################################################################################################
