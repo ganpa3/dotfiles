@@ -12,7 +12,7 @@
 ########################################################################################################################
 ##                                                          MINIMAL
 ## To use the minimal version, run this command:
-## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Manjaro-Install | bash -s --minimal
+## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Manjaro-Install | bash -s -- --minimal
 ########################################################################################################################
 OPTIONS=$(getopt --options amn --longoptions all,minimal,noconfig --name "$0" -- "$@")
 eval set -- "$OPTIONS"
