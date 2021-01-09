@@ -120,6 +120,12 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+# Vagrant aliases
+alias VH="vagrant halt"
+alias VR="vagrant reload"
+alias VS="vagrant ssh"
+alias VU="vagrant up && vagrant ssh"
+
 alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
