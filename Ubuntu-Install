@@ -7,14 +7,30 @@
 
 # Things to do before running this script:
 # If your pip is messed up, remove and install it again.
+
 ########################################################################################################################
 ##                                                      Minimal
 ## To use the minimal version, run this command:
-## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Ubuntu-Install | bash -s minimal
+## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Ubuntu-Install | bash -s --minimal
 ########################################################################################################################
-if [[ "$1" == "minimal" ]]; then
-    sudo apt update
-    sudo apt upgrade -y
+OPTIONS=$(getopt --options am --longoptions all,minimal --name "$0" -- "$@")
+eval set -- "$OPTIONS"
+
+ALL_CONFIGS=false
+MINMAL=false
+
+while true; do
+    case "$1" in
+        -a | --all ) ALL_CONFIGS=true; shift ;;
+        -m | --minimal ) MINIMAL=true; shift ;;
+        -- ) shift; break ;;
+        * ) echo "DOBA! Sahi arguments de."; break ;;
+    esac
+done
+
+if [[ "$MINIMAL" == "true" ]]; then
+    sudo apt-get update
+    sudo apt-get upgrade -y
     mkdir -p ~/source ~/C++_Programs
     packages=(
     "zsh"
@@ -36,7 +52,11 @@ if [[ "$1" == "minimal" ]]; then
     sudo apt-get install -y "${packages[@]}"
 
     # Installing config files
-    curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
+    if [[ "$ALL_CONFIGS" == "true" ]]; then
+        curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash
+    else
+        curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
+    fi
     exit
 fi
 ########################################################################################################################

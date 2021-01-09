@@ -12,9 +12,24 @@
 ########################################################################################################################
 ##                                                          MINIMAL
 ## To use the minimal version, run this command:
-## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Manjaro-Install | bash -s minimal
+## curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/Manjaro-Install | bash -s --minimal
 ########################################################################################################################
-if [[ "$1" == "minimal" ]]; then
+OPTIONS=$(getopt --options am --longoptions all,minimal --name "$0" -- "$@")
+eval set -- "$OPTIONS"
+
+ALL_CONFIGS=false
+MINMAL=false
+
+while true; do
+    case "$1" in
+        -a | --all ) ALL_CONFIGS=true; shift ;;
+        -m | --minimal ) MINIMAL=true; shift ;;
+        -- ) shift; break ;;
+        * ) echo "DOBA! Sahi arguments de."; break ;;
+    esac
+done
+
+if [[ "$MINIMAL" == "true" ]]; then
     sudo pacman-mirrors --fasttrack
     sudo pacman-db-upgrade && sync
     sudo pacman -Syu
@@ -42,7 +57,11 @@ if [[ "$1" == "minimal" ]]; then
     sudo pacman --noconfirm --needed -S "${packages[@]}"
 
     # Installing config files
-    curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
+    if [[ "$ALL_CONFIGS" == "true" ]]; then
+        curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash
+    else
+        curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
+    fi
     exit
 fi
 ########################################################################################################################
