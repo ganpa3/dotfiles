@@ -13,6 +13,9 @@
     "javascript.format.semicolons": "insert",
     "code-runner.runInTerminal": true,
     "python.languageServer": "Microsoft",
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
     "code-runner.executorMap": {

@@ -103,6 +103,7 @@ source $ZSH/oh-my-zsh.sh
 
 ##############################################################################################
 # Custom Commands below
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
@@ -285,26 +286,41 @@ c() {
 }
 
 t() {
-    filename=$1
+    filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 test.cpp -o test.out && ./test.out < input.txt > o2.txt
-    g++ -std=c++17 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input.txt > o1.txt
-    diff -w o1.txt o2.txt
+    g++ -std=c++17 -O2 test.cpp -o test.out && ./test.out < input > o2
+    g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input > o1
+
+    res=$(diff -q -w o1 o2)
+    if [[ $(echo $?) == 1 ]]; then
+    	echo "The input is:"
+    	cat input
+    	echo "Your output: "
+    	cat o1
+    	echo "Actual output: "
+    	cat o2
+        echo ""
+    fi
 }
 
 tt() {
-    for i in 0 1 2 3 4
-    do
-    	run tc.cpp > input.txt
-    	t $1
-        ret=$(diff -q -w o1.txt o2.txt)
+    filename="$1"
+    filenameWithoutExt=${filename%.*}
+    g++ -std=c++17 -O2 test.cpp -o test.out
+    g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
+
+    for i in 0 1 2 3 4; do
+        g++ -std=c++17 -O2 tc.cpp -o tc.out && ./tc.out > input
+        ./test.out < input > o2
+        ./$filenameWithoutExt.out < input > o1
+        res=$(diff -q -w o1 o2)
         if [[ $(echo $?) == 1 ]]; then
         	echo "The input is:"
-        	cat input.txt
+        	cat input
         	echo "Your output: "
-        	cat o1.txt
+        	cat o1
         	echo "Actual output: "
-        	cat o2.txt
+        	cat o2
             echo ""
         fi
     done
@@ -312,7 +328,7 @@ tt() {
 
 mkcd () { mkdir -p $1 && cd $1; }
 
-m() { mv $1 ~/C++_Programs/Competitive-Programming/Codeforces/; }
+m() { mv "$@" ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
 mf() { 
     filename="$@"
