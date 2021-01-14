@@ -3,7 +3,6 @@
 	"font_size": 16,
 	"ignored_packages":
 	[
-		"Vintage"
 	],
 	"save_on_focus_lost": true,
 	"theme": "Reverse Gravity.sublime-theme",

@@ -231,7 +231,7 @@ r() {
     elif [[ -f /etc/pacman.conf ]]; then # Arch-based
     	sudo pacman -Rs --noconfirm "$@"
     elif [[ -e /etc/apt ]]; then
-    	sudo apt-get purge "$@"
+    	sudo apt-get remove -y "$@"
     fi
 }
 
@@ -245,9 +245,9 @@ u() {
 
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
     else
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" $@
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
     fi
 }
 
@@ -308,9 +308,10 @@ tt() {
     filenameWithoutExt=${filename%.*}
     g++ -std=c++17 -O2 test.cpp -o test.out
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
+    g++ -std=c++17 -O2 tc.cpp -o tc.out
 
-    for i in 0 1 2 3 4; do
-        g++ -std=c++17 -O2 tc.cpp -o tc.out && ./tc.out > input
+    for i in {1..100}; do
+        ./tc.out > input
         ./test.out < input > o2
         ./$filenameWithoutExt.out < input > o1
         res=$(diff -q -w o1 o2)

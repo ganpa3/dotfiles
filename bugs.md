@@ -1,3 +1,10 @@
+# Python Debugging Tips:
+
+Pretty print all variables defined inside a function:
+```
+exec('import pprint\npp = pprint.PrettyPrinter(indent=4, width=80)\npp.pprint(locals())')
+```
+
 To find group of a file/directory: `stat -c "%U %G" /path/to/file`
 
 first value is owner and second is group
