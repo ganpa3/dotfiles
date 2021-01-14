@@ -1,8 +1,8 @@
-# Python Debugging Tips:
+#### Python Debugging Tips:
 
-Pretty print all variables defined inside a function:
+1. Pretty print all variables defined inside a function:
 ```
-exec('import pprint\npp = pprint.PrettyPrinter(indent=4, width=80)\npp.pprint(locals())')
+exec('import pprint\npp = pprint.PrettyPrinter(indent=4, width=80)\npp.pprint("\n",locals(),"\n")')
 ```
 
 To find group of a file/directory: `stat -c "%U %G" /path/to/file`
