@@ -135,6 +135,7 @@ packages=(
 "make"
 "curl"
 "wget"
+"bison"
 "binutils"
 "fakeroot"
 "vlc"
