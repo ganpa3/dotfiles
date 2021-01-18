@@ -13,11 +13,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'preservim/nerdtree'
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
-    " Prettier
     Plug 'udalov/kotlin-vim'
-
+    Plug 'lervag/vimtex'
     Plug 'sheerun/vim-polyglot'
-    Plug 'glepnir/oceanic-material'
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

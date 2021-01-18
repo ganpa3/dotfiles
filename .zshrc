@@ -108,6 +108,7 @@ reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
 export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
