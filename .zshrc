@@ -332,17 +332,17 @@ mkcd () { mkdir -p $1 && cd $1; }
 
 m() { mv "$@" ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
-mf() { 
-    filename="$@"
-    filename="${filename// /_}"
-    cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
-}
-
-mft() { 
-    filename="$@"
-    filename="${filename// /_}"
-    cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
-}
+# mf() { 
+#     filename="$@"
+#     filename="${filename// /_}"
+#     cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
+# }
+# 
+# mft() { 
+#     filename="$@"
+#     filename="${filename// /_}"
+#     cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
+# }
 
 run() {
     filename=$1

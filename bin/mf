@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+import requests
+from bs4 import BeautifulSoup
+
+
+def get_header(url):
+    return "/*\n" f" * Problem Statement: {url}\n" " * Author: ganpa\n" " */\n"
+
+
+def get_file_name(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+    problem_statement = soup.find(class_="title").text.split(".")[1].strip()
+    problem_statement = re.sub("[\(\[].*?[\)\]]", "", problem_statement)
+    file_name = "_".join(problem_statement.split()) + ".cpp"
+    return file_name
+
+
+def main():
+    for url in sys.argv[1:]:
+        problem_statement = get_file_name(url)
+
+        file = open(problem_statement, "w")
+        solution_template = requests.get(
+            "https://raw.githubusercontent.com/ganpa3/Competitive-Programming/master/template.cpp"
+        ).text
+        file_contents = get_header(url) + solution_template
+
+        file.write(file_contents)
+        file.close()
+
+
+if __name__ == "__main__":
+    main()
