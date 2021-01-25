@@ -107,12 +107,14 @@ export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
+export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export DENO_INSTALL="/home/ganpa/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 setopt rm_star_silent
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
@@ -128,7 +130,7 @@ alias VR="vagrant reload"
 alias VS="vagrant ssh"
 alias VU="vagrant up && vagrant ssh"
 
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -146,6 +148,7 @@ alert() {
     ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
     notify-send --urgency=critical "Hello!"
 }
+alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
@@ -186,6 +189,7 @@ alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
+alias CV='cd ~/Videos'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
@@ -311,7 +315,7 @@ tt() {
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
     g++ -std=c++17 -O2 tc.cpp -o tc.out
 
-    for i in {1..100}; do
+    for i in {1..10}; do
         ./tc.out > input
         ./test.out < input > o2
         ./$filenameWithoutExt.out < input > o1
