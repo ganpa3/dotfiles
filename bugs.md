@@ -8,23 +8,23 @@ exec('import pprint\npp = pprint.PrettyPrinter(indent=4, width=80)\npp.pprint(lo
 
 1. To know who called a function (turn off strict before using):
 ```javascript
-console.log("caller is " + function_name.caller);
+console.log("caller is " + *function_name*.caller);
 ```
-1. To print function call trace:
+2. To print function call trace:
 ```javascript
 console.trace();
 ```
-1. Snippet to debug:
+3. Snippet to debug:
 ```javascript
 function log(...args) {
-    function print(something) {
+    const print = (something) => {
         if (typeof something === "object" && something !== null) {
             console.log(JSON.stringify(something, null, 2));
         } else {
             console.log(something);
         }
-    }
-    args.forEach(something => print(something));
+    };
+    args.forEach((something) => print(something));
 }
 ```
 
