@@ -15,18 +15,37 @@ console.log("caller is " + *function_name*.caller);
 console.trace();
 ```
 3. Snippet to debug:
+
+Pass arguments as an object in both cases. E.g. `log({a, b, c});`
+
+For frontend
+Run this to add this function to all JS files
+```
+find -name \*.js | xargs sed -i '1i function log(args) {\n    console.dir(args);\n}\n'
+```
+To delete
+```
+find -name \*.js | xargs sed -i '1,3d'
+```
 ```javascript
-function log(...args) {
-    const print = (something) => {
-        if (typeof something === "object" && something !== null) {
-            console.log(JSON.stringify(something, null, 2));
-        } else {
-            console.log(something);
-        }
-    };
-    args.forEach((something) => print(something));
+function log(args) {
+    console.dir(args);
 }
 ```
+
+For backend
+Run this to add this function to all JS files
+```
+find -name \*.js | xargs sed -i '1i function log(args) {\n    console.log(JSON.stringify(args, null, 2));\n}\n'
+```
+To delete
+```
+find -name \*.js | xargs sed -i '1,3d'
+```
+```javascript
+function log(args) {
+    console.log(JSON.stringify(args, null, 2));
+}
 
 To find group of a file/directory: `stat -c "%U %G" /path/to/file`
 
