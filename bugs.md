@@ -18,13 +18,14 @@ console.trace();
 
 Pass arguments as an object in both cases. E.g. `log({a, b, c});`
 
-For frontend
+#####For frontend
+
 Run this to add this function to all JS files
-```
+```sh
 find -name \*.js | xargs sed -i '1i function log(args) {\n    console.dir(args);\n}\n'
 ```
 To delete
-```
+```sh
 find -name \*.js | xargs sed -i '1,3d'
 ```
 ```javascript
@@ -33,19 +34,21 @@ function log(args) {
 }
 ```
 
-For backend
+#####For backend
+
 Run this to add this function to all JS files
-```
+```sh
 find -name \*.js | xargs sed -i '1i function log(args) {\n    console.log(JSON.stringify(args, null, 2));\n}\n'
 ```
 To delete
-```
+```sh
 find -name \*.js | xargs sed -i '1,3d'
 ```
 ```javascript
 function log(args) {
     console.log(JSON.stringify(args, null, 2));
 }
+```
 
 To find group of a file/directory: `stat -c "%U %G" /path/to/file`
 
