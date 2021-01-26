@@ -18,7 +18,7 @@ console.trace();
 
 Pass arguments as an object in both cases. E.g. `log({a, b, c});`
 
-#####For frontend
+##### For frontend
 
 Run this to add this function to all JS files
 ```sh
@@ -34,7 +34,7 @@ function log(args) {
 }
 ```
 
-#####For backend
+##### For backend
 
 Run this to add this function to all JS files
 ```sh
