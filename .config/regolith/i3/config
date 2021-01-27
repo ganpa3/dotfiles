@@ -4,7 +4,14 @@ bindsym --release $mod+Shift+n exec --no-startup-id redshift -O 2600
 bindsym --release $mod+Mod1+n exec --no-startup-id redshift -x
 for_window [class="yakuake"] floating enable
 exec --no-startup-id /home/ganpa/bin/battery_status
-###############################################################################
+
+
+################################################################################
+# Some browser shortcuts
+bindsym $mod+Mod1+z exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/zulip
+################################################################################
+
+################################################################################
 #
 # In this config file, may values are taken from Xresources with the directive 
 # set_from_resource:

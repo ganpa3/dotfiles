@@ -4,6 +4,8 @@ import sys
 import re
 import requests
 from bs4 import BeautifulSoup
+from pathlib import Path
+import validators
 
 
 def get_header(url):
@@ -11,10 +13,15 @@ def get_header(url):
 
 
 def get_file_name(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, "html.parser")
-    problem_statement = soup.find(class_="title").text.split(".")[1].strip()
-    problem_statement = re.sub("[\(\[].*?[\)\]]", "", problem_statement)
+    if validators.url(url):
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        problem_statement = soup.find(class_="title").text.split(".")[1].strip()
+        problem_statement = re.sub("[\(\[].*?[\)\]]", "", problem_statement)
+    else:
+        problem_statement = url
+
     file_name = "_".join(problem_statement.split()) + ".cpp"
     return file_name
 
@@ -22,13 +29,17 @@ def get_file_name(url):
 def main():
     for url in sys.argv[1:]:
         problem_statement = get_file_name(url)
+        try:
+            home = str(Path.home())
+            with open(home + "/C++_Programs/Competitive-Programming/templatewithtc.cpp", "r") as template:
+                solution_template = template.read()
+        except FileNotFoundError:
+            solution_template = requests.get(
+                "https://raw.githubusercontent.com/ganpa3/Competitive-Programming/master/templatewithtc.cpp"
+            ).text
 
         file = open(problem_statement, "w")
-        solution_template = requests.get(
-            "https://raw.githubusercontent.com/ganpa3/Competitive-Programming/master/templatewithtc.cpp"
-        ).text
         file_contents = get_header(url) + solution_template
-
         file.write(file_contents)
         file.close()
 
