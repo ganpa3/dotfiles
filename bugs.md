@@ -2,7 +2,7 @@
 
 1. Pretty print all variables defined inside a function:
 ```python
-exec('import pprint\npp = pprint.PrettyPrinter(indent=4, width=80)\npp.pprint(locals())')
+exec('import pprint,sys\npp = pprint.PrettyPrinter(indent=4, width=80)\nprint("\\nLocation: ", sys._getframe().f_code.co_name, "\\n")\npp.pprint(locals())\nprint()')
 ```
 #### Javascript Debugging Tips:
 
