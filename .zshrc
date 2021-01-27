@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -186,7 +179,7 @@ alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
 alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
-
+alias dfgu='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
