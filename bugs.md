@@ -1,3 +1,55 @@
+#### Python Debugging Tips:
+
+1. Pretty print all variables defined inside a function:
+```python
+exec('import pprint,sys\npp = pprint.PrettyPrinter(indent=4, width=80)\nprint("\\nLocation: ", sys._getframe().f_code.co_name, "\\n")\npp.pprint(locals())\nprint()')
+```
+#### Javascript Debugging Tips:
+
+1. To know who called a function (turn off strict before using):
+```javascript
+console.log("caller is " + *function_name*.caller);
+```
+2. To print function call trace:
+```javascript
+console.trace();
+```
+3. Snippet to debug:
+
+Pass arguments as an object in both cases. E.g. `log({a, b, c});`
+
+##### For frontend
+
+Run this to add this function to all JS files
+```sh
+find -name \*.js | xargs sed -i '1i function log(args) {\n    console.dir(args);\n}\n'
+```
+To delete
+```sh
+find -name \*.js | xargs sed -i '1,3d'
+```
+```javascript
+function log(args) {
+    console.dir(args);
+}
+```
+
+##### For backend
+
+Run this to add this function to all JS files
+```sh
+find -name \*.js | xargs sed -i '1i function log(args) {\n    console.log(JSON.stringify(args, null, 2));\n}\n'
+```
+To delete
+```sh
+find -name \*.js | xargs sed -i '1,3d'
+```
+```javascript
+function log(args) {
+    console.log(JSON.stringify(args, null, 2));
+}
+```
+
 To find group of a file/directory: `stat -c "%U %G" /path/to/file`
 
 first value is owner and second is group

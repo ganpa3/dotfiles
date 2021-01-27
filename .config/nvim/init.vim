@@ -13,11 +13,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'preservim/nerdtree'
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
-    " Prettier
     Plug 'udalov/kotlin-vim'
-
+    Plug 'lervag/vimtex'
     Plug 'sheerun/vim-polyglot'
-    Plug 'glepnir/oceanic-material'
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -118,6 +116,22 @@ cmap w!! w !sudo tee %
 "endfunction
 "map <C-f> :exec Format()<CR>
 "map <C-b> :w <bar> !ktlint -F<CR>
+
+function Run()
+    let l:filename = expand('%:t')
+    let l:filename_without_extension = expand('%:r')
+    
+    if &filetype ==# "cpp"
+        let l:output_file = join(["./", filename_without_extension, ".out"], "")
+        :execute "!g++ -Wall -O2 " . filename . " && " . output_file . " < input"
+    
+    elseif &filetype ==# "c"
+        let l:output_file = join(["./", filename_without_extension, ".out"], "")
+        :execute "!gcc -Wall -O2 " . filename . " && " . output_file . " < input"
+    endif
+endfunction
+
+map <C-b> :call Run()<CR>
 
 " NERDTree mappings
 map <C-n> :NERDTreeToggle<CR>

@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -70,7 +77,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -103,14 +110,18 @@ source $ZSH/oh-my-zsh.sh
 
 ##############################################################################################
 # Custom Commands below
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
+export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export DENO_INSTALL="/home/ganpa/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 setopt rm_star_silent
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
@@ -120,7 +131,13 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**'"
+# Vagrant aliases
+alias VH="vagrant halt"
+alias VR="vagrant reload"
+alias VS="vagrant ssh"
+alias VU="vagrant up && vagrant ssh"
+
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -138,6 +155,7 @@ alert() {
     ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
     notify-send --urgency=critical "Hello!"
 }
+alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
@@ -147,15 +165,15 @@ alias s='ls -A'
 alias sl='ls -A'
 alias l='ls -CF'
 alias x='exit'
-#alias c='clear'
 alias f='nautilus .'
+
 alias so='source ~/.zshrc'
-# alias r='rm *.out'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
 alias chrome='/opt/google/chrome/chrome'
 alias v='nvim'
 alias spd='systemctl suspend'
 alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
+
 alias ys='youtube-dl --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
 alias emcc='~/source/emsdk/upstream/emscripten/emcc'
 alias empp='~/source/emsdk/upstream/emscripten/em++'
@@ -173,10 +191,13 @@ alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
 alias CS='cd ~/source/'
+alias CB='cd ~/bin/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
 alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
+alias CD='cd ~/Downloads'
+alias CV='cd ~/Videos'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
@@ -203,11 +224,6 @@ alias cvrc='code ~/.vimrc'
 alias cnrc='code ~/.config/nvim/init.vim'
 alias carc='code ~/.config/alacritty/alacritty.yml'
 
-## Formatting files
-#alias ff='clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp'
-alias fp='black --line-length 100 *.py'
-alias fj='prettier --config $HOME/.config/.prettierrc.json --write .'
-
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
@@ -228,7 +244,7 @@ r() {
     elif [[ -f /etc/pacman.conf ]]; then # Arch-based
     	sudo pacman -Rs --noconfirm "$@"
     elif [[ -e /etc/apt ]]; then
-    	sudo apt-get purge "$@"
+    	sudo apt-get remove -y "$@"
     fi
 }
 
@@ -242,9 +258,25 @@ u() {
 
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" *.cpp
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
     else
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4}" $@
+        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
+    fi
+}
+
+fj() {
+    if [ $# -eq 0 ]; then
+        prettier --config $HOME/.config/.prettierrc.json --write .
+    else
+        prettier --config $HOME/.config/.prettierrc.json --write $@
+    fi
+}
+
+fp() {
+    if [ $# -eq 0 ]; then
+        black --line-length 100 *.py
+    else
+        black --line-length 100 $@
     fi
 }
 
@@ -267,26 +299,42 @@ c() {
 }
 
 t() {
-    filename=$1
+    filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 test.cpp -o test.out && ./test.out < input.txt > o2.txt
-    g++ -std=c++17 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input.txt > o1.txt
-    diff -w o1.txt o2.txt
+    g++ -std=c++17 -O2 test.cpp -o test.out && ./test.out < input > o2
+    g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input > o1
+
+    res=$(diff -q -w o1 o2)
+    if [[ $(echo $?) == 1 ]]; then
+    	echo "The input is:"
+    	cat input
+    	echo "Your output: "
+    	cat o1
+    	echo "Actual output: "
+    	cat o2
+        echo ""
+    fi
 }
 
 tt() {
-    for i in 0 1 2 3 4
-    do
-    	run tc.cpp > input.txt
-    	t $1
-        ret=$(diff -q -w o1.txt o2.txt)
+    filename="$1"
+    filenameWithoutExt=${filename%.*}
+    g++ -std=c++17 -O2 test.cpp -o test.out
+    g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
+    g++ -std=c++17 -O2 tc.cpp -o tc.out
+
+    for i in {1..10}; do
+        ./tc.out > input
+        ./test.out < input > o2
+        ./$filenameWithoutExt.out < input > o1
+        res=$(diff -q -w o1 o2)
         if [[ $(echo $?) == 1 ]]; then
         	echo "The input is:"
-        	cat input.txt
+        	cat input
         	echo "Your output: "
-        	cat o1.txt
+        	cat o1
         	echo "Actual output: "
-        	cat o2.txt
+        	cat o2
             echo ""
         fi
     done
@@ -294,19 +342,19 @@ tt() {
 
 mkcd () { mkdir -p $1 && cd $1; }
 
-m() { mv $1 ~/C++_Programs/Competitive-Programming/Codeforces/; }
+m() { mv "$@" ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
-mf() { 
-    filename="$@"
-    filename="${filename// /_}"
-    cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
-}
-
-mft() { 
-    filename="$@"
-    filename="${filename// /_}"
-    cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
-}
+# mf() { 
+#     filename="$@"
+#     filename="${filename// /_}"
+#     cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
+# }
+# 
+# mft() { 
+#     filename="$@"
+#     filename="${filename// /_}"
+#     cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
+# }
 
 run() {
     filename=$1
@@ -360,3 +408,6 @@ server() {
     fi
 }
 ##############################################################################################
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
