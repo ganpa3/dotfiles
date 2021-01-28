@@ -2,7 +2,7 @@
 
 1. Pretty print all variables defined inside a function:
 ```python
-exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=80,sort_dicts=True)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function,"\\n")')
+exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=80,sort_dicts=True)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function)', globals())
 ```
 #### Javascript Debugging Tips:
 
