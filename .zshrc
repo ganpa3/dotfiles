@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
+plugins=(git sublime vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -80,7 +80,6 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -134,7 +133,6 @@ alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
-alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
 alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
