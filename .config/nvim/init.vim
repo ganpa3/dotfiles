@@ -128,10 +128,16 @@ function Run()
     elseif &filetype ==# "c"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
         :execute "!gcc -Wall -O2 " . filename . " && " . output_file . " < input"
+
+    elseif &filetype ==# "python"
+        :execute "!python3 " . filename
+
+    elseif &filetype ==# "javascript"
+        :execute "!node " . filename
     endif
 endfunction
 
-map <C-b> :call Run()<CR>
+map <C-b> :w <bar> call Run()<CR>
 
 " NERDTree mappings
 map <C-n> :NERDTreeToggle<CR>

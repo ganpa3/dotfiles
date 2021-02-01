@@ -39,7 +39,8 @@ def main():
             ).text
 
         file = open(problem_statement, "w")
-        file_contents = get_header(url) + solution_template
+        file_contents = get_header(url) if validators.url(url) else ""
+        file_contents += solution_template
         file.write(file_contents)
         file.close()
 

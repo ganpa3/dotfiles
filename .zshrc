@@ -129,7 +129,7 @@ alias VR="vagrant reload"
 alias VS="vagrant ssh"
 alias VU="vagrant up && vagrant ssh"
 
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -357,6 +357,9 @@ run() {
 	    cpp | cc)
 	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
 	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        ;;
 	    py)
 	        python3 $filename
 	        ;;
@@ -375,6 +378,9 @@ cpa() {
     case $filetype in
 	    cpp | cc)
 	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
 	        ;;
 	    py)
 	        python3 $filename
