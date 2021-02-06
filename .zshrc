@@ -103,21 +103,25 @@ source $ZSH/oh-my-zsh.sh
 ##############################################################################################
 # Custom Commands below
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+export DENO_INSTALL="/home/ganpa/.deno"
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
+
 export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export DENO_INSTALL="/home/ganpa/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+
 setopt rm_star_silent
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
 if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
     source $HOME/.local/bin/virtualenvwrapper.sh
 fi
@@ -274,9 +278,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up $1
+        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up $1
     fi
 }
 
@@ -293,7 +297,7 @@ c() {
 t() {
     filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 -O2 test.cpp -o test.out && ./test.out < input > o2
+    g++ -std=c++17 -O2 -w test.cpp -o test.out && ./test.out < input > o2
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input > o1
 
     res=$(diff -q -w o1 o2)
@@ -311,7 +315,7 @@ t() {
 tt() {
     filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 -O2 test.cpp -o test.out
+    g++ -std=c++17 -O2 -w test.cpp -o test.out
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
     g++ -std=c++17 -O2 tc.cpp -o tc.out
 
