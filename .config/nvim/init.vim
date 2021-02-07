@@ -100,7 +100,6 @@ set autochdir                          " Your working directory will always be t
 
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vim alternatively you can run :source $MYVIMRC
 
-" You can't stop me
 cmap w!! w !sudo tee %
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -123,11 +122,11 @@ function Run()
     
     if &filetype ==# "cpp"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
-        :execute "!g++ -Wall -O2 " . filename . " && " . output_file . " < input"
+        :execute "!g++ -DGANPA -Wall -O2 -o" output_file filename "&&" output_file "< input"
     
     elseif &filetype ==# "c"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
-        :execute "!gcc -Wall -O2 " . filename . " && " . output_file . " < input"
+        :execute "!gcc -DGANPA -Wall -O2 -o" output_file ".out" filename "&&" output_file "< input"
 
     elseif &filetype ==# "python"
         :execute "!python3 " . filename
