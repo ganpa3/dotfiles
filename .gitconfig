@@ -1,0 +1,24 @@
+[user]
+	email = pawarg256@gmail.com
+    name = Ganesh Pawar
+[core]
+    editor = 'nvim'
+    diff  = auto
+    status= auto
+    branch= auto
+    interactive = true
+
+[alias]
+    ci = commit
+    di = diff --color-words
+    st = status
+    re = restore
+    co = checkout
+    log1 = log --pretty=oneline --abbrev-commit
+    logs = log --stat -p --full-diff
+[cola]
+	spellcheck = false
+[color]
+	ui = auto
+[merge]
+	conflictstyle = diff3

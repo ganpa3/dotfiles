@@ -1,7 +1,6 @@
 {
     "window.zoomLevel": 1,
     "editor.fontSize": 17,
-    "files.autoSave": "onFocusChange",
     "python.linting.flake8Args": [
         "--ignore=E501"
     ],
