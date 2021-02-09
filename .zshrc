@@ -127,6 +127,8 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+alias rd='./tools/run-dev.py --force --enable-tornado-logging'
+
 # Vagrant aliases
 alias VH="vagrant halt"
 alias VR="vagrant reload"

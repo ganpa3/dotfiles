@@ -172,9 +172,7 @@ sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
 
 # Install go
 cd ~/Downloads || exit
-wget -c https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
-export PATH=$PATH:/usr/local/go/bin
-cd ~ || exit
+wget -c https://dl.google.com/go/go1.15.8.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
