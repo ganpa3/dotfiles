@@ -171,7 +171,6 @@ wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_curren
 sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
 
 # Install go
-cd ~/Downloads || exit
 wget -c https://dl.google.com/go/go1.15.8.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
 
 # Install rust

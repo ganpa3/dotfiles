@@ -254,11 +254,19 @@ u() {
     fi
 }
 
+# ff() {
+#     if [ $# -eq 0 ]; then
+#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
+#     else
+#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
+#     fi
+# }
+
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
+        clang-format -i --style=file --fallback-style=webkit *.cpp
     else
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
+        clang-format -i --style=file --fallback-style=webkit $@
     fi
 }
 
