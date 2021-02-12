@@ -49,7 +49,8 @@ colors:
     # COLORSCHEME: dracula.yaml
     # Default colors
     primary:
-        background: '0x282a36'
+        #background: '0x282a36'
+        background: '0x08090f'
         foreground: "0xf8f8f2"
 
     # Normal colors

@@ -103,36 +103,43 @@ source $ZSH/oh-my-zsh.sh
 ##############################################################################################
 # Custom Commands below
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+export DENO_INSTALL="/home/ganpa/.deno"
 reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
+
 export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export DENO_INSTALL="/home/ganpa/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+
 setopt rm_star_silent
 ulimit -s 512000
 export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
 if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
     source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+alias rd='./tools/run-dev.py --force --enable-tornado-logging'
+
 # Vagrant aliases
 alias VH="vagrant halt"
 alias VR="vagrant reload"
 alias VS="vagrant ssh"
 alias VU="vagrant up && vagrant ssh"
 
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!templates/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
+alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
 alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -247,11 +254,19 @@ u() {
     fi
 }
 
+# ff() {
+#     if [ $# -eq 0 ]; then
+#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
+#     else
+#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
+#     fi
+# }
+
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
+        clang-format -i --style=file --fallback-style=webkit *.cpp
     else
-        clang-format -i -style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
+        clang-format -i --style=file --fallback-style=webkit $@
     fi
 }
 
@@ -273,9 +288,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 3 && nmcli r wifi on && sleep 3 && nmcli con up $1
+        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up $1
     fi
 }
 
@@ -292,7 +307,7 @@ c() {
 t() {
     filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 -O2 test.cpp -o test.out && ./test.out < input > o2
+    g++ -std=c++17 -O2 -w test.cpp -o test.out && ./test.out < input > o2
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out && ./$filenameWithoutExt.out < input > o1
 
     res=$(diff -q -w o1 o2)
@@ -310,7 +325,7 @@ t() {
 tt() {
     filename="$1"
     filenameWithoutExt=${filename%.*}
-    g++ -std=c++17 -O2 test.cpp -o test.out
+    g++ -std=c++17 -O2 -w test.cpp -o test.out
     g++ -std=c++17 -O2 $filename -o $filenameWithoutExt.out
     g++ -std=c++17 -O2 tc.cpp -o tc.out
 
@@ -356,6 +371,9 @@ run() {
 	    cpp | cc)
 	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
 	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        ;;
 	    py)
 	        python3 $filename
 	        ;;
@@ -374,6 +392,9 @@ cpa() {
     case $filetype in
 	    cpp | cc)
 	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
 	        ;;
 	    py)
 	        python3 $filename
