@@ -105,8 +105,7 @@ font pango:System San Francisco Display 11
 floating_modifier $mod
 
 # Start a terminal
-#bindsym $mod+Return exec alacritty
-bindsym $mod+Return exec konsole
+bindsym $mod+Return exec alacritty
 
 # Kill focused window
 bindsym $mod+Shift+q kill
