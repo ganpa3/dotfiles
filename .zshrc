@@ -142,7 +142,6 @@ alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
-alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
 LIGHT_COLOR="papercolor_light.yaml"
 # alias a="alacritty-colorscheme -C $COLOR_DIR"
