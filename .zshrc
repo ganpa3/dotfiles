@@ -191,6 +191,7 @@ alias CS='cd ~/source/'
 alias CB='cd ~/bin/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
+alias CZ='cd ~/source/nand2tetris'
 alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
@@ -287,9 +288,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up $1
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up $1
     fi
 }
 

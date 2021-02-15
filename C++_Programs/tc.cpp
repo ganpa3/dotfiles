@@ -121,12 +121,16 @@ void rarr(size_t size, A l, B r, int decimals = 2) {
 string s1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 string s = "abcdefghijklmnopqrstuvwxyz";
 
+bool test_case = 1;
+
 int32_t main() {
-    int tc = 1;
- //   cout << tc << endl;
+    int tc = 100;
+    if (test_case) cout << tc << endl;
+
     while (tc--) {
-        auto n = ran(1, RAN1);
+        auto n = ran(1, INF);
         print(n, ran(1, INF));
+        //       arr(n, 1, INF);
     }
     return 0;
 }
