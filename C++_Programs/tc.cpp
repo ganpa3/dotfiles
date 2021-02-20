@@ -119,18 +119,22 @@ void rarr(size_t size, A l, B r, int decimals = 2) {
 }
 
 string s1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-string s = "abcdefghijklmnopqrstuvwxyz";
+string s = "abcdefghijklmnopqrstuvwxy?";
 
-bool test_case = 1;
+//#define TEST_CASE 1
 
 int32_t main() {
-    int tc = 100;
-    if (test_case) cout << tc << endl;
-
+#ifdef TEST_CASE
+    int tc = 1;
+    cout << tc << endl;
     while (tc--) {
-        auto n = ran(1, INF);
-        print(n, ran(1, INF));
-        //       arr(n, 1, INF);
+#endif
+        ll n = ran(1, 5);
+        cout << n << " " << ran(1, INF) << endl;
+        for (int i = 0; i < 2 * n; i++) cout << ran(1, INF) << " ";
+        cout << endl;
+#ifdef TEST_CASE
     }
+#endif
     return 0;
 }

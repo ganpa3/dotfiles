@@ -20,6 +20,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'tpope/vim-rhubarb'
     Plug 'psf/black', { 'branch': 'stable' }
 
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+    Plug 'preservim/nerdcommenter'
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -73,6 +75,7 @@ let g:black_linelength=100
 
 " set leader key
 let mapleader = ","
+set timeoutlen=5000 " Set timeout length to 5000 ms
 let g:loaded_matchparen=1
 syntax enable                           " Enables syntax highlighing
 set hidden                              " Required to keep multiple buffers open
@@ -143,10 +146,14 @@ function Run()
     endif
 endfunction
 
-map <C-b> :w <bar> call Run()<CR>
+"map <C-b> :w <bar> call Run()<CR>
+map <C-b> :call Run()<CR>
 
 " NERDTree mappings
 map <C-n> :NERDTreeToggle<CR>
+
+" Markdown preview
+map <C-m> <Plug>MarkdownPreviewToggle
 
 " Better nav for omnicomplete
 inoremap <expr> <c-j> ("\<C-n>")
