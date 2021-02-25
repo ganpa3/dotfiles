@@ -129,10 +129,10 @@ int32_t main() {
     cout << tc << endl;
     while (tc--) {
 #endif
-        ll n = ran(1, 5);
-        cout << n << " " << ran(1, INF) << endl;
-        for (int i = 0; i < 2 * n; i++) cout << ran(1, INF) << " ";
-        cout << endl;
+        ll n = ran(1, RAN2), m = ran(1, RAN2);
+        print(n, m);
+        arr(n, 1, INFL);
+        arr(m, 1, INFL);
 #ifdef TEST_CASE
     }
 #endif

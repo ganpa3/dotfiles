@@ -22,6 +22,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Plug 'preservim/nerdcommenter'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -114,17 +115,14 @@ cmap w!! w !sudo tee %
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""" Mappings """""""""""""""""""""""""""""""""""
-" Running C++ programs
-"map <C-b> :!g++ -Wall -Wextra --std=c++17 -O2 -Wshadow -Wformat=2 % -o %:r.out<CR>  
-"map <C-r> :!time ./%:r.out < input.txt<CR>
+function Format()
+    let l:filename = expand('%:t')
+    :execute "!clang-format -i --style=file --fallback-style=webkit " . filename
+endfunction
 
-" Formatting C++ files
-"function Format()
-"    :w
-"    :!clang-format -i *.cpp
-"endfunction
-"map <C-f> :exec Format()<CR>
-"map <C-b> :w <bar> !ktlint -F<CR>
+map <silent> <Leader>f :call Format()<CR>
+
+"map <Leader>f !clang-format -i --style=file --fallback-style=webkit %<CR>
 
 function Run()
     let l:filename = expand('%:t')
@@ -132,11 +130,11 @@ function Run()
     
     if &filetype ==# "cpp"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
-        :execute "!g++ -DGANPA -Wall -O2 -o" output_file filename "&&" output_file "< input"
-    
+        :execute "!g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
+
     elseif &filetype ==# "c"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
-        :execute "!gcc -DGANPA -Wall -O2 -o" output_file ".out" filename "&&" output_file "< input"
+        :execute "!gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
 
     elseif &filetype ==# "python"
         :execute "!python3 " . filename

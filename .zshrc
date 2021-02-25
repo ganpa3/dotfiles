@@ -166,7 +166,7 @@ alias f='nautilus .'
 
 alias so='source ~/.zshrc'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
-alias chrome='/opt/google/chrome/chrome'
+alias chrome='/opt/google/chrome/google-chrome'
 alias v='nvim'
 alias spd='systemctl suspend'
 alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
@@ -298,7 +298,7 @@ c() {
     if [ $# -ne 0 ]; then
         filename=$1
         filenameWithoutExt="${filename%.*}"
-        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename
+        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
     else
         clear
     fi
@@ -369,10 +369,10 @@ run() {
 
     case $filetype in
 	    cpp | cc)
-	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
 	        ;;
 	    c)
-	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
 	        ;;
 	    py)
 	        python3 $filename
