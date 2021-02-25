@@ -3,6 +3,7 @@
     name = Ganesh Pawar
 [core]
     editor = 'nvim'
+    pager = delta
     diff  = auto
     status= auto
     branch= auto
@@ -10,10 +11,11 @@
 
 [alias]
     ci = commit
-    di = diff --color-words
+    di = diff --histogram
     st = status
     re = restore
     co = checkout
+    ls = ls-files
     log1 = log --pretty=oneline --abbrev-commit
     logs = log --stat -p --full-diff
 [cola]
@@ -26,4 +28,19 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
+    required = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    plus-color = "#012800"
+    minus-color = "#340001"
+    syntax-theme = Monokai Extended
+    features = decorations
+    line-numbers = true
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none

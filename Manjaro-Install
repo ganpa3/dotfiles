@@ -54,6 +54,7 @@ if [[ "$MINIMAL" == "true" ]]; then
     "ranger"
     "neofetch"
     "rsync"
+    "ripgrep"
     )
     sudo pacman --noconfirm --needed -S "${packages[@]}"
 

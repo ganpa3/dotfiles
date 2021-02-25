@@ -10,7 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ALTS : amuse, 
 ZSH_THEME="robbyrussell"
-#ZSH_THEME="amuse"
+#ZSH_THEME="random"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -26,7 +26,7 @@ ZSH_THEME="robbyrussell"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -135,14 +135,13 @@ alias VR="vagrant reload"
 alias VS="vagrant ssh"
 alias VU="vagrant up && vagrant ssh"
 
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**'"
+alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**' -g '!templates/**' -g '!*.md' -g '!*.svg'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 alias flake8='flake8 --ignore=E501'
 alias own='sudo chown -R ganpa:ganpa'
-alias bt='python3 /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
 LIGHT_COLOR="papercolor_light.yaml"
 # alias a="alacritty-colorscheme -C $COLOR_DIR"
@@ -167,7 +166,7 @@ alias f='nautilus .'
 
 alias so='source ~/.zshrc'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
-alias chrome='/opt/google/chrome/chrome'
+alias chrome='/opt/google/chrome/google-chrome'
 alias v='nvim'
 alias spd='systemctl suspend'
 alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
@@ -192,6 +191,7 @@ alias CS='cd ~/source/'
 alias CB='cd ~/bin/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
+alias CN='cd ~/source/nand2tetris'
 alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
@@ -288,9 +288,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 2 && nmcli r wifi on && sleep 3 && nmcli con up $1
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up $1
     fi
 }
 
@@ -298,7 +298,7 @@ c() {
     if [ $# -ne 0 ]; then
         filename=$1
         filenameWithoutExt="${filename%.*}"
-        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename
+        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
     else
         clear
     fi
@@ -369,10 +369,10 @@ run() {
 
     case $filetype in
 	    cpp | cc)
-	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
 	        ;;
 	    c)
-	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
 	        ;;
 	    py)
 	        python3 $filename
