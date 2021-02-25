@@ -52,7 +52,7 @@ if [[ "$MINIMAL" == "true" ]]; then
     "shellcheck"
     "ripgrep"
     )
-    sudo apt-get install -y "${packages[@]}"
+    sudo apt-get install --fix-missing -y "${packages[@]}"
     
     if [[ "$NOCONFIG" != "true" ]]; then
         # Installing config files
@@ -165,7 +165,7 @@ packages=(
 "ubuntu-restricted-extras" # Keep this at last, since it involves agreeing to a license.
 )
 
-sudo apt-get install -y "${packages[@]}"
+sudo apt-get install --fix-missing -y "${packages[@]}"
 
 # Google Chrome
 wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
