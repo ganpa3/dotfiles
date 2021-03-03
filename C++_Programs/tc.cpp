@@ -11,17 +11,11 @@ typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
 
-string to_string(string s) {
-    return '"' + s + '"';
-}
+string to_string(string s) { return '"' + s + '"'; }
 
-string to_string(const char* s) {
-    return to_string((string)s);
-}
+string to_string(const char* s) { return to_string((string)s); }
 
-string to_string(bool b) {
-    return (b ? "true" : "false");
-}
+string to_string(bool b) { return (b ? "true" : "false"); }
 
 template <typename A, typename B>
 string to_string(pair<A, B> p) {
@@ -43,9 +37,7 @@ string to_string(A v) {
     return res;
 }
 
-void debug_out() {
-    cerr << endl;
-}
+void debug_out() { cerr << endl; }
 
 template <typename Head, typename... Tail>
 void debug_out(Head H, Tail... T) {
@@ -53,9 +45,7 @@ void debug_out(Head H, Tail... T) {
     debug_out(T...);
 }
 
-void print() {
-    cout << endl;
-}
+void print() { cout << endl; }
 
 template <typename Head, typename... Tail>
 void print(Head H, Tail... T) {
@@ -121,18 +111,17 @@ void rarr(size_t size, A l, B r, int decimals = 2) {
 string s1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 string s = "abcdefghijklmnopqrstuvwxy?";
 
-//#define TEST_CASE 1
+#define TEST_CASE 1
 
 int32_t main() {
-#ifdef TEST_CASE
+#if TEST_CASE == 1
     int tc = 1;
     cout << tc << endl;
     while (tc--) {
 #endif
-        ll n = ran(1, RAN2), m = ran(1, RAN2);
-        print(n, m);
-        arr(n, 1, INFL);
-        arr(m, 1, INFL);
+        int n = ran(2, 100);
+        cout << n << " " << ran(2, n) << endl;
+        arr(n, 1, INF);
 #ifdef TEST_CASE
     }
 #endif

@@ -19,10 +19,11 @@
     "explorer.confirmDelete": false,
     "code-runner.executorMap": {
 
+
         "javascript": "node",
         "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
         "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-        "cpp": "g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $fileNameWithoutExt.out $fileName && ./$fileNameWithoutExt.out < input.txt 2>&1 | tee output.txt",
+        "cpp": "cd $dir && g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -o $fileNameWithoutExt.out $fileName && ./$fileNameWithoutExt.out < input 2>&1 | tee output",
         "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
         "php": "php",
         "python": "python -u",

@@ -102,6 +102,7 @@ source $ZSH/oh-my-zsh.sh
 
 ##############################################################################################
 # Custom Commands below
+export EDITOR="/usr/bin/nvim"
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 export DENO_INSTALL="/home/ganpa/.deno"
 reset-cursor() {
@@ -127,6 +128,10 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
+lc() {
+    clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
+}
 alias rd='./tools/run-dev.py --force --enable-tornado-logging'
 
 # Vagrant aliases
