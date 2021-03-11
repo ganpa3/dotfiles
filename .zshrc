@@ -102,6 +102,7 @@ source $ZSH/oh-my-zsh.sh
 
 ##############################################################################################
 # Custom Commands below
+export EDITOR="/usr/bin/nvim"
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 export DENO_INSTALL="/home/ganpa/.deno"
 reset-cursor() {
@@ -127,6 +128,10 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
+lc() {
+    clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
+}
 alias rd='./tools/run-dev.py --force --enable-tornado-logging'
 
 # Vagrant aliases
@@ -176,6 +181,8 @@ alias emcc='~/source/emsdk/upstream/emscripten/emcc'
 alias empp='~/source/emsdk/upstream/emscripten/em++'
 alias path='readlink -f'
 alias redshift='redshift -O 2600'
+# Make feh work with many image formats. Requires imagemagick.
+alias feh='feh --conversion-timeout 1'
 
 ## Managing dotfiles
 alias dfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -184,6 +191,7 @@ alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
 alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
 alias dfgu='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
+
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
 alias CK='cd ~/Kotlin_Programs/'
@@ -196,6 +204,7 @@ alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 alias CV='cd ~/Videos'
+alias CT='cd ~/webdev/github-timeline'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
@@ -205,6 +214,7 @@ alias irc='nvim ~/.config/i3/config'
 alias vrc='nvim ~/.vimrc'
 alias nrc='nvim ~/.config/nvim/init.vim'
 alias arc='nvim ~/.config/alacritty/alacritty.yml'
+
 # With Sublime text
 alias sirc='subl ~/.config/i3/config'
 alias szrc='subl ~/.zshrc'
@@ -213,6 +223,7 @@ alias srrc='subl ~/.config/regolith/i3/config'
 alias svrc='subl ~/.vimrc'
 alias snrc='subl ~/.config/nvim/init.vim'
 alias sarc='subl ~/.config/alacritty/alacritty.yml'
+
 # With Sublime text
 alias circ='code ~/.config/i3/config'
 alias czrc='code ~/.zshrc'
@@ -227,7 +238,7 @@ alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
 ##############################################################################################
 
-#######################################Custom Functions ######################################
+###################################### Custom Functions ######################################
 i() {
     if [[ -f /etc/pacman.conf ]]; then # Arch-based
         sudo pacman -S --noconfirm "$@"
@@ -253,14 +264,6 @@ u() {
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/* # Debian-based
     fi
 }
-
-# ff() {
-#     if [ $# -eq 0 ]; then
-#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" *.cpp
-#     else
-#         clang-format -i --style=file --fallback-style="{BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}" $@
-#     fi
-# }
 
 ff() {
     if [ $# -eq 0 ]; then
@@ -288,9 +291,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 2 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 3 && nmcli con up $1
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 2 && nmcli con up $1
     fi
 }
 

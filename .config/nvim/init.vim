@@ -19,10 +19,16 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'psf/black', { 'branch': 'stable' }
+    Plug 'pangloss/vim-javascript'
 
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Plug 'preservim/nerdcommenter'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'kyoz/purify', { 'rtp': 'vim' }
+    Plug 'gosukiwi/vim-atom-dark'
+    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -57,18 +63,17 @@ if (empty($TMUX))
     set termguicolors
   endif
 endif
-let g:onedark_hide_endofbuffer=1
-let g:onedark_termcolors=256
-let g:onedark_terminal_italics=1
 syntax on
-set background=dark
-"colorscheme oceanic_material
-"colorscheme nord
 hi Comment cterm=italic
 hi Normal     ctermbg=NONE guibg=NONE
 hi LineNr     ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi Comment guifg=#5C6370 ctermfg=59
+
+" Theme
+"colorscheme purify
+"colorscheme dracula
+set background=dark
 
 " Line length for Black formatter in python.
 let g:black_linelength=100
@@ -130,7 +135,7 @@ function Run()
     
     if &filetype ==# "cpp"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
-        :execute "!g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
+        :execute "!g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
 
     elseif &filetype ==# "c"
         let l:output_file = join(["./", filename_without_extension, ".out"], "")
