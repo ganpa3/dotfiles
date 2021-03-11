@@ -72,9 +72,8 @@ hi Comment guifg=#5C6370 ctermfg=59
 
 " Theme
 "colorscheme purify
-colorscheme dracula
+"colorscheme dracula
 set background=dark
-let g:airline_theme='onehalfdark'
 
 " Line length for Black formatter in python.
 let g:black_linelength=100

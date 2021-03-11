@@ -84,5 +84,15 @@
     "terminal.integrated.fontSize": 16,
     "workbench.iconTheme": "vscode-icons",
     "vsicons.dontShowNewVersionMessage": true,
-    "latex-workshop.view.pdf.viewer": "browser"
+    "latex-workshop.view.pdf.viewer": "browser",
+    "tabnine.experimentalAutoImports": true,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ]
 }

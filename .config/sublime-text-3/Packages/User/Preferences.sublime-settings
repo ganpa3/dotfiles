@@ -4,7 +4,7 @@
 	"ignored_packages":
 	[
 	],
-	"save_on_focus_lost": true,
+	// "save_on_focus_lost": true,
 	"theme": "Reverse Gravity.sublime-theme",
 	"word_wrap": true
 }
