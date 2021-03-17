@@ -11,6 +11,8 @@ exec --no-startup-id sudo modprobe -r uvcvideo
 # Some browser shortcuts
 bindsym $mod+Mod1+z exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/zulip
 bindsym $mod+Mod1+g exec --no-startup-id /opt/google/chrome/chrome https://docs.github.com/en/graphql/reference/queries
+bindsym $mod+Mod1+d exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/dotfiles
+bindsym $mod+Mod1+w exec --no-startup-id /opt/google/chrome/chrome https://web.whatsapp.com
 ################################################################################
 
 ################################################################################

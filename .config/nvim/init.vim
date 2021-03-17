@@ -72,7 +72,7 @@ hi Comment guifg=#5C6370 ctermfg=59
 
 " Theme
 "colorscheme purify
-"colorscheme dracula
+colorscheme dracula
 set background=dark
 
 " Line length for Black formatter in python.

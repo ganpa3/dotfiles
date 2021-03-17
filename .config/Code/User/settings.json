@@ -94,5 +94,9 @@
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
-    ]
+    ],
+    "cph.general.defaultLanguage": "cpp",
+    "markdown.preview.fontSize": 16,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.currentLine.enabled": false
 }

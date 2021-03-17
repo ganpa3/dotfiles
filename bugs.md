@@ -69,10 +69,10 @@ To build-deps, uncomment the deb-src line in the /etc/apt/sources.list file. Loo
 Help : https://techpiezo.com/linux/install-vlc-media-player-in-ubuntu/
 
 configure with:
-```./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse```
+`./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse`
 
 Extra packages to install for building vlc on Ubuntu:
-```sudo apt-get install -y qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev```
+`sudo apt-get install -y qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev`
 
 To list all the dependencies of an arch package, including optionals, using the hard way using python, run the following script:
 ```python
@@ -111,7 +111,7 @@ For arch, install packages:
 To change battery colour in regolith, change file:
 `/usr/share/i3xrocks/battery`
 
-To change themes, icon themes, wallpapers, etc. in Regolith, change file ```/etc/regolith/styles/lascaille/theme```
+To change themes, icon themes, wallpapers, etc. in Regolith, change file `/etc/regolith/styles/lascaille/theme`
 E.g.
 ```C
 #define gtk_theme           Adwaita-dark
@@ -125,4 +125,29 @@ E.g.
 #define i3wm_gaps_inner_size            5
 #define i3wm_gaps_outer_size            0
 #define i3wm_bar_position               bottom
+```
+
+Get Pull Requests associated with a commit using Github GraphQL API
+E.g.
+```graphql
+{
+  repository(owner: "ganpa3", name: "Bodhitree-Scrapper") {
+    ref(qualifiedName: "main") {
+      repository {
+        object(oid: "8585ee8ad7c7be2bb03220dbe5d4cdaf03b6114d") {
+          ... on Commit {
+            associatedPullRequests(first: 100) {
+              edges {
+                node {
+                  title
+                }
+              }
+            }
+            message
+          }
+        }
+      }
+    }
+  }
+}
 ```
