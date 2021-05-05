@@ -2,19 +2,19 @@
 
 1. Pretty print all variables defined inside a function:
 ```python
-exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=80,sort_dicts=True)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function)', globals())
+exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=100)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function, "\nin", i.filename, "at line no.", i.lineno)', globals())
 ```
+```sh
+find -name \*.py | xargs sed -i '1i import inspect, pprint, sys\npp = pprint.PrettyPrinter(indent=4, width=100, stream=sys.stderr)\ndef LOG(*args):\n    for arg in args:\n        pp.pprint(arg)'
+```
+
 #### Javascript Debugging Tips:
 
-1. To know who called a function (turn off strict before using):
-```javascript
-console.log("caller is " + *function_name*.caller);
-```
-2. To print function call trace:
+1. To print function call trace:
 ```javascript
 console.trace();
 ```
-3. Snippet to debug:
+2. Snippet to debug:
 
 Pass arguments as an object in both cases. E.g. `log({a, b, c});`
 
@@ -23,10 +23,19 @@ Pass arguments as an object in both cases. E.g. `log({a, b, c});`
 Run this to add this function to all JS files
 ```sh
 find -name \*.js | xargs sed -i '1i function log(args) {\n    console.dir(args);\n}\n'
+find -name \*.ts | xargs sed -i '1i function log(args: any) {\n    console.dir(args);\n}\n'
+```
+To add at end
+```sh
+find -name \*.js | xargs sed -i '$a function log(args) {\n    console.dir(args);\n}\n'
+find -name \*.ts | xargs sed -i '$a function log(args: any) {\n    console.dir(args);\n}\n'
 ```
 To delete
 ```sh
+# from start of file
 find -name \*.js | xargs sed -i '1,3d'
+# from end of file
+find -name \*.js | xargs sed -i -n -e :a -e '1,3!{P;N;D;};N;ba'
 ```
 ```javascript
 function log(args) {
@@ -111,7 +120,7 @@ For arch, install packages:
 To change battery colour in regolith, change file:
 `/usr/share/i3xrocks/battery`
 
-To change themes, icon themes, wallpapers, etc. in Regolith, change file `/etc/regolith/styles/lascaille/theme`
+To change themes, icon themes, wallpapers, etc. in Regolith, change file `/etc/regolith/styles/lascaille/theme`.
 E.g.
 ```C
 #define gtk_theme           Adwaita-dark
@@ -127,23 +136,23 @@ E.g.
 #define i3wm_bar_position               bottom
 ```
 
-Get Pull Requests associated with a commit using Github GraphQL API
+Get Pull Requests associated with a commit(use full SHA1 of commit) using Github GraphQL API.
 E.g.
 ```graphql
 {
-  repository(owner: "ganpa3", name: "Bodhitree-Scrapper") {
-    ref(qualifiedName: "main") {
+  repository(owner: "zulip", name: "zulip") {
+    ref(qualifiedName: "master") {
       repository {
-        object(oid: "8585ee8ad7c7be2bb03220dbe5d4cdaf03b6114d") {
+        object(oid: "5262ca76213a6585f4d6498f34467e87568cbf1b") {
           ... on Commit {
             associatedPullRequests(first: 100) {
               edges {
                 node {
                   title
+                  url
                 }
               }
             }
-            message
           }
         }
       }

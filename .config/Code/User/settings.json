@@ -98,5 +98,8 @@
     "cph.general.defaultLanguage": "cpp",
     "markdown.preview.fontSize": 16,
     "gitlens.hovers.currentLine.over": "line",
-    "gitlens.currentLine.enabled": false
+    "gitlens.currentLine.enabled": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

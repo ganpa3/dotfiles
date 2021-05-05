@@ -114,13 +114,13 @@ class BatteryNotifier:
             args.low: Notification(
                 status="running low",
                 msg="Maybe go look for a charger.",
-                icon="battery-caution",
+                icon="/home/ganpa/.config/dunst/images/battery-low.png",
                 urgency="critical",
             ),
             args.critical: Notification(
                 status="critically low",
                 msg="Please save any unsaved work.",
-                icon="battery-empty",
+                icon="/home/ganpa/.config/dunst/images/battery-low.png",
                 urgency="critical",
             ),
         }

@@ -1,18 +1,23 @@
+#exec --no-startup-id feh --no-fehbg --bg-fill '/home/ganpa/Pictures/Wallpapers/r80iVd8-linux-walpaper.jpg'
+exec_always --no-startup-id feh --no-fehbg --bg-fill '/home/ganpa/Pictures/Wallpapers/wp7086892-aesthetic-anime-laptop-4k-wallpapers.jpg'
 # To enable touchpad, see : https://www.reddit.com/r/i3wm/comments/516e8c/tap_to_click_touchpad/
 exec xinput set-prop 13 333 1
 bindsym --release $mod+Shift+n exec --no-startup-id redshift -O 2600
 bindsym --release $mod+Mod1+n exec --no-startup-id redshift -x
+bindsym --release $mod+w exec --no-startup-id nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
 for_window [class="yakuake"] floating enable
 exec --no-startup-id /home/ganpa/bin/battery_status
 exec --no-startup-id sudo modprobe -r uvcvideo
 
+# Cause File Manager app to float above tiled windows
+for_window [class="Org.gnome.Nautilus"] floating enable
 
 ################################################################################
 # Some browser shortcuts
 bindsym $mod+Mod1+z exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/zulip
-bindsym $mod+Mod1+g exec --no-startup-id /opt/google/chrome/chrome https://docs.github.com/en/graphql/reference/queries
+bindsym $mod+Mod1+g exec --no-startup-id /opt/google/chrome/chrome https://docs.github.com/en/graphql/overview/explorer
 bindsym $mod+Mod1+d exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/dotfiles
-bindsym $mod+Mod1+w exec --no-startup-id /opt/google/chrome/chrome https://web.whatsapp.com
+# bindsym $mod+Mod1+w exec --no-startup-id /opt/google/chrome/chrome https://web.whatsapp.com
 ################################################################################
 
 ################################################################################
@@ -92,8 +97,9 @@ bindsym $mod+Return exec alacritty
 #bindsym $mod+Return exec /usr/bin/x-terminal-emulator
 
 ## Launch // Browser // <><Shift> Enter ##
-bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
+#bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
 #bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser)
+bindsym $mod+Shift+Return exec firefox --private-window
 
 ## Launch // Browser // <> b ##
 bindsym $mod+b exec gtk-launch $(xdg-settings get default-web-browser)
@@ -323,7 +329,7 @@ bindsym $mod+d exec nautilus
 
 ## Modify // Wifi Settings // <> w ##
 set_from_resource $i3-wm.program.wifi i3-wm.program.wifi gnome-control-center wifi
-bindsym $mod+w exec $i3-wm.program.wifi
+#bindsym $mod+w exec $i3-wm.program.wifi
 
 ## Modify // Bluetooth Settings // <> b ##
 ## set_from_resource $i3-wm.program.bluetooth i3-wm.program.bluetooth gnome-control-center bluetooth
@@ -503,6 +509,11 @@ set_from_resource $i3-wm.bar.status_command i3-wm.bar.status_command i3xrocks -u
 
 # The bar configuration
 bar {
+###############################################################################
+# Disable mouse scrolling on bar
+  bindsym button4 nop
+  bindsym button5 nop
+###############################################################################
   position $i3-wm.bar.position
   font $i3-wm.bar.font
   separator_symbol $i3-wm.bar.separator

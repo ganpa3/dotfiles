@@ -1,4 +1,6 @@
-"""""""""""""""""""""""""""""" Plugins """"""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -11,9 +13,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " File Explorer
     Plug 'preservim/nerdtree'
+    
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'udalov/kotlin-vim'
+
     Plug 'lervag/vimtex'
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
@@ -29,11 +32,39 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""" General Settings """"""""""""""""""""""""""""""""
-" Theme
+    " Rust language support
+    Plug 'rust-lang/rust.vim'
+
+    " Syntastic
+    Plug 'vim-syntastic/syntastic'
+
+    " Tagbar
+    Plug 'preservim/tagbar'
+
+    " Modern database interface for Vim
+    Plug 'tpope/vim-dadbod'
+
+    Plug 'vim-airline/vim-airline'
+
+call plug#end()
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Global variables
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+
+" Syntastic checkers
+let g:syntastic_python_checkers = ['flake8']
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Theme
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -64,6 +95,7 @@ if (empty($TMUX))
   endif
 endif
 syntax on
+filetype plugin indent on
 hi Comment cterm=italic
 hi Normal     ctermbg=NONE guibg=NONE
 hi LineNr     ctermbg=NONE guibg=NONE
@@ -112,7 +144,8 @@ set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
 set clipboard=unnamedplus
 set formatoptions-=cro                  " Stop newline continution of comments
-set autochdir                          " Your working directory will always be the same as your working directory
+set autochdir                           " Your working directory will always be the same as your working directory
+set cmdheight=1                         " Removes the extra statusline below the command statusline
 
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vim alternatively you can run :source $MYVIMRC
 
@@ -201,3 +234,8 @@ nnoremap <Leader>o o<Esc>^Da
 nnoremap <Leader>O O<Esc>^Da
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+let g:NERDTreeWinSize=26
+let g:NERDTreeShowHidden=1

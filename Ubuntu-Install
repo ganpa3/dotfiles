@@ -2,7 +2,7 @@
 
 # NOTE : This is a poorly written script. Run at your own risk
 
-# If having a separatee home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
+# If having a separate home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
 # It can be done by groupmod command.
 
 # Things to do before running this script:
