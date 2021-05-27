@@ -2,7 +2,7 @@
 
 # NOTE : This is a poorly written script. Run at your own risk
 
-# If having a separatee home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
+# If having a separate home directory, then make sure that groups among different distros have the same gid to avoid permission issues.
 # It can be done by groupmod command.
 
 # Things to do before running this script:
@@ -169,9 +169,9 @@ packages=(
 
 sudo apt-get install --fix-missing -y "${packages[@]}"
 
-# Google Chrome
-wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
-sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
+# Google Chrome. NOTE: On Pop_OS!, it isn't necessary to do this.
+#wget -v --tries=3 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
+#sudo dpkg -i "$HOME"/Downloads/google-chrome-stable_current_amd64.deb
 
 # Install go
 wget -c https://dl.google.com/go/go1.15.8.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local

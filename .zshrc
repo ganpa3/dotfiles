@@ -128,6 +128,9 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
+alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+complete -F _quilt_completion -o filenames dquilt
+
 alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
 lc() {
     clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
@@ -140,7 +143,7 @@ alias VR="vagrant reload"
 alias VS="vagrant ssh"
 alias VU="vagrant up && vagrant ssh"
 
-alias rg="rg -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**' -g '!templates/**' -g '!*.md' -g '!*.svg'"
+alias rg="rg -g '!node_modules/**' -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**' -g '!templates/**' -g '!*.md' -g '!*.svg'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
 alias sudo='sudo '
 alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
@@ -174,13 +177,17 @@ alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 
 alias chrome='/opt/google/chrome/google-chrome'
 alias v='nvim'
 alias spd='systemctl suspend'
-alias y='youtube-dl -o "~/Videos/%(title)s.%(ext)s"'
 
-alias ys='youtube-dl --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
+# youtube-dl shortcuts
+alias y='youtube-dl --restrict-filenames -o "~/Videos/%(title)s.%(ext)s"'
+alias ys='youtube-dl --restrict-filenames --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
+alias song='youtube-dl --restrict-filenames --extract-audio --audio-format mp3 -o "~/Music/%(title)s.%(ext)s"'
+
 alias emcc='~/source/emsdk/upstream/emscripten/emcc'
 alias empp='~/source/emsdk/upstream/emscripten/em++'
 alias path='readlink -f'
 alias redshift='redshift -O 2600'
+alias open='xdg-open'
 # Make feh work with many image formats. Requires imagemagick.
 alias feh='feh --conversion-timeout 1'
 
@@ -190,7 +197,7 @@ alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f'
 alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
 alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
-alias dfgu='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
+alias dfgm='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
 
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
@@ -204,7 +211,10 @@ alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 alias CV='cd ~/Videos'
-alias CT='cd ~/webdev/github-timeline'
+alias CT='cd ~/Music/github-timeline/src'
+alias CA='cd ~/apps'
+alias CM='cd ~/Music'
+alias CR='cd ~/rust_programs/src'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
@@ -236,13 +246,16 @@ alias carc='code ~/.config/alacritty/alacritty.yml'
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
+
+## Update git fork. Requires oh-my-zsh.
+alias gu='gcm && gf upstream && grb upstream/"$(git_main_branch)" && ggp'
 ##############################################################################################
 
 ###################################### Custom Functions ######################################
 i() {
     if [[ -f /etc/pacman.conf ]]; then # Arch-based
         sudo pacman -S --noconfirm "$@"
-    elif [[ -e /etc/apt ]]; then
+    elif [[ -e /etc/apt ]]; then # Debian-based
     	sudo apt-get install -y "$@"
     fi
 }
@@ -252,7 +265,7 @@ r() {
 		rm *.out
     elif [[ -f /etc/pacman.conf ]]; then # Arch-based
     	sudo pacman -Rs --noconfirm "$@"
-    elif [[ -e /etc/apt ]]; then
+    elif [[ -e /etc/apt ]]; then # Debian-based
     	sudo apt-get remove -y "$@"
     fi
 }
@@ -260,16 +273,16 @@ r() {
 u() {
     if [[ -f /etc/pacman.conf ]]; then # Arch-based
         yay -Syu --noconfirm
-    elif [[ -e /etc/apt ]]; then
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && rm -rf ~/.cache/thumbnails/* # Debian-based
+    elif [[ -e /etc/apt ]]; then # Debian-based
+        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean
     fi
 }
 
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i --style=file --fallback-style=webkit *.cpp
+        clang-format -i --style=file --fallback-style=google *.cpp
     else
-        clang-format -i --style=file --fallback-style=webkit $@
+        clang-format -i --style=file --fallback-style=google $@
     fi
 }
 
@@ -291,19 +304,9 @@ fp() {
 
 wifi() {
     if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 2 && nmcli con up GaneshP
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
     else
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 2 && nmcli con up $1
-    fi
-}
-
-c() {
-    if [ $# -ne 0 ]; then
-        filename=$1
-        filenameWithoutExt="${filename%.*}"
-        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
-    else
-        clear
+        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up $1
     fi
 }
 
@@ -369,41 +372,76 @@ run() {
     filename=$1
     filenameWithoutExt="${filename%.*}"
     filetype="$(echo $filename | cut -d'.' -f2)"
+    shift
 
     case $filetype in
 	    cpp | cc)
-	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@ |& tee output.txt
 	        ;;
 	    c)
-	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
 	        ;;
 	    py)
-	        python3 $filename
+	        python3 $filename $@
 	        ;;
-
+        rs)
+            rustc -A unused_imports -A unused_must_use --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
+            ;;
 	    kt)
-	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar $@
 	        ;;
     esac
+}
+
+c() {
+    if [ $# -ne 0 ]; then
+        filename=$1
+        filenameWithoutExt="${filename%.*}"
+        filetype="$(echo $filename | cut -d'.' -f2)"
+
+        case $filetype in
+	        cpp | cc)
+	            g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
+	            ;;
+	        c)
+	            gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
+	            ;;
+	        py)
+	            python3 $filename $@
+	            ;;
+            rs)
+                rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename
+                ;;
+	        kt)
+	            kotlinc $filename -include-runtime -d $filenameWithoutExt.jar
+	            ;;
+        esac
+    else
+        clear
+    fi
 }
 
 cpa() {
     filename=$1
     filenameWithoutExt="${filename%.*}"
     filetype="$(echo $filename | cut -d'.' -f2)"
+    shift
 
     case $filetype in
 	    cpp | cc)
-	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out |& tee output.txt
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@ |& tee output.txt
 	        ;;
 	    c)
-	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
 	        ;;
+        rs)
+            rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
+            ;;
 	    py)
-	        python3 $filename
+	        python3 $filename $@
 	        ;;
 	    kt)
-	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar $@
 	        ;;
     esac
 }
@@ -411,8 +449,22 @@ cpa() {
 cc() {
     filename=$1
     filenameWithoutExt="${filename%.*}"
-	
-	g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+    filetype="$(echo $filename | cut -d'.' -f2)"
+
+    case $filetype in
+	    cpp | cc)
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+	        ;;
+        rs)
+            rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename
+            ;;
+	    kt)
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar
+	        ;;
+    esac
 }
 
 server() {
@@ -423,6 +475,3 @@ server() {
     fi
 }
 ##############################################################################################
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

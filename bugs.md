@@ -1,52 +1,64 @@
 #### Python Debugging Tips:
 
 1. Pretty print all variables defined inside a function:
+
 ```python
-exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=80,sort_dicts=True)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function)', globals())
+exec('import inspect,pprint,sys\npp=pprint.PrettyPrinter(indent=4,width=100)\nd={k:v for k,v in locals().items() if not inspect.ismodule(v)}\npp.pprint(d)\nprint("\\nStack trace:")\nfor i in inspect.stack():\n    print(i.function, "\nin", i.filename, "at line no.", i.lineno)', globals())
 ```
+
+```python
+exec('import pprint\npp=pprint.PrettyPrinter(indent=4,width=100)\nd=locals()\ndel d["d"]\nif "__builtins__" in d:\n    del d["__builtins__"]\npp.pprint(d)')
+```
+
+```sh
+find -name \*.py | xargs sed -i '1i import inspect, pprint, sys\npp = pprint.PrettyPrinter(indent=4, width=100, stream=sys.stderr)\ndef LOG(*args):\n    for arg in args:\n        pp.pprint(arg)'
+```
+
 #### Javascript Debugging Tips:
 
-1. To know who called a function (turn off strict before using):
-```javascript
-console.log("caller is " + *function_name*.caller);
-```
-2. To print function call trace:
-```javascript
-console.trace();
-```
-3. Snippet to debug:
+2. Snippet to debug:
 
 Pass arguments as an object in both cases. E.g. `log({a, b, c});`
 
 ##### For frontend
 
 Run this to add this function to all JS files
+
 ```sh
-find -name \*.js | xargs sed -i '1i function log(args) {\n    console.dir(args);\n}\n'
+find -name \*.js | xargs sed -i '1i const LOG = (...a) => a.map((_) => console.debug(JSON.stringify(_, null, 2)));\n'
+find -name \*.ts | xargs sed -i '1i const LOG = (...a: any) => a.map((_: any) => console.debug(JSON.stringify(_, null, 2)));\n'
 ```
+
 To delete
+
 ```sh
-find -name \*.js | xargs sed -i '1,3d'
+# from start of file
+find -name \*.js | xargs sed -i '1,1d'
 ```
+
 ```javascript
 function log(args) {
-    console.dir(args);
+  console.dir(args);
 }
 ```
 
 ##### For backend
 
 Run this to add this function to all JS files
+
 ```sh
 find -name \*.js | xargs sed -i '1i function log(args) {\n    console.log(JSON.stringify(args, null, 2));\n}\n'
 ```
+
 To delete
+
 ```sh
 find -name \*.js | xargs sed -i '1,3d'
 ```
+
 ```javascript
 function log(args) {
-    console.log(JSON.stringify(args, null, 2));
+  console.log(JSON.stringify(args, null, 2));
 }
 ```
 
@@ -69,12 +81,13 @@ To build-deps, uncomment the deb-src line in the /etc/apt/sources.list file. Loo
 Help : https://techpiezo.com/linux/install-vlc-media-player-in-ubuntu/
 
 configure with:
-```./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse```
+`./configure --enable-avcodec --enable-avformat --enable-swscale --enable-mad --enable-a52 --enable-libmpeg2 --enable-dvdnav --enable-faad --enable-vorbis --enable-ogg --enable-theora --enable-freetype --enable-fribidi --enable-speex --enable-flac --enable-live555 --enable-caca --enable-skins2 --enable-alsa --enable-ncurses --enable-xcb --enable-pulse`
 
 Extra packages to install for building vlc on Ubuntu:
-```sudo apt-get install -y qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts  qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev```
+`sudo apt-get install -y qtquickcontrols2-5-dev libxkbcommon-x11-dev qtdeclarative5-dev qml-module-qtquick-controls2 qml-module-qtquick-layouts qml-module-qtquick2 qml-module-qtgraphicaleffects qml-module-qtqml-models2 liblivemedia-dev`
 
 To list all the dependencies of an arch package, including optionals, using the hard way using python, run the following script:
+
 ```python
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -99,11 +112,11 @@ browser.quit()
 
 To manage dotfiles, use these links:
 
-* https://github.com/jesuswasrasta/dotfiles
+- https://github.com/jesuswasrasta/dotfiles
 
-* https://www.atlassian.com/git/tutorials/dotfiles
+- https://www.atlassian.com/git/tutorials/dotfiles
 
-* https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+- https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
 
 For arch, install packages:
 `sudo pacman -S xorg xorg-xinit xf86-video-intel`
@@ -111,8 +124,9 @@ For arch, install packages:
 To change battery colour in regolith, change file:
 `/usr/share/i3xrocks/battery`
 
-To change themes, icon themes, wallpapers, etc. in Regolith, change file ```/etc/regolith/styles/lascaille/theme```
+To change themes, icon themes, wallpapers, etc. in Regolith, change file `/etc/regolith/styles/lascaille/theme`.
 E.g.
+
 ```C
 #define gtk_theme           Adwaita-dark
 #define icon_theme          Papirus-Dark
@@ -125,4 +139,30 @@ E.g.
 #define i3wm_gaps_inner_size            5
 #define i3wm_gaps_outer_size            0
 #define i3wm_bar_position               bottom
+```
+
+Get Pull Requests associated with a commit(use full SHA1 of commit) using Github GraphQL API.
+E.g.
+
+```graphql
+{
+  repository(owner: "zulip", name: "zulip") {
+    ref(qualifiedName: "master") {
+      repository {
+        object(oid: "5262ca76213a6585f4d6498f34467e87568cbf1b") {
+          ... on Commit {
+            associatedPullRequests(first: 100) {
+              edges {
+                node {
+                  title
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 ```

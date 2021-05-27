@@ -119,9 +119,7 @@ int32_t main() {
     cout << tc << endl;
     while (tc--) {
 #endif
-        int n = ran(2, 100);
-        cout << n << " " << ran(2, n) << endl;
-        arr(n, 1, INF);
+        for (int i = 2; i < 101; i++) cout << i << endl;
 #ifdef TEST_CASE
     }
 #endif
