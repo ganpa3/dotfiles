@@ -101,5 +101,12 @@
     "gitlens.currentLine.enabled": false,
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "vim.vimrc.path": "/home/ganpa/.config/nvim/init.vim",
+    "vim.vimrc.enable": true,
+    "vim.enableNeovim": true,
+    "vim.leader": ",",
+    "vim.neovimUseConfigFile": true,
+    "vim.useSystemClipboard": true,
+    "rust-analyzer.updates.askBeforeDownload": false
 }

@@ -211,10 +211,10 @@ alias CW='cd ~/webdev'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 alias CV='cd ~/Videos'
-alias CT='cd ~/Music/github-timeline'
+alias CT='cd ~/Music/github-timeline/src'
 alias CA='cd ~/apps'
 alias CM='cd ~/Music'
-alias CR='cd ~/Rust_Programs'
+alias CR='cd ~/rust_programs/src'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
@@ -246,6 +246,9 @@ alias carc='code ~/.config/alacritty/alacritty.yml'
 ## Toggle webcam
 alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
+
+## Update git fork. Requires oh-my-zsh.
+alias gu='gcm && gf upstream && grb upstream/"$(git_main_branch)" && ggp'
 ##############################################################################################
 
 ###################################### Custom Functions ######################################
@@ -277,9 +280,9 @@ u() {
 
 ff() {
     if [ $# -eq 0 ]; then
-        clang-format -i --style=file --fallback-style=webkit *.cpp
+        clang-format -i --style=file --fallback-style=google *.cpp
     else
-        clang-format -i --style=file --fallback-style=webkit $@
+        clang-format -i --style=file --fallback-style=google $@
     fi
 }
 
@@ -304,16 +307,6 @@ wifi() {
         nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
     else
         nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up $1
-    fi
-}
-
-c() {
-    if [ $# -ne 0 ]; then
-        filename=$1
-        filenameWithoutExt="${filename%.*}"
-        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
-    else
-        clear
     fi
 }
 
@@ -391,11 +384,41 @@ run() {
 	    py)
 	        python3 $filename $@
 	        ;;
-
+        rs)
+            rustc -A unused_imports -A unused_must_use --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
+            ;;
 	    kt)
 	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar && java -jar $filenameWithoutExt.jar $@
 	        ;;
     esac
+}
+
+c() {
+    if [ $# -ne 0 ]; then
+        filename=$1
+        filenameWithoutExt="${filename%.*}"
+        filetype="$(echo $filename | cut -d'.' -f2)"
+
+        case $filetype in
+	        cpp | cc)
+	            g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
+	            ;;
+	        c)
+	            gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o $filenameWithoutExt.out $filename
+	            ;;
+	        py)
+	            python3 $filename $@
+	            ;;
+            rs)
+                rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename
+                ;;
+	        kt)
+	            kotlinc $filename -include-runtime -d $filenameWithoutExt.jar
+	            ;;
+        esac
+    else
+        clear
+    fi
 }
 
 cpa() {
@@ -411,6 +434,9 @@ cpa() {
 	    c)
 	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
 	        ;;
+        rs)
+            rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename && ./$filenameWithoutExt.out $@
+            ;;
 	    py)
 	        python3 $filename $@
 	        ;;
@@ -423,8 +449,22 @@ cpa() {
 cc() {
     filename=$1
     filenameWithoutExt="${filename%.*}"
-	
-	g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+    filetype="$(echo $filename | cut -d'.' -f2)"
+
+    case $filetype in
+	    cpp | cc)
+	        g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+	        ;;
+	    c)
+	        gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -o $filenameWithoutExt.out $filename
+	        ;;
+        rs)
+            rustc --edition=2018 -O --verbose -o $filenameWithoutExt.out $filename
+            ;;
+	    kt)
+	        kotlinc $filename -include-runtime -d $filenameWithoutExt.jar
+	        ;;
+    esac
 }
 
 server() {
@@ -435,143 +475,3 @@ server() {
     fi
 }
 ##############################################################################################
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-# =============================================================================
-#
-# Utility functions for zoxide.
-#
-
-# pwd based on the value of _ZO_RESOLVE_SYMLINKS.
-function __zoxide_pwd() {
-    pwd -L
-}
-
-# cd + custom logic based on the value of _ZO_ECHO.
-function __zoxide_cd() {
-    cd "$@"
-}
-
-# =============================================================================
-#
-# Hook configuration for zoxide.
-#
-
-# Hook to add new entries to the database.
-function __zoxide_hook() {
-    zoxide add "$(__zoxide_pwd)"
-}
-
-# Initialize hook.
-chpwd_functions=(${chpwd_functions[@]} "__zoxide_hook")
-
-# =============================================================================
-#
-# When using zoxide with --no-aliases, alias these internal functions as
-# desired.
-#
-
-# Jump to a directory using only keywords.
-function __zoxide_z() {
-    if [ "$#" -eq 0 ]; then
-        __zoxide_cd ~
-    elif [ "$#" -eq 1 ] && [ "$1" = '-' ]; then
-        if [ -n "$OLDPWD" ]; then
-            __zoxide_cd "$OLDPWD"
-        else
-            echo "zoxide: \\$OLDPWD is not set"
-            return 1
-        fi
-    elif [ "$#" -eq 1 ] &&  [ -d "$1" ]; then
-        __zoxide_cd "$1"
-    else
-        local __zoxide_result
-        __zoxide_result="$(zoxide query -- "$@")" && __zoxide_cd "$__zoxide_result"
-    fi
-}
-
-# Jump to a directory using interactive search.
-function __zoxide_zi() {
-    local __zoxide_result
-    __zoxide_result="$(zoxide query -i -- "$@")" && __zoxide_cd "$__zoxide_result"
-}
-
-# Add a new entry to the database.
-function __zoxide_za() {
-    zoxide add "$@"
-}
-
-# Query an entry from the database using only keywords.
-function __zoxide_zq() {
-    zoxide query "$@"
-}
-
-# Query an entry from the database using interactive selection.
-function __zoxide_zqi() {
-    zoxide query -i "$@"
-}
-
-# Remove an entry from the database using the exact path.
-function __zoxide_zr() {
-    zoxide remove "$@"
-}
-
-# Remove an entry from the database using interactive selection.
-function __zoxide_zri() {
-    zoxide remove -i "$@"
-}
-
-# =============================================================================
-#
-# Convenient aliases for zoxide. Disable these using --no-aliases.
-#
-
-# Remove definitions.
-function __zoxide_unset() {
-    \unalias "$@" &>/dev/null
-    \unfunction "$@" &>/dev/null
-    \unset "$@" &>/dev/null
-}
-
-__zoxide_unset 'z'
-function z() {
-    __zoxide_z "$@"
-}
-
-__zoxide_unset 'zi'
-function zi() {
-    __zoxide_zi "$@"
-}
-
-__zoxide_unset 'za'
-function za() {
-    __zoxide_za "$@"
-}
-
-__zoxide_unset 'zq'
-function zq() {
-    __zoxide_zq "$@"
-}
-
-__zoxide_unset 'zqi'
-function zqi() {
-    __zoxide_zqi "$@"
-}
-
-__zoxide_unset 'zr'
-function zr() {
-    __zoxide_zr "$@"
-}
-
-__zoxide_unset 'zri'
-function zri() {
-    __zoxide_zri "$@"
-}
-
-# =============================================================================
-#
-# To initialize zoxide with zsh, add the following line to your zsh
-# configuration file (usually ~/.zshrc):
-#
-eval "$(zoxide init zsh)"

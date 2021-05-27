@@ -5,8 +5,6 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  "autocmd VimEnter * PlugInstall
-  "autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 call plug#begin('~/.config/nvim/autoload/plugged')
@@ -26,11 +24,18 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Plug 'preservim/nerdcommenter'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'kyoz/purify', { 'rtp': 'vim' }
     Plug 'gosukiwi/vim-atom-dark'
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+
+    " Fuzzy finder
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+
+    " COC - autocompletion and linting
+    " Install all extensions with
+    " :CocInstall coc-json coc-rust-analyzer coc-eslint coc-prettier coc-tsserver coc-sh coc-pyright coc-clangd
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Rust language support
@@ -45,23 +50,72 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Modern database interface for Vim
     Plug 'tpope/vim-dadbod'
 
-    Plug 'vim-airline/vim-airline'
+    " Golang support
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-call plug#end()
+    "Plug 'vim-airline/vim-airline'
+    
+    "File type icons to Vim plugins
+    Plug 'ryanoasis/vim-devicons'
+
+    call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Global variables
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': '-p90%,90%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.9 } }
+endif
+
+" NERD Commenter settings
+let g:NERDCustomDelimiters = {
+            \ 'c': { 'left': '// ' },
+            \ 'cpp': { 'left': '// ' },
+            \ 'rust': { 'left': '// ' }
+            \ }
+
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 
 " Syntastic checkers
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_cpp_checkers = ['clang-tidy']
+
+" Additional arguments to a checker
+let g:syntastic_python_flake8_args = "--ignore=E501"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! -nargs=0 Pret :CocCommand prettier.formatFile
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
+    \ {'options': ['--layout=reverse'], 'source': 'fdfind --exclude "node_modules"',
+    \ 'sink': 'tabedit'}), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case
+  \   --glob "!node_modules"
+  \   --glob "!locale/**"
+  \   --glob "!docs/**"
+  \   --glob "!corporate/**"
+  \   --glob "!frontend_tests/**"
+  \   --glob "!zerver/migrations/**"
+  \   --glob "!zerver/tests/**"
+  \   --glob "!templates/**"
+  \   --type-not md
+  \   --type-not svg
+  \   -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "" Theme
@@ -113,7 +167,7 @@ let g:black_linelength=100
 
 " set leader key
 let mapleader = ","
-set timeoutlen=5000 " Set timeout length to 5000 ms
+set timeoutlen=10000 " Set timeout length to 5000 ms
 let g:loaded_matchparen=1
 syntax enable                           " Enables syntax highlighing
 set hidden                              " Required to keep multiple buffers open
@@ -155,24 +209,22 @@ cmap w!! w !sudo tee %
 """"""""""""""""""""""""""""""""" Mappings """""""""""""""""""""""""""""""""""
 function Format()
     let l:filename = expand('%:t')
-    :execute "!clang-format -i --style=file --fallback-style=webkit " . filename
+    :execute "!clang-format -i --style=file --fallback-style=google " . filename
 endfunction
-
-map <silent> <Leader>f :call Format()<CR>
-
-"map <Leader>f !clang-format -i --style=file --fallback-style=webkit %<CR>
 
 function Run()
     let l:filename = expand('%:t')
     let l:filename_without_extension = expand('%:r')
+    let l:output_file = join(["./", filename_without_extension, ".out"], "")
     
     if &filetype ==# "cpp"
-        let l:output_file = join(["./", filename_without_extension, ".out"], "")
         :execute "!g++ -DGANPA -Wall -Wextra -pedantic -std=c++17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
 
     elseif &filetype ==# "c"
-        let l:output_file = join(["./", filename_without_extension, ".out"], "")
         :execute "!gcc -DGANPA -Wall -Wextra -pedantic -std=c17 -O2 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -o" output_file filename "&&" output_file "< input"
+
+    elseif &filetype ==# "rust"
+        :execute "!rustc --edition=2018 -O --verbose -o" output_file filename "&&" output_file
 
     elseif &filetype ==# "python"
         :execute "!python3 " . filename
@@ -233,9 +285,38 @@ nnoremap <C-l> <C-w>l
 nnoremap <Leader>o o<Esc>^Da
 nnoremap <Leader>O O<Esc>^Da
 
+" FZF shortcuts
+nnoremap <C-p> :Files<CR>
+nnoremap <C-t> :Buffers<CR>
+
+" Format files
+nnoremap <silent> <C-f> :call CocActionAsync('format')<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 let g:NERDTreeWinSize=26
 let g:NERDTreeShowHidden=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leader key mappings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <silent> <Leader>f :call Format()<CR>
+
+" COC mappings
+nmap <silent> <Leader>e <Plug>(coc-codeaction-cursor)
+"nmap <silent> <Leader>d <Plug>(coc-definition)
+nmap <Leader>d <Plug>(coc-definition)
+
+" Hide search highlighs
+nmap <Leader>h :noh<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+  \ |   exe "normal! g`\""
+  \ | endif

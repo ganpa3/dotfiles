@@ -17,7 +17,7 @@ for_window [class="Org.gnome.Nautilus"] floating enable
 bindsym $mod+Mod1+z exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/zulip
 bindsym $mod+Mod1+g exec --no-startup-id /opt/google/chrome/chrome https://docs.github.com/en/graphql/overview/explorer
 bindsym $mod+Mod1+d exec --no-startup-id /opt/google/chrome/chrome https://github.com/ganpa3/dotfiles
-# bindsym $mod+Mod1+w exec --no-startup-id /opt/google/chrome/chrome https://web.whatsapp.com
+bindsym $mod+Mod1+w exec --no-startup-id /opt/google/chrome/chrome https://web.whatsapp.com
 ################################################################################
 
 ################################################################################
@@ -99,7 +99,8 @@ bindsym $mod+Return exec alacritty
 ## Launch // Browser // <><Shift> Enter ##
 #bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
 #bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser)
-bindsym $mod+Shift+Return exec firefox --private-window
+bindsym $mod+Shift+Return exec firefox
+#bindsym $mod+Shift+Return exec firefox --private-window
 
 ## Launch // Browser // <> b ##
 bindsym $mod+b exec gtk-launch $(xdg-settings get default-web-browser)
