@@ -1,0 +1,9 @@
+{
+    "clangd.disableDiagnostics": true,
+
+    "coc.preferences.messageLevel": "warning",
+    "rust-analyzer.updates.prompt": false
+    //"coc.preferences.formatOnType": true,
+    //"coc.preferences.formatOnTypeFiletypes": ["cpp", "js", "javascript", "rs", "py", "json", "rust"]
+    //"coc.preferences.formatOnSaveFiletypes": ["*"]
+}
