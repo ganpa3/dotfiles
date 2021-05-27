@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+import requests
+from bs4 import BeautifulSoup
+from pathlib import Path
+import validators
+
+
+def get_header(url):
+    return "/*\n" f" * Problem Statement: {url}\n" " * Author: ganpa\n" " */\n"
+
+
+def get_file_name(url):
+    if validators.url(url):
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        problem_statement = soup.find(class_="title").text.split(".")[1].strip()
+        problem_statement = re.sub("[\(\[].*?[\)\]]", "", problem_statement)
+    else:
+        problem_statement = url
+
+    file_name = "_".join(problem_statement.split()) + ".cpp"
+    return file_name
+
+
+def main():
+    for url in sys.argv[1:]:
+        problem_statement = get_file_name(url)
+        try:
+            home = str(Path.home())
+            with open(home + "/C++_Programs/Competitive-Programming/template.cpp", "r") as template:
+                solution_template = template.read()
+        except FileNotFoundError:
+            solution_template = requests.get(
+                "https://raw.githubusercontent.com/ganpa3/Competitive-Programming/master/template.cpp"
+            ).text
+
+        file = open(problem_statement, "w")
+        file_contents = get_header(url) if validators.url(url) else ""
+        file_contents += solution_template
+        file.write(file_contents)
+        file.close()
+
+
+if __name__ == "__main__":
+    main()
