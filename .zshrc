@@ -196,7 +196,7 @@ alias dfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add'
 alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
-alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin main'
+alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin'
 alias dfgm='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
 
 ## Quickly changing directories
