@@ -61,23 +61,27 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Global variables
+" Plugin settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = {
+            \ 'c': { 'left': '// ' },
+            \ }
+
+" FZF
 if exists('$TMUX')
   let g:fzf_layout = { 'tmux': '-p90%,90%' }
 else
   let g:fzf_layout = { 'window': { 'width': 1.0, 'height': 0.9 } }
 endif
 
-" NERD Commenter settings
-let g:NERDCustomDelimiters = {
-            \ 'c': { 'left': '// ' },
-            \ 'cpp': { 'left': '// ' },
-            \ 'rust': { 'left': '// ' }
-            \ }
 
-" Syntastic settings
+" Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
@@ -90,6 +94,15 @@ let g:syntastic_cpp_checkers = ['clang-tidy']
 " Additional arguments to a checker
 let g:syntastic_python_flake8_args = "--ignore=E501"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Global variables
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom commands
@@ -305,8 +318,7 @@ map <silent> <Leader>f :call Format()<CR>
 
 " COC mappings
 nmap <silent> <Leader>e <Plug>(coc-codeaction-cursor)
-"nmap <silent> <Leader>d <Plug>(coc-definition)
-nmap <Leader>d <Plug>(coc-definition)
+nmap <silent> <Leader>d <Plug>(coc-definition)
 
 " Hide search highlighs
 nmap <Leader>h :noh<CR>
