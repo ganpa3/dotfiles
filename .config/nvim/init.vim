@@ -342,6 +342,7 @@ nmap <leader>cq <plug>NERDCommenterComment
 " COC
 nmap <silent> <Leader>e <Plug>(coc-codeaction-cursor)
 nmap <silent> <Leader>d <Plug>(coc-definition)
+nnoremap <silent> <C-d> <Plug>(coc-definition)
 
 " Format files
 nnoremap <silent> <C-f> :call CocActionAsync('format')<CR>
