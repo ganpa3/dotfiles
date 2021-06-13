@@ -166,3 +166,9 @@ E.g.
   }
 }
 ```
+
+### Update all extensions of VS Code
+Bash
+code --list-extensions | xargs code --force --install-extension
+Powershell
+@(code --list-extensions) | %{code --force --install-extension $_}
