@@ -15,19 +15,19 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
 
-    Plug 'lervag/vimtex'
-    Plug 'sheerun/vim-polyglot'
+    " Plug 'lervag/vimtex'
+    " Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'psf/black', { 'branch': 'stable' }
     Plug 'pangloss/vim-javascript'
 
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+    " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Plug 'preservim/nerdcommenter'
-    Plug 'kyoz/purify', { 'rtp': 'vim' }
-    Plug 'gosukiwi/vim-atom-dark'
+    " Plug 'kyoz/purify', { 'rtp': 'vim' }
+    " Plug 'gosukiwi/vim-atom-dark'
     Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+    " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
     " Fuzzy finder
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -45,15 +45,15 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'vim-syntastic/syntastic'
 
     " Tagbar
-    Plug 'preservim/tagbar'
+    " Plug 'preservim/tagbar'
 
     " Modern database interface for Vim
-    Plug 'tpope/vim-dadbod'
+    " Plug 'tpope/vim-dadbod'
 
     " Golang support
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-    "Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline'
     
     "File type icons to Vim plugins
     Plug 'ryanoasis/vim-devicons'
@@ -269,6 +269,10 @@ nnoremap <Leader>O O<Esc>^Da
 nnoremap <C-p> :Files<CR>
 nnoremap <C-t> :Buffers<CR>
 
+" Quick tab switching
+nnoremap H gT
+nnoremap L gt
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
@@ -342,7 +346,7 @@ nmap <leader>cq <plug>NERDCommenterComment
 " COC
 nmap <silent> <Leader>e <Plug>(coc-codeaction-cursor)
 nmap <silent> <Leader>d <Plug>(coc-definition)
-nnoremap <silent> <C-d> <Plug>(coc-definition)
+nmap <silent> <C-d> <Plug>(coc-definition)
 
 " Format files
 nnoremap <silent> <C-f> :call CocActionAsync('format')<CR>

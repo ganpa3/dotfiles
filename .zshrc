@@ -135,7 +135,8 @@ alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
 lc() {
     clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
 }
-alias rd='./tools/run-dev.py --force --enable-tornado-logging'
+
+alias rd='(sudo service postgresql status > /dev/null || ./tools/wsl/start_services) && ./tools/run-dev.py --skip-provision-check --enable-tornado-logging'
 
 # Vagrant aliases
 alias VH="vagrant halt"
