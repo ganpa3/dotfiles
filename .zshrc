@@ -176,8 +176,12 @@ alias f='nautilus .'
 alias so='source ~/.zshrc'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
 alias chrome='/opt/google/chrome/google-chrome'
-alias v='nvim'
 alias spd='systemctl suspend'
+
+# Neovim shortcuts
+alias v='nvim'
+alias vv='nvim --noplugin'
+alias vvv='nvim -u NONE'
 
 # youtube-dl shortcuts
 alias y='youtube-dl --restrict-filenames -o "~/Videos/%(title)s.%(ext)s"'
