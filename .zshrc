@@ -128,9 +128,6 @@ if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
 fi
 
 ######################################## TEMPORARY ALIASES ###################################
-alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
-complete -F _quilt_completion -o filenames dquilt
-
 alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
 lc() {
     clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
@@ -165,11 +162,21 @@ alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
-alias ll='ls -alF'
-alias la='ls -A'
-alias s='ls -A'
-alias sl='ls -A'
-alias l='ls -CF'
+# Check if a command exists.
+check_if_exists() {
+    command -v $1 > /dev/null 2>&1
+}
+# Replace UNIX commands with modern replacements. Modern, they say.
+alias ls='check_if_exists exa && exa || ls --color=tty'
+alias la='check_if_exists exa && exa --all || ls --color=tty -A'
+alias s='la'
+alias sl=ls
+alias ll='check_if_exists exa && exa --all --long || ls --color=tty -alF'
+alias l='ll'
+alias du='check_if_exists dust && dust || du -h'
+alias cat='check_if_exists batcat && batcat || cat'
+alias find='check_if_exists fdfind && fdfind || find'
+
 alias x='exit'
 alias f='nautilus .'
 
@@ -361,18 +368,6 @@ mkcd () { mkdir -p $1 && cd $1; }
 
 m() { mv "$@" ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
-# mf() { 
-#     filename="$@"
-#     filename="${filename// /_}"
-#     cp ~/C++_Programs/Competitive-Programming/template.cpp "$filename.cpp"; 
-# }
-# 
-# mft() { 
-#     filename="$@"
-#     filename="${filename// /_}"
-#     cp ~/C++_Programs/Competitive-Programming/templatewithtc.cpp "$filename.cpp"; 
-# }
-
 run() {
     filename=$1
     filenameWithoutExt="${filename%.*}"
@@ -479,4 +474,3 @@ server() {
         http-server --port $1
     fi
 }
-##############################################################################################
