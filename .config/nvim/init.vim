@@ -81,6 +81,12 @@ command! -bang -nargs=? -complete=dir Files
     \ {'options': ['--layout=reverse'], 'source': 'fdfind --exclude "node_modules"',
     \ 'sink': 'tabedit'}), <bang>0)
 
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! ProjectFiles execute 'Files' s:find_git_root()
+
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case
@@ -266,12 +272,12 @@ nnoremap <Leader>o o<Esc>^Da
 nnoremap <Leader>O O<Esc>^Da
 
 " FZF shortcuts
-nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :ProjectFiles<CR>
 nnoremap <C-t> :Buffers<CR>
 
 " Quick tab switching
-nnoremap H gT
-nnoremap L gt
+nnoremap J gT
+nnoremap K gt
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Exit Vim if NERDTree is the only window left.
@@ -303,6 +309,9 @@ autocmd BufReadPost *
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Airline
+let g:airline_extensions = ["branch"]
+
 " NERDCommenter
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'

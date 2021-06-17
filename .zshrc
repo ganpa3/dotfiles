@@ -113,7 +113,6 @@ export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
-export PS1="$(reset-cursor)$PS1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -167,11 +166,11 @@ check_if_exists() {
     command -v $1 > /dev/null 2>&1
 }
 # Replace UNIX commands with modern replacements. Modern, they say.
-alias ls='check_if_exists exa && exa || ls --color=tty'
-alias la='check_if_exists exa && exa --all || ls --color=tty -A'
+alias ls='check_if_exists exa && exa || bash -c "ls --color=tty"'
+alias la='check_if_exists exa && exa --all || bash -c "ls --color=tty -A"'
+alias ll='check_if_exists exa && exa --all --long || bash -c "ls --color=tty -alF"'
 alias s='la'
 alias sl=ls
-alias ll='check_if_exists exa && exa --all --long || ls --color=tty -alF'
 alias l='ll'
 alias du='check_if_exists dust && dust || du -h'
 alias cat='check_if_exists batcat && batcat || cat'
@@ -207,8 +206,8 @@ alias feh='feh --conversion-timeout 1'
 alias dfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add'
-alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit -m "Changed"'
-alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin'
+alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit --amend --no-edit --no-verify'
+alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin --force-with-lease'
 alias dfgm='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
 
 ## Quickly changing directories
