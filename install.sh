@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-INSTALL_DIR=$HOME/tmp-dotfiles
+INSTALL_DIR=/tmp/tmp-dotfiles
 
 OPTIONS=$(getopt --options ms --longoptions minimal,ssh --name "$0" -- "$@")
 eval set -- "$OPTIONS"
