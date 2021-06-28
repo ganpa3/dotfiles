@@ -161,20 +161,8 @@ alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
-# Check if a command exists.
-check_if_exists() {
-    command -v $1 > /dev/null 2>&1
-}
 # Replace UNIX commands with modern replacements. Modern, they say.
-alias ls='check_if_exists exa && exa || bash -c "ls --color=tty"'
-alias la='check_if_exists exa && exa --all || bash -c "ls --color=tty -A"'
-alias ll='check_if_exists exa && exa --all --long || bash -c "ls --color=tty -alF"'
-alias s='la'
-alias sl=ls
-alias l='ll'
-alias du='check_if_exists dust && dust || du -h'
-alias cat='check_if_exists batcat && batcat || cat'
-alias find='check_if_exists fdfind && fdfind || find'
+alias fd='fdfind'
 
 alias x='exit'
 alias f='nautilus .'
@@ -194,8 +182,6 @@ alias y='youtube-dl --restrict-filenames -o "~/Videos/%(title)s.%(ext)s"'
 alias ys='youtube-dl --restrict-filenames --all-subs -o "~/Videos/%(title)s/%(title)s.%(ext)s"'
 alias song='youtube-dl --restrict-filenames --extract-audio --audio-format mp3 -o "~/Music/%(title)s.%(ext)s"'
 
-alias emcc='~/source/emsdk/upstream/emscripten/emcc'
-alias empp='~/source/emsdk/upstream/emscripten/em++'
 alias path='readlink -f'
 alias redshift='redshift -O 2600'
 alias open='xdg-open'
