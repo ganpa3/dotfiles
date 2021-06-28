@@ -1,6 +1,5 @@
 {
-    "window.zoomLevel": 1,
-    "editor.fontSize": 17,
+    "editor.fontSize": 18,
     "python.linting.flake8Args": [
         "--ignore=E501"
     ],
@@ -89,16 +88,12 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
     "cph.general.defaultLanguage": "cpp",
     "markdown.preview.fontSize": 16,
     "gitlens.hovers.currentLine.over": "line",
-    "gitlens.currentLine.enabled": false,
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
@@ -108,5 +103,18 @@
     "vim.leader": ",",
     "vim.neovimUseConfigFile": true,
     "vim.useSystemClipboard": true,
-    "rust-analyzer.updates.askBeforeDownload": false
+    "rust-analyzer.updates.askBeforeDownload": false,
+    "editor.fontFamily": "FiraCode Nerd Font Mono",
+    "window.zoomLevel": 1,
+    "extensions.ignoreRecommendations": true,
+    "remote.SSH.defaultExtensions": [
+        "eamodio.gitlens",
+        "ms-python.python"
+    ],
+    "editor.mouseWheelScrollSensitivity": 2,
+    "editor.cursorSmoothCaretAnimation": true,
+    "workbench.list.smoothScrolling": true,
+    "editor.smoothScrolling": true,
+    "terminal.integrated.mouseWheelScrollSensitivity": 2,
+    "workbench.list.mouseWheelScrollSensitivity": 2
 }

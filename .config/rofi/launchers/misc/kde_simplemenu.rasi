@@ -20,6 +20,7 @@ configuration {
 }
 
 /* -- Breeze Light-- */
+/*
 * {
     background:                     #EFF0F1FF;
     background-alt:              	#00000000;
@@ -27,9 +28,9 @@ configuration {
     foreground:                     #000000A6;
     accent:			            	#3DAEE9FF;
 }
+*/
 
 /* -- Breeze Dark-- */
-/*
 * {
     background:                     #31363bff;
     background-alt:              	#00000000;
@@ -37,7 +38,6 @@ configuration {
     foreground:                     #f5f5f5e6;
     accent:			            	#1d99f3ff;
 }
-*/
 
 /* -- Black-- */
 /*

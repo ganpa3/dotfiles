@@ -4,7 +4,7 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill '/home/ganpa/Pictures/Wallp
 exec xinput set-prop 13 333 1
 bindsym --release $mod+Shift+n exec --no-startup-id redshift -O 2600
 bindsym --release $mod+Mod1+n exec --no-startup-id redshift -x
-bindsym --release $mod+w exec --no-startup-id nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
+# bindsym --release $mod+w exec --no-startup-id nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
 for_window [class="yakuake"] floating enable
 exec --no-startup-id /home/ganpa/bin/battery_status
 exec --no-startup-id sudo modprobe -r uvcvideo
@@ -93,23 +93,19 @@ bindsym $mod+KP_Enter exec yakuake
 
 ## Launch // Terminal // <> Enter ##
 #for_window [class="Alacritty"] title_format "Alacritty"
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec /home/ganpa/.local/kitty.app/bin/kitty #alacritty
 #bindsym $mod+Return exec /usr/bin/x-terminal-emulator
 
 ## Launch // Browser // <><Shift> Enter ##
-#bindsym $mod+Shift+Return exec /opt/google/chrome/chrome --incognito
-#bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser)
-bindsym $mod+Shift+Return exec firefox
-#bindsym $mod+Shift+Return exec firefox --private-window
+# bindsym $mod+Shift+Return exec google-chrome --incognito --force-dark-mode
+bindsym $mod+Shift+Return exec firefox --first-startup --private-window
 
 ## Launch // Browser // <> b ##
-bindsym $mod+b exec gtk-launch $(xdg-settings get default-web-browser)
-
-set_from_resource $rofiTheme rofi.theme /etc/regolith/styles/lascaille/rofi.rasi
+# bindsym $mod+b exec firefox --first-startup
+bindsym $mod+b exec google-chrome --force-dark-mode
 
 ## Launch // Application // <> Space ##
-set_from_resource $i3-wm.program.launcher.app i3-wm.program.launcher.app rofi -show drun -theme $rofiTheme
-bindsym $mod+space exec $i3-wm.program.launcher.app
+bindsym $mod+space exec rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/theme.rasi
 
 ## Launch // Command // <><Shift> Space ##
 set_from_resource $i3-wm.program.launcher.cmd i3-wm.program.launcher.cmd rofi -show run -theme $rofiTheme
@@ -330,11 +326,10 @@ bindsym $mod+d exec nautilus
 
 ## Modify // Wifi Settings // <> w ##
 set_from_resource $i3-wm.program.wifi i3-wm.program.wifi gnome-control-center wifi
-#bindsym $mod+w exec $i3-wm.program.wifi
+bindsym $mod+w exec $i3-wm.program.wifi
 
 ## Modify // Bluetooth Settings // <> b ##
 ## set_from_resource $i3-wm.program.bluetooth i3-wm.program.bluetooth gnome-control-center bluetooth
-## bindsym $mod+b exec $i3-wm.program.bluetooth
 
 ## Launch // File Browser // <><Shift> n ##
 #set_from_resource $i3-wm.program.files i3-wm.program.files /usr/bin/nautilus --new-window

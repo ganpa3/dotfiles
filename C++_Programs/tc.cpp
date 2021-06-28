@@ -115,12 +115,15 @@ string s = "abcdefghijklmnopqrstuvwxy?";
 
 int32_t main() {
 #if TEST_CASE == 1
-    int tc = 1;
+    int tc = 100;
     cout << tc << endl;
     while (tc--) {
 #endif
-        for (int i = 2; i < 101; i++) cout << i << endl;
-#ifdef TEST_CASE
+        int n = ran(2, 2000);
+        cout << n << endl;
+        arr(n, 1, 100);
+
+#if TEST_CASE == 1
     }
 #endif
     return 0;

@@ -47,6 +47,8 @@ function git_main_branch() {
 # (sorted alphabetically)
 #
 
+alias g='git'
+
 alias ga='git add'
 alias gaa='git add --all'
 alias gapa='git add --patch'
@@ -89,11 +91,14 @@ alias gcm='git checkout $(git_main_branch)'
 alias gcd='git checkout develop'
 alias gcmsg='git commit -m'
 alias gco='git checkout'
+alias gcor='git checkout --recurse-submodules'
 alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 alias gcs='git commit -S'
+alias gcss='git commit -S -s'
+alias gcssm='git commit -S -s -m'
 
 alias gd='git diff'
 alias gdca='git diff --cached'
@@ -213,6 +218,7 @@ alias gpd='git push --dry-run'
 alias gpf='git push --force-with-lease'
 alias gpf!='git push --force'
 alias gpoat='git push origin --all && git push origin --tags'
+alias gpr='git pull --rebase'
 alias gpu='git push upstream'
 alias gpv='git push -v'
 

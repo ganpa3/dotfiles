@@ -20,7 +20,7 @@ scrolling:
 # Font configurations
 # Use 11.0 for i3 on Manjaro
 font:
-    size: 16.0
+    size: 17.0
     normal:
         family: FiraCode Nerd Font Mono
         # style: Retina
@@ -42,54 +42,87 @@ font:
 
     use_thin_strokes: false
 
+
 draw_bold_text_with_bright_colors: true
 
-# Colors (Monokai Dark)
 colors:
-    # COLORSCHEME: dracula.yaml
-    # Default colors
-    primary:
-        #background: '0x282a36'
-        background: '0x08090f'
-        foreground: "0xf8f8f2"
+  primary:
+    background: '#282a36'
+    foreground: '#eff0eb'
 
-    # Normal colors
-    normal:
-        # Bright colors
-        black: "0x000000"
-        red: "0xff5555"
-        green: "0x50fa7b"
-        yellow: "0xf1fa8c"
-        blue: "0xbd93f9"
-        magenta: "0xff79c6"
-        cyan: "0x8be9fd"
-        white: "0xbbbbbb"
+  cursor:
+    cursor: '#97979b'
 
-    # Bright colors
-    bright:
-        black: "0x555555"
-        red: "0xff5555"
-        green: "0x50fa7b"
-        yellow: "0xf1fa8c"
-        blue: "0xcaa9fa"
-        magenta: "0xff79c6"
-        cyan: "0x8be9fd"
-        white: "0xffffff"
-    cursor:
-        text: "0x000b1e"
-        cursor: "0x0abdc6"
+  selection:
+    text:       '#282a36'
+    background: '#feffff'
 
-    # Normal colors
-    indexed_colors: []
-    dim:
-        black: "0x31363b"
-        red: "0x783228"
-        green: "0x17a262"
-        yellow: "0xb65619"
-        blue: "0x1b668f"
-        magenta: "0x614a73"
-        cyan: "0x186c60"
-        white: "0x63686d"
+  normal:
+    black:   '#282a36'
+    red:     '#ff5c57'
+    green:   '#5af78e'
+    yellow:  '#f3f99d'
+    blue:    '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan:    '#9aedfe'
+    white:   '#f1f1f0'
+
+  bright:
+    black:   '#686868'
+    red:     '#ff5c57'
+    green:   '#5af78e'
+    yellow:  '#f3f99d'
+    blue:    '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan:    '#9aedfe'
+    white:   '#eff0eb'
+
+# colors:
+#     # COLORSCHEME: dracula.yaml
+#     # Default colors
+#     primary:
+#         #background: '0x282a36'
+#         background: '0x08090f'
+#         foreground: "0xf8f8f2"
+# 
+#     # Normal colors
+#     normal:
+#         # Bright colors
+#         black: "0x000000"
+#         red: "0xff5555"
+#         green: "0x50fa7b"
+#         yellow: "0xf1fa8c"
+#         blue: "0xbd93f9"
+#         magenta: "0xff79c6"
+#         cyan: "0x8be9fd"
+#         white: "0xbbbbbb"
+# 
+#     # Bright colors
+#     bright:
+#         black: "0x555555"
+#         red: "0xff5555"
+#         green: "0x50fa7b"
+#         yellow: "0xf1fa8c"
+#         blue: "0xcaa9fa"
+#         magenta: "0xff79c6"
+#         cyan: "0x8be9fd"
+#         white: "0xffffff"
+#     cursor:
+#         text: "0x000b1e"
+#         cursor: "0x0abdc6"
+# 
+#     # Normal colors
+#     indexed_colors: []
+#     dim:
+#         black: "0x31363b"
+#         red: "0x783228"
+#         green: "0x17a262"
+#         yellow: "0xb65619"
+#         blue: "0x1b668f"
+#         magenta: "0x614a73"
+#         cyan: "0x186c60"
+#         white: "0x63686d"
+
 bell:
     animation: EaseOutExpo
     duration: 0
@@ -113,7 +146,7 @@ mouse:
     hide_when_typing: false
 
 cursor:
-    shape: Beam
+    style: Beam
     unfocused_hollow: true
 
 window.dynamic_title: true

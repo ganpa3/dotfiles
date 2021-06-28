@@ -1,5 +1,5 @@
 {
-    "clangd.disableDiagnostics": true,
+    // "clangd.disableDiagnostics": true,
     "coc.preferences.messageLevel": "warning",
     "rust-analyzer.updates.prompt": false,
     "python.formatting.provider": "black"

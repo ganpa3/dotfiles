@@ -168,7 +168,30 @@ E.g.
 ```
 
 ### Update all extensions of VS Code
-Bash
+```sh
 code --list-extensions | xargs code --force --install-extension
-Powershell
+```
+
+```powershell
+# Powershell
 @(code --list-extensions) | %{code --force --install-extension $_}
+```
+
+To set two-finger touchpad click as middle click:
+
+1. Run `xinput list` to find the id number of the touchpad.
+2. Run `xinput set-button-map 17 1 3 2`. This probably won't work on Wayland.
+
+Send a file to the `bot` channel on Discord.
+```sh
+curl --no-progress-meter -H "Authorization: Bot bot_token" https://discord.com/api/v9/channels/873523199252516914/messages -F file=@file_name | jq
+```
+
+Send a message to the `bot` channel on Discord.
+```sh
+curl --no-progress-meter -H "Authorization: Bot bot_token" -H "Content-Type: application/json" https://discord.com/api/v9/channels/873523199252516914/messages -d '{"content": "This is the message"}' | jq
+```
+
+To access WSL files from Linux dual boot, see https://stackoverflow.com/a/37790474
+
+Refer https://www.jessesquire.com/articles/2019/03/31/configure-github-activity-signing-with-wsl/ for issues with gpg in WSL2

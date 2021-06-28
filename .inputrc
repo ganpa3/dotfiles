@@ -1,0 +1,6 @@
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e\C-l": alias-expand-line
+
+set show-all-if-ambiguous on
+set completion-ignore-case on

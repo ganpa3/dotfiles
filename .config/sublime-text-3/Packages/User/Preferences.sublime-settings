@@ -1,9 +1,9 @@
 {
-	"color_scheme": "Packages/Agila Theme/Agila Dracula.tmTheme",
-	"font_size": 16,
+	"font_size": 17,
 	"ignored_packages":
 	[
 	],
+	"word_wrap": true,
 	"theme": "Reverse Gravity.sublime-theme",
-	"word_wrap": true
+	"color_scheme": "Packages/Dracula Color Scheme/Dracula.tmTheme",
 }

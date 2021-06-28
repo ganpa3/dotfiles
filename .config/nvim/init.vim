@@ -71,7 +71,7 @@ command! -nargs=0 Pret :CocCommand prettier.formatFile
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
     \ {'options': ['--layout=reverse'], 'source': 'fdfind --exclude "node_modules"',
-    \ 'sink': 'tabedit'}), <bang>0)
+    \ }), <bang>0)
 
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
@@ -245,6 +245,8 @@ noremap <C-c> :q!<CR>
 noremap <C-s> :w<CR>
 " Alternate way to save and quit
 nnoremap <C-q> :wq!<CR>
+" Alternate way to close the current buffer
+noremap <C-x> :bd<CR>
 
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -294,9 +296,6 @@ autocmd BufReadPost *
   \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
   \ |   exe "normal! g`\""
   \ | endif
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -347,6 +346,8 @@ nmap <leader>cq <plug>NERDCommenterComment
 nmap <silent> <Leader>e <Plug>(coc-codeaction-cursor)
 nmap <silent> <Leader>d <Plug>(coc-definition)
 nmap <silent> <C-d> <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 
 " Format files
 nnoremap <silent> <C-f> :call CocActionAsync('format')<CR>

@@ -16,14 +16,12 @@
 OPTIONS=$(getopt --options amn --longoptions all,minimal,noconfig --name "$0" -- "$@")
 eval set -- "$OPTIONS"
 
-ALL_CONFIGS=false
-MINMAL=false
+MINIMAL=false
 NOCONFIG=false
 EXTRAS=true
 
 while true; do
     case "$1" in
-        -a | --all ) ALL_CONFIGS=true; shift ;;
         -m | --minimal ) MINIMAL=true; shift ;;
         -n | --noconfig ) NOCONFIG=true; shift ;;
         -x | --no-extras ) EXTRAS=false; shift ;;
@@ -46,6 +44,9 @@ if [[ "$MINIMAL" == "true" ]]; then
     "curl"
     "wget"
     "binutils"
+    "htop"
+    "golang-go"
+    "clangd"
     "clang-format"
     "rsync"
     "neovim"
@@ -58,21 +59,17 @@ if [[ "$MINIMAL" == "true" ]]; then
     "fd-find"
     )
     sudo apt-get install --fix-missing -y "${packages[@]}"
-    
-    if [[ "$NOCONFIG" != "true" ]]; then
-        # Installing config files
-        if [[ "$ALL_CONFIGS" == "true" ]]; then
-            curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash
-        else
-            curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash -s minimal
-        fi
-    fi
-    exit
 
-    if [[ "$EXTRAS" != "true" ]]; then
+    if [[ "$NOCONFIG" == "false" ]]; then
+        curl -fsS https://raw.githubusercontent.com/ganpa3/dotfiles/main/install.sh | bash
+    fi
+
+    if [[ "$EXTRAS" == "true" ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
         pip install --upgrade httpie pgcli
     fi
+
+    exit
 fi
 ########################################################################################################################
 
@@ -87,7 +84,6 @@ mkdir -p ~/webdev
 mkdir -p ~/source
 mkdir -p ~/C++_Programs
 mkdir -p ~/Python_Programs
-mkdir -p ~/Kotlin_Programs
 
 # Login without password
 sudo sed -i '1i auth sufficient pam_succeed_if.so user ingroup adm' /etc/pam.d/gdm-password
@@ -115,18 +111,9 @@ gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
 gsettings set org.gtk.Settings.FileChooser show-hidden true
 ########################################################################################################################
 
-# Adding packages to apt sources
-# Regolith
-sudo add-apt-repository -y ppa:regolith-linux/release
-
 # Subllime Text
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
- echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-
-# VS Code
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 
 # Github CLI
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
@@ -146,9 +133,12 @@ packages=(
 "make"
 "curl"
 "wget"
+"golang-go"
 "bison"
 "binutils"
 "fakeroot"
+"htop"
+"clangd"
 "clang-format"
 "vlc"
 "neovim"
@@ -168,11 +158,12 @@ packages=(
 "dunst"
 "libnotify-bin"
 "ffmpeg"
-"regolith-desktop-mobile" # OR regolith-desktop-standard for desktop
+# "regolith-desktop-mobile" # OR regolith-desktop-standard for desktop
 "alacritty"
 "sublime-text"
 "code"
 "gh"
+"qbittorrent"
 "ubuntu-restricted-extras" # Keep this at last, since it involves agreeing to a license.
 )
 
@@ -182,18 +173,14 @@ pip install --upgrade httpie pgcli
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
-cargo install du-dust
-
-# Install kotlin
-sudo snap install --classic kotlin
 
 # Updates all the pip packages and install some
 pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
 pip3 install black selenium scrapy virtualenvwrapper
 
 # Installing nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 # Installing latest node version and npm packages
 nvm install node
-npm install -g serve http-server yarn prettier tldr
+npm install -g serve yarn prettier

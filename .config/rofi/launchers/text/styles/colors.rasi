@@ -8,4 +8,4 @@
  *
  */
 
-@import "faded.rasi"
+@import "cocoa.rasi"

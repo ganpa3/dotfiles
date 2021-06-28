@@ -1,4 +1,0 @@
-_vagrant_vms=( ${(Q)"${(z)$(<<\EO:_vagrant_vms
-'default' 'The' '`vagrant' 'kill/destroy'
-EO:_vagrant_vms
-)}"} )

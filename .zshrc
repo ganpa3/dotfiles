@@ -109,9 +109,7 @@ reset-cursor() {
   printf '\033]50;CursorShape=1\x7'
 }
 
-export PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
-export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -119,7 +117,6 @@ export NVM_DIR="$HOME/.nvm"
 
 setopt rm_star_silent
 ulimit -s 512000
-export BROWSER='/usr/bin/google-chrome-stable'
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
@@ -136,9 +133,8 @@ alias rd='(sudo service postgresql status > /dev/null || ./tools/wsl/start_servi
 
 # Vagrant aliases
 alias VH="vagrant halt"
-alias VR="vagrant reload"
 alias VS="vagrant ssh"
-alias VU="vagrant up && vagrant ssh"
+alias VU="vagrant up && vagrant ssh -c 'sudo service postgresql start' && vagrant ssh"
 
 alias rg="rg -g '!node_modules/**' -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**' -g '!templates/**' -g '!*.md' -g '!*.svg'"
 alias play='ffplay -nodisp -autoexit -loglevel quiet'
@@ -161,8 +157,15 @@ alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
+alias ll='ls -alF'
+alias la='ls -A'
+alias sl='ls -A'
+alias s='ls -A'
+alias l='ls -CF'
+
 # Replace UNIX commands with modern replacements. Modern, they say.
 alias fd='fdfind'
+alias bat='batcat'
 
 alias x='exit'
 alias f='nautilus .'
@@ -204,7 +207,7 @@ alias CB='cd ~/bin/'
 alias CP='cd ~/Python_Programs/mysite'
 alias CZ='cd ~/source/zulip'
 alias CN='cd ~/source/nand2tetris'
-alias CW='cd ~/webdev'
+alias CW='cd ~/source/wazir'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 alias CV='cd ~/Videos'
@@ -245,33 +248,83 @@ alias disable_wc='sudo modprobe -r uvcvideo'
 alias enable_wc='sudo modprobe uvcvideo'
 
 ## Update git fork. Requires oh-my-zsh.
-alias gu='gcm && gf upstream && grb upstream/"$(git_main_branch)" && ggp'
+alias gu='gcm && gf upstream && git rebase upstream/"$(git_main_branch)" && ggp'
 ##############################################################################################
 
 ###################################### Custom Functions ######################################
+is_command() {
+    # Checks to see if the given command (passed as a string argument) exists on the system.
+    # The function returns 0 (success) if the command exists, and 1 if it doesn't.
+    local check_command="$1"
+
+    command -v "${check_command}" >/dev/null 2>&1
+}
+
 i() {
-    if [[ -f /etc/pacman.conf ]]; then # Arch-based
-        sudo pacman -S --noconfirm "$@"
-    elif [[ -e /etc/apt ]]; then # Debian-based
+    # Check pkg before apt for termux
+    if is_command pkg ; then
+    	pkg install "$@"
+    # If apt-get is installed, then we know it's part of the Debian family
+    elif is_command apt-get ; then
     	sudo apt-get install -y "$@"
+    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
+    elif is_command rpm ; then
+        if is_command dnf ; then
+            PKG_MANAGER="dnf"
+        else
+            PKG_MANAGER="yum"
+        fi
+
+        "${PKG_MANAGER}" install -y "$@"
+    # If rpm is not found, check for pacman to see if it's a Arch family OS
+    elif is_command pacman ; then
+        sudo pacman -S --noconfirm "$@"
     fi
 }
 
 r() {
 	if [[ $# -eq 0 ]]; then
 		rm *.out
-    elif [[ -f /etc/pacman.conf ]]; then # Arch-based
-    	sudo pacman -Rs --noconfirm "$@"
-    elif [[ -e /etc/apt ]]; then # Debian-based
+    # Check pkg before apt for termux
+    elif is_command pkg ; then
+    	pkg uninstall "$@"
+    # If apt-get is installed, then we know it's part of the Debian family
+    elif is_command apt-get ; then
     	sudo apt-get remove -y "$@"
+    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
+    elif is_command rpm ; then
+        if is_command dnf ; then
+            PKG_MANAGER="dnf"
+        else
+            PKG_MANAGER="yum"
+        fi
+
+        "${PKG_MANAGER}" remove "$@"
+    # If rpm is not found, check for pacman to see if it's a Arch family OS
+    elif is_command pacman ; then
+    	sudo pacman -Rs --noconfirm "$@"
     fi
 }
 
 u() {
-    if [[ -f /etc/pacman.conf ]]; then # Arch-based
-        yay -Syu --noconfirm
-    elif [[ -e /etc/apt ]]; then # Debian-based
+    # Check pkg before apt for termux
+    if is_command pkg ; then
+    	pkg upgrade "$@"
+    # If apt-get is installed, then we know it's part of the Debian family
+    elif is_command apt-get ; then
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean
+    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
+    elif is_command rpm ; then
+        if is_command dnf ; then
+            PKG_MANAGER="dnf"
+        else
+            PKG_MANAGER="yum"
+        fi
+
+        "${PKG_MANAGER}" update
+    # If rpm is not found, check for pacman to see if it's a Arch family OS
+    elif is_command pacman ; then
+        yay -Syu --noconfirm
     fi
 }
 
@@ -315,12 +368,7 @@ t() {
 
     res=$(diff -q -w o1 o2)
     if [[ $(echo $?) == 1 ]]; then
-    	echo "The input is:"
-    	cat input
-    	echo "Your output: "
-    	cat o1
-    	echo "Actual output: "
-    	cat o2
+        diff o1 o2
         echo ""
     fi
 }
@@ -338,13 +386,9 @@ tt() {
         ./$filenameWithoutExt.out < input > o1
         res=$(diff -q -w o1 o2)
         if [[ $(echo $?) == 1 ]]; then
-        	echo "The input is:"
-        	cat input
-        	echo "Your output: "
-        	cat o1
-        	echo "Actual output: "
-        	cat o2
+            diff o1 o2
             echo ""
+            exit
         fi
     done
 }
@@ -459,3 +503,31 @@ server() {
         http-server --port $1
     fi
 }
+
+vg() {
+    rg $@ -l | xargs nvim
+}
+
+cg() {
+    rg $@ -l | xargs code
+}
+
+source ~/source/forgit/forgit.plugin.zsh
+
+# enable GPG signing
+export GPG_TTY=$(tty)
+
+# if [ ! -f ~/.gnupg/S.gpg-agent ]; then
+#     eval $( gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf 2> /dev/null)
+# fi
+
+# export GPG_AGENT_INFO=${HOME}/.gnupg/S.gpg-agent:0:1
+bo() {
+    ans=$(curl --no-progress-meter -b 'sessionid=e86imcexoct0xsu5m3oi4sxek2veg2i1' https://pccoe.bodhi-tree.in/quiz/api/question_module/$1/get_questions/ | jq ".questions[0].answer")
+    if [[ "$ans" == "null" ]]; then
+        curl --no-progress-meter -b 'sessionid=u3gps5dwfdc0xr2gu1nrdh48jkcb484y' https://pccoe.bodhi-tree.in/quiz/api/question_module/$1/get_questions/ | jq ".questions[0].answer"
+    else
+        echo $ans
+    fi
+}
+CZ
