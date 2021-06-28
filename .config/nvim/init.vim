@@ -16,7 +16,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'jiangmiao/auto-pairs'
 
     " Plug 'lervag/vimtex'
-    " Plug 'sheerun/vim-polyglot'
+    Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'psf/black', { 'branch': 'stable' }
@@ -24,8 +24,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     Plug 'preservim/nerdcommenter'
-    " Plug 'kyoz/purify', { 'rtp': 'vim' }
-    " Plug 'gosukiwi/vim-atom-dark'
     Plug 'dracula/vim', { 'as': 'dracula' }
     " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 
@@ -43,12 +41,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Syntastic
     Plug 'vim-syntastic/syntastic'
-
-    " Tagbar
-    " Plug 'preservim/tagbar'
-
-    " Modern database interface for Vim
-    " Plug 'tpope/vim-dadbod'
 
     " Golang support
     " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -143,9 +135,8 @@ hi SignColumn ctermbg=NONE guibg=NONE
 hi Comment guifg=#5C6370 ctermfg=59
 
 " Theme
-"colorscheme purify
-colorscheme dracula
 set background=dark
+colorscheme dracula
 
 " Line length for Black formatter in python.
 let g:black_linelength=100
