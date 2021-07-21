@@ -161,6 +161,10 @@ alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
+alias ll='ls -AlF'
+alias la='ls -AF'
+alias l='ls -A'
+alias s='ls -A'
 # Replace UNIX commands with modern replacements. Modern, they say.
 alias fd='fdfind'
 
