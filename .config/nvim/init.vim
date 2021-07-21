@@ -71,7 +71,7 @@ command! -nargs=0 Pret :CocCommand prettier.formatFile
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(
     \ {'options': ['--layout=reverse'], 'source': 'fdfind --exclude "node_modules"',
-    \ 'sink': 'tabedit'}), <bang>0)
+    \ }), <bang>0)
 
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
