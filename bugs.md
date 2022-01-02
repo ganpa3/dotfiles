@@ -195,3 +195,12 @@ curl --no-progress-meter -H "Authorization: Bot bot_token" -H "Content-Type: app
 To access WSL files from Linux dual boot, see https://stackoverflow.com/a/37790474
 
 Refer https://www.jessesquire.com/articles/2019/03/31/configure-github-activity-signing-with-wsl/ for issues with gpg in WSL2
+
+### To avoid entering password for git commit signing, use this script as the executable for `git config gpg.program '~/.gpg_proxy'`
+```bash
+#!/usr/bin/env bash
+set -e
+set -x
+
+gpg --pinentry-mode=loopback --passphrase "password_here" "$@"
+```
