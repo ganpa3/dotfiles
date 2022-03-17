@@ -48,6 +48,7 @@ if [[ "$MINIMAL" == "true" ]]; then
     "rsync"
     "neovim"
     "ripgrep"
+    "fzf"
     )
     sudo apt-get install --fix-missing -y "${packages[@]}"
 
