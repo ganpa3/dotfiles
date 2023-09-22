@@ -26,7 +26,7 @@ ZSH_THEME="robbyrussell"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+#DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -70,7 +70,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sublime vi-mode)
+plugins=(git sublime vi-mode forgit)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,58 +102,27 @@ source $ZSH/oh-my-zsh.sh
 
 ##############################################################################################
 # Custom Commands below
-export EDITOR="/usr/bin/nvim"
-export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
-export DENO_INSTALL="/home/ganpa/.deno"
-reset-cursor() {
-  printf '\033]50;CursorShape=1\x7'
-}
+export EDITOR="/usr/local/bin/nvim"
 
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.config/yarn/global/node_modules/.bin:/usr/local/go/bin:/tmp/rust_install_w3id_45r/bin:$PATH"
+paths_to_add=(
+    /usr/local/opt/postgresql@14/bin
+    $HOME/bin
+    $HOME/.local/bin
+    $HOME/.yarn/bin
+    $HOME/go/bin
+    $HOME/.config/yarn/global/node_modules/.bin
+    /usr/local/go/bin
+    $PATH
+    )
+export PATH=$(IFS=:; echo "${paths_to_add[*]}")
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-setopt rm_star_silent
-ulimit -s 512000
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-
-if [[ -f $HOME/.local/bin/virtualenvwrapper.sh ]]; then
-    source $HOME/.local/bin/virtualenvwrapper.sh
-fi
-
 ######################################## TEMPORARY ALIASES ###################################
-alias bt='/home/ganpa/bin/btt | tee /tmp/bt'
-lc() {
-    clang-tidy --checks='*,-llvm-header-guard,-google-build-using-namespace,-clang-analyzer-alpha.clone.CloneChecker,-google-runtime-int,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-clang-analyzer-alpha.deadcode.UnreachableCode,-misc-use-after-move,-cppcoreguidelines-pro-type-vararg,-modernize-use-emplace,-cert-err60-cpp,-llvmlibc-implementation-in-namespace,-modernize-use-trailing-return-type,-llvmlibc-callee-namespace' $@ -- --std=c++17
-}
-
-alias rd='(sudo service postgresql status > /dev/null || ./tools/wsl/start_services) && ./tools/run-dev.py --skip-provision-check --enable-tornado-logging'
-
-# Vagrant aliases
-alias VH="vagrant halt"
-alias VS="vagrant ssh"
-alias VU="vagrant up && vagrant ssh -c 'sudo service postgresql start' && vagrant ssh"
-
-alias rg="rg -g '!node_modules/**' -g '!locale/**' -g '!docs/**' -g '!corporate/**' -g'!frontend_tests/**' -g '!zerver/migrations/**' -g '!zerver/tests/**' -g '!templates/**' -g '!*.md' -g '!*.svg'"
-alias play='ffplay -nodisp -autoexit -loglevel quiet'
-alias sudo='sudo '
-alias vbt='nvim /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
-alias sbt='subl /home/ganpa/source/Bodhitree-Scrapper/bt-scrapper.py'
-alias flake8='flake8 --ignore=E501'
-alias own='sudo chown -R ganpa:ganpa'
 COLOR_DIR="/home/ganpa/source/alacritty-theme/themes"
 LIGHT_COLOR="papercolor_light.yaml"
 # alias a="alacritty-colorscheme -C $COLOR_DIR"
 # alias day="alacritty-colorscheme -C $COLOR_DIR -a $LIGHT_COLOR"
 # alias night="alacritty-colorscheme -C $COLOR_DIR -a $DARK_COLOR"
-alert() { 
-    sleep $1
-    ffplay -nodisp -autoexit -loglevel quiet /usr/share/sounds/gnome/default/alerts/drip.ogg
-    notify-send --urgency=critical "Hello!"
-}
-alias ts='tsc --target "ES2020"'
 ##############################################################################################
 
 ############################################ ALIASES #########################################
@@ -163,20 +132,13 @@ alias sl='ls -A'
 alias s='ls -A'
 alias l='ls -CF'
 
-# Replace UNIX commands with modern replacements. Modern, they say.
-alias fd='fdfind'
-alias bat='batcat'
-
 alias x='exit'
-alias f='nautilus .'
 
 alias so='source ~/.zshrc'
 alias pipu='pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U'
-alias chrome='/opt/google/chrome/google-chrome'
-alias spd='systemctl suspend'
 
 # Neovim shortcuts
-alias v='nvim'
+alias v='nvim -p'
 alias vv='nvim --noplugin'
 alias vvv='nvim -u NONE'
 
@@ -186,148 +148,75 @@ alias ys='youtube-dl --restrict-filenames --all-subs -o "~/Videos/%(title)s/%(ti
 alias song='youtube-dl --restrict-filenames --extract-audio --audio-format mp3 -o "~/Music/%(title)s.%(ext)s"'
 
 alias path='readlink -f'
-alias redshift='redshift -O 2600'
-alias open='xdg-open'
-# Make feh work with many image formats. Requires imagemagick.
-alias feh='feh --conversion-timeout 1'
-
-## Managing dotfiles
-alias dfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dfgs='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
-alias dfga='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add'
-alias dfgc='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME commit --amend --no-edit --no-verify'
-alias dfgp='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin --force-with-lease'
-alias dfgm='dfg checkout minimal && dfg ls-files | xargs git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME co main --'
 
 ## Quickly changing directories
 alias CC='cd ~/C++_Programs/'
-alias CK='cd ~/Kotlin_Programs/'
 alias CS='cd ~/source/'
 alias CB='cd ~/bin/'
 alias CP='cd ~/Python_Programs/mysite'
-alias CZ='cd ~/source/zulip'
-alias CN='cd ~/source/nand2tetris'
 alias CW='cd ~/source/wazir'
 alias CD='cd ~/Downloads'
 alias CD='cd ~/Downloads'
 alias CV='cd ~/Videos'
-alias CT='cd ~/Music/github-timeline/src'
-alias CA='cd ~/apps'
 alias CM='cd ~/Music'
-alias CR='cd ~/rust_programs/src'
 
 ## Opening config files
 alias brc='nvim ~/.bashrc'
 alias zrc='nvim ~/.zshrc'
-alias rrc='nvim ~/.config/regolith/i3/config'
-alias irc='nvim ~/.config/i3/config'
 alias vrc='nvim ~/.vimrc'
-alias nrc='nvim ~/.config/nvim/init.vim'
+alias nrc='nvim ~/.config/nvim/init.lua'
 alias arc='nvim ~/.config/alacritty/alacritty.yml'
 
 # With Sublime text
-alias sirc='subl ~/.config/i3/config'
 alias szrc='subl ~/.zshrc'
 alias sbrc='subl ~/.bashrc'
-alias srrc='subl ~/.config/regolith/i3/config'
 alias svrc='subl ~/.vimrc'
 alias snrc='subl ~/.config/nvim/init.vim'
 alias sarc='subl ~/.config/alacritty/alacritty.yml'
 
 # With Sublime text
-alias circ='code ~/.config/i3/config'
 alias czrc='code ~/.zshrc'
 alias cbrc='code ~/.bashrc'
-alias crrc='code ~/.config/regolith/i3/config'
 alias cvrc='code ~/.vimrc'
 alias cnrc='code ~/.config/nvim/init.vim'
 alias carc='code ~/.config/alacritty/alacritty.yml'
 
-## Toggle webcam
-alias disable_wc='sudo modprobe -r uvcvideo'
-alias enable_wc='sudo modprobe uvcvideo'
-
 ## Update git fork. Requires oh-my-zsh.
-alias gu='gcm && gf upstream && git rebase upstream/"$(git_main_branch)" && ggp'
+alias gu='gcm && gl'
 ##############################################################################################
 
 ###################################### Custom Functions ######################################
-is_command() {
-    # Checks to see if the given command (passed as a string argument) exists on the system.
-    # The function returns 0 (success) if the command exists, and 1 if it doesn't.
-    local check_command="$1"
+gub() {
+    # Array of git branches
+    BRANCHES=("${(@f)$(git branch --format='%(refname:short)')}")
 
-    command -v "${check_command}" >/dev/null 2>&1
-}
+    MAIN_BRANCH="master"
 
-i() {
-    # Check pkg before apt for termux
-    if is_command pkg ; then
-    	pkg install "$@"
-    # If apt-get is installed, then we know it's part of the Debian family
-    elif is_command apt-get ; then
-    	sudo apt-get install -y "$@"
-    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
-    elif is_command rpm ; then
-        if is_command dnf ; then
-            PKG_MANAGER="dnf"
-        else
-            PKG_MANAGER="yum"
+    for branch in $BRANCHES; do
+        if [[ "$branch" != "$MAIN_BRANCH" ]]; then
+            echo -n "Update branch \"$branch\"? (Press 'd' to delete) "
+
+            read -k 1 CHOICE
+            if [[ "$CHOICE" = "Y" || "$CHOICE" = "y" ]]; then
+                echo
+                echo
+                echo \*\* Updating branch: $branch
+
+                git checkout "$branch" && git rebase "$MAIN_BRANCH" && ggf
+            elif [[ "$CHOICE" = "D" || "$CHOICE" = "d" ]]; then
+                echo
+                echo
+                echo \*\* Deleting branch: $branch
+
+                git branch -D $branch
+            else
+                echo
+                echo
+            fi
+            echo "================================================================================"
         fi
-
-        "${PKG_MANAGER}" install -y "$@"
-    # If rpm is not found, check for pacman to see if it's a Arch family OS
-    elif is_command pacman ; then
-        sudo pacman -S --noconfirm "$@"
-    fi
+    done
 }
-
-r() {
-	if [[ $# -eq 0 ]]; then
-		rm *.out
-    # Check pkg before apt for termux
-    elif is_command pkg ; then
-    	pkg uninstall "$@"
-    # If apt-get is installed, then we know it's part of the Debian family
-    elif is_command apt-get ; then
-    	sudo apt-get remove -y "$@"
-    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
-    elif is_command rpm ; then
-        if is_command dnf ; then
-            PKG_MANAGER="dnf"
-        else
-            PKG_MANAGER="yum"
-        fi
-
-        "${PKG_MANAGER}" remove "$@"
-    # If rpm is not found, check for pacman to see if it's a Arch family OS
-    elif is_command pacman ; then
-    	sudo pacman -Rs --noconfirm "$@"
-    fi
-}
-
-u() {
-    # Check pkg before apt for termux
-    if is_command pkg ; then
-    	pkg upgrade "$@"
-    # If apt-get is installed, then we know it's part of the Debian family
-    elif is_command apt-get ; then
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean
-    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
-    elif is_command rpm ; then
-        if is_command dnf ; then
-            PKG_MANAGER="dnf"
-        else
-            PKG_MANAGER="yum"
-        fi
-
-        "${PKG_MANAGER}" update
-    # If rpm is not found, check for pacman to see if it's a Arch family OS
-    elif is_command pacman ; then
-        yay -Syu --noconfirm
-    fi
-}
-
 ff() {
     if [ $# -eq 0 ]; then
         clang-format -i --style=file --fallback-style=google *.cpp
@@ -349,14 +238,6 @@ fp() {
         black --line-length 100 *.py
     else
         black --line-length 100 $@
-    fi
-}
-
-wifi() {
-    if [ $# -eq 0 ]; then
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up GaneshP
-    else
-        nmcli r wifi off && sleep 1 && nmcli r wifi on && sleep 1 && nmcli con up $1
     fi
 }
 
@@ -394,8 +275,6 @@ tt() {
 }
 
 mkcd () { mkdir -p $1 && cd $1; }
-
-m() { mv "$@" ~/C++_Programs/Competitive-Programming/Codeforces/; }
 
 run() {
     filename=$1
@@ -446,7 +325,7 @@ c() {
 	            ;;
         esac
     else
-        clear
+        printf '\033[2J\033[3J\033[1;1H'
     fi
 }
 
@@ -496,38 +375,40 @@ cc() {
     esac
 }
 
-server() {
-    if [[ $# -eq 0 ]]; then
-        http-server --port 8000
-    else
-        http-server --port $1
-    fi
-}
-
 vg() {
-    rg $@ -l | xargs nvim
+    rg $@ -l | xargs nvim -p
 }
 
 cg() {
     rg $@ -l | xargs code
 }
 
-source ~/source/forgit/forgit.plugin.zsh
-
-# enable GPG signing
-export GPG_TTY=$(tty)
-
-# if [ ! -f ~/.gnupg/S.gpg-agent ]; then
-#     eval $( gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf 2> /dev/null)
-# fi
-
-# export GPG_AGENT_INFO=${HOME}/.gnupg/S.gpg-agent:0:1
-bo() {
-    ans=$(curl --no-progress-meter -b 'sessionid=e86imcexoct0xsu5m3oi4sxek2veg2i1' https://pccoe.bodhi-tree.in/quiz/api/question_module/$1/get_questions/ | jq ".questions[0].answer")
-    if [[ "$ans" == "null" ]]; then
-        curl --no-progress-meter -b 'sessionid=u3gps5dwfdc0xr2gu1nrdh48jkcb484y' https://pccoe.bodhi-tree.in/quiz/api/question_module/$1/get_questions/ | jq ".questions[0].answer"
-    else
-        echo $ans
-    fi
+pg() {
+    rg $@ -l | xargs pycharm
 }
-CZ
+
+# source ~/source/forgit/forgit.plugin.zsh
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Macbook specific
+alias cs="cd ~/source/summon-platform && source venv/bin/activate"
+alias cw="cd ~/source/web-feature-platform"
+alias python="python3.8"
+alias pip="pip3.8"
+alias brew="arch -x86_64 brew"
+
+# see `man dyld` for details
+dynamic_library_paths_to_add=(
+    /usr/local/opt/openssl/lib
+    )
+export DYLD_LIBRARY_PATH=$(IFS=:; echo "${dynamic_library_paths_to_add[*]}")
+
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+alias psql="psql -U django -p 6432"
+alias rg="rg -g '!**/migrations/' -g '!**/tests/' --type-not po"
+alias rrg="/usr/local/bin/rg"
+alias rd="python manage.py runserver"
